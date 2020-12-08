@@ -1,6 +1,3 @@
-// angular
-var app = angular.module("MfdApp",["ngRoute"])
-
 app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, MfdServ, $location){
     $scope.webName = "Mfd";
     $scope.searchData = {};

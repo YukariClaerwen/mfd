@@ -13,7 +13,7 @@
 </head>
 <body ng-controller="mainCtrl">
     <nav class="navbar navbar-expand-sm {{theme.navbar}} {{theme.bg}} border-bottom {{theme.border}} py-0">
-        <a class="navbar-brand myBrand" href="#"><b>{{webName}}</b></a>
+        <a class="navbar-brand myBrand" href="/"><b>{{webName}}</b></a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,6 +45,11 @@
         </div>
     </nav>
 
+    
+		<div class="container">
+			<div ng-view></div>
+		</div>
+
     <footer>
 
     </footer>
@@ -60,8 +65,8 @@
 
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 
-    <script src="public/js/mfd.js"></script>
-    <script src="public/js/routes.js"></script>
+    <script src="app.js"></script>
+    <script src="public/js/controllers/mfd.js"></script>
     <script src="public/js/services/mfd.js"></script>
 </body>
 </html>
