@@ -1,16 +1,9 @@
-// angular
-var app = angular.module("MfdApp",["ngRoute"])
-
 app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, MfdServ, $location){
-    $scope.webName = "Mfd";
-    $scope.searchData = {};
-    $scope.loading = false;
-    $scope.searching = false;
-    $scope.link = "";
-    $scope.searchList = [];
     $scope.isActive = function(route) {
         return route === $location.path();
     }
+
+
     $scope.themesData = {
         "light" : {
             "navbar" : "navbar-light",
@@ -40,4 +33,13 @@ app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, M
         $("[theme]").show();
         $("[theme='" + key +"']").hide();
     }
+
+    $scope.showSideMenu = function($event){
+        $event.stopPropagation();
+        $("header").addClass("sideMenuOpen");
+    }
+    $scope.hideSideMenu = function(){
+        $("header").removeClass("sideMenuOpen");
+    }
+
 }])

@@ -1,14 +1,23 @@
+// angular
+var app = angular.module("MfdApp",["ngRoute"])
 
 // app route
 app.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider){
     
     $routeProvider
         .when("/",{
-            templateUrl: "views/home.html",
+            templateUrl: "/views/explore.html",
+            controller: 'mainCtrl',
+            activetab: 'explore'
+        })
+        .when("/home",{
+            templateUrl: "/views/home.html",
+            controller: 'mainCtrl',
             activetab: 'home'
         })
         .when("/about",{
-            templateUrl: "views/about.html",
+            templateUrl: "/views/about.html",
+            controller: 'mainCtrl',
             activetab: 'about'
         })
         .when("/news",{
@@ -37,7 +46,6 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
     $locationProvider.html5Mode({
         enabled: true
     });
-    $locationProvider.hashPrefix('');
 }])
 
 // end app route
