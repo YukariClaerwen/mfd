@@ -15,6 +15,9 @@ app.config(function($routeProvider){
     .when("/yeuthich",{
         templateUrl:"yeuthich.html"
     })
+    .when("/hinhanh&video",{
+        templateUrl:"hinhanh&video.html"
+    })
     .otherwise({
         redirectTo: "/"
     })

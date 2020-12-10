@@ -3,19 +3,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bài viết</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-                var maxheight=100;
-                var divbaiviet=$("div[div-name=baiviet]");
-                var height = $("div[div-name=baiviet]").height();
-                var pbaiviet= $("p[p-name=baiviet]")
-                if(height > maxheight){
-                    divbaiviet.css("height","100px");
-                    pbaiviet.css({"overflow-y":"hidden","height": "inherit"});
-                    $("button[btn-name=xemthem]").css("display","block");
+            /*for (let index = 0; index < arraydivbaiviet.length; index++) {
+                if(arraydivbaiviet[index].height() > maxheight){
+                    arraydivbaiviet[index].css("height","100px");
+                    arraydivbaiviet[index].find("p[p-name=baiviet]").css({"overflow-y":"hidden","height": "inherit"});
+                    arraydivbaiviet[index].siblings("div").find("button[btn-name=xemthem]").css("display","block");
+                }      
+            }*/
+            $("div[div-name=baiviet]").each(function(){
+                if($(this).height() > 100){
+                    $(this).css("height","100px");
+                    $(this).find("p[p-name=baiviet]").css({"overflow-y":"hidden","height": "inherit"});
+                    $(this).siblings("div").find("button[btn-name=xemthem]").css("display","block");
                 }
-            console.log(height);
+            });
+
+            $("div[div-name=binhluan]").each(function(index){
+                if($(this).height() > 70){
+                    $(this).css("height","100px");
+                    $(this).find("p[p-name=binhluan]").css({"overflow-y":"hidden","height": "inherit"});
+                    $(this).find("div button[btn-name=xemthem-binhluan]").css("display","block");
+                }
+                console.log(index + "cao: " +$(this).height());
+            });
+
             $("button[btn-name=xemthem]").click(function(){
                 $(this).closest("div").siblings("div[div-name=baiviet]").find("p").css({"overflow-y":"visible"});
                 $(this).closest("div").siblings("div[div-name=baiviet]").css("height","auto");
@@ -28,7 +41,7 @@
                 $(this).closest("div").siblings("div[div-name=baiviet]").css("height","100px");
                 $(this).siblings("button[btn-name=xemthem]").css("display","block");
                 $(this).css("display","none");
-            })
+            });
 
             $("button[btn-name=xemthem-binhluan]").click(function(){
                 $(this).closest("div").siblings("p").css({"overflow-y":"visible"});
@@ -55,14 +68,29 @@
     </form>
     </div>
     <div class="col mt-4">
-        <div class="d-flex flex-row">
-            <ion-icon name="person-circle-outline" size="large"></ion-icon>
-            <h3>Tên đại diện</h3>
-            <button class="btn btn-outline-primary" style="margin-right: 0px;">Theo dõi</button>
+        <div class="d-flex flex-row  justify-content-between">
+            <div class="d-flex flex-row">
+                <img src="../image/user-male.jpg" alt="" style="border-radius: 50%;" height="50px"; width="50px">
+                <div>
+                    <h3>Tên đại diện</h3>
+                    <p>12/02/2020 lúc 14:24</p>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-self-center">
+                <button class="btn btn-outline-primary" >Theo dõi</button>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Chỉnh sửa bài viết</a>
+                      <a class="dropdown-item" href="#">Báo cáo bài viết</a>
+                    </div>
+                  </div>
+            </div>
         </div>
-        <p>12/02/2020 lúc 14:24</p>
         <h3>Tiêu đề bài viết</h3>
-        <div  div-name="baiviet">
+        <div div-name="baiviet">
             <p id="1" p-name="baiviet" >
                 Nhà mình đến ăn vào buổi trưa trong tuần khách cũng lai rai nên gọi món lên nhanh. Có 2 menu: 1 menu ngang thì kêu buffet thoải mái còn menu đứng là 1 số món cao cấp nên kêu là tính thêm tiền. Mình chọn lẩu 2 ngăn là lẩu Mala Đài Loan cho team ăn cay và lẩu nấm cho team ko cay :v Lẩu Mala cay khá là nồng ăn dễ bị sặc. Lẩu nấm thì nhẹ nhàng mà nhạt nhẽo :)) Ăn gì thì ghi vô trong tờ giấy số lượng món rồi đưa nhân viên nà.
                 _Gầu hoa bò Úc - cái món mà hay thấy trên mạng nè. Thịt đắp lên như núi lửa rồi toả khói nghi ngút á là người ta chỉ làm khói có 1 lần thôi nha. Nên lúc đem ra là sẵn sàng chụp bụp bụp liền nha tại khói nó bay nhanh lắm :v Thịt xắt siêu mỏng nên nhúng lẩu ăn vừa phải ko bị ngấy.
@@ -87,8 +115,11 @@
             <img src="../image/amthuc3.jpg" alt="">
         </div>
         <hr>
-        <div class="d-flex flex-row">
-            <ion-icon name="eye-outline"></ion-icon> 100 lượt xem
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <ion-icon name="eye-outline"></ion-icon> 100 lượt xem
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon> 2 bình luận
+            </div>
             <div>
                 <button class="btn btn-outline-secondary"><ion-icon name="heart-outline" size="large"></ion-icon></button>
                 <button class="btn btn-outline-secondary"><ion-icon name="share-outline" size="large"></ion-icon></button>
@@ -100,34 +131,23 @@
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Bình luận">
             </div>
         </form>
+
         <div class="d-flex flex-row  mt-2">
             <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan" style="height: 100px;">
-                <p style="overflow-y: hidden;">
+            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan">
+                <p p-name="binhluan">
                     Món ăn tạm được, giá cả ok
                 </p>
                 <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan">Xem thêm</button>
+                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan" style="display: none;">Xem thêm</button>
                     <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;" >Ẩn</button>
                 </div>
             </div>
         </div>                                                                                                                         
         <div class="d-flex flex-row  mt-2">
             <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan" style="height: 100px;">
-                <p style="overflow-y: hidden;">
-                    Ngon trong tầm giá
-                </p>
-                <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan">Xem thêm</button>
-                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;" >Ẩn</button>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-row  mt-2">
-            <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan" style="height: 100px;">
-                <p style="overflow-y: hidden;">
+            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan">
+                <p  p-name="binhluan">
                     Nhà mình đến ăn vào buổi trưa trong tuần khách cũng lai rai nên gọi món lên nhanh.
                     Có 2 menu: 1 menu ngang thì kêu buffet thoải mái còn menu đứng là 1 số món cao cấp nên kêu là tính thêm tiền.
                     Mình chọn lẩu 2 ngăn là lẩu Mala Đài Loan cho team ăn cay và lẩu nấm cho team ko cay :v
@@ -135,26 +155,22 @@
                     Ăn gì thì ghi vô trong tờ giấy số lượng món rồi đưa nhân viên nà.
                 </p>
                 <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan">Xem thêm</button>
-                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;" >Ẩn</button>
+                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan" style="display: none;">Xem thêm</button>
+                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;">Ẩn</button>
                 </div>
             </div>
         </div>
-        <div class="d-flex flex-row  mt-2">
-            <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan" style="height: 100px;">
-                <p style="overflow-y: hidden;">
-                    Nhà mình đến ăn vào buổi trưa trong tuần khách cũng lai rai nên gọi món lên nhanh.
-                </p>
-                <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan">Xem thêm</button>
-                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;" >Ẩn</button>
-                </div>
-            </div>
-        </div>
+
     </div>  
 
-    
-
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="#">Chỉnh sửa bài viết</a></li>
+          <li><a class="dropdown-item" href="#">Báo cáo bài viết</a></li>
+        </ul>
+    </div>
 </body>
 </html>
