@@ -6,9 +6,9 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
     
     $routeProvider
         .when("/",{
-            templateUrl: "/views/home.html",
+            templateUrl: "/views/explore.html",
             controller: 'mainCtrl',
-            activetab: 'home'
+            activetab: 'explore'
         })
         .when("/home",{
             templateUrl: "/views/home.html",
