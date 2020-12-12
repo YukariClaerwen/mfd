@@ -1,5 +1,5 @@
 // angular
-var app = angular.module("MfdApp",["ngRoute"])
+var app = angular.module("MfdApp",["ngRoute","app.swiper"])
 
 // app route
 app.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider){
@@ -10,10 +10,10 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'mainCtrl',
             activetab: 'explore'
         })
-        .when("/home",{
-            templateUrl: "/views/home.html",
+        .when("/explore",{
+            templateUrl: "/views/explore.html",
             controller: 'mainCtrl',
-            activetab: 'home'
+            activetab: 'explore'
         })
         .when("/about",{
             templateUrl: "/views/about.html",

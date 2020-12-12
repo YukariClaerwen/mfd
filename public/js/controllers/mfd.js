@@ -1,8 +1,9 @@
+'use strict';
+
 app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, MfdServ, $location){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
-
 
     $scope.themesData = {
         "light" : {
@@ -40,6 +41,13 @@ app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, M
     }
     $scope.hideSideMenu = function(){
         $("header").removeClass("sideMenuOpen");
+    }
+    
+    $scope.navH = function(){
+        return $("nav").height()
+    }
+    $scope.topMargin = {
+        "margin-top" : $("nav").height()
     }
 
 }])

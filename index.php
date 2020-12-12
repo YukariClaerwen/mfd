@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="public/css/libs/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/css/xeditable.min.css"/>
-
+    <link rel="stylesheet" href="public/css/libs/swiper-bundle.min.css">
+    
     <link rel="stylesheet" href="public/css/mfd.css">
 </head>
 <body>
@@ -17,18 +18,13 @@
             <ul ng-include="'views/includes/mainMenu.html'"></ul>
             <div class="dropdown">
                 <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
-                <div class="dropdown-menu dropdown-menu-right {{theme.bg}} {{theme.border}} " aria-labelledby="dropdown">
-                    <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="/#/admin">Quản lý</a>
-                    <!-- <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="" ng-click="switch('dark')" theme="dark" style="display: none;">Switch dark theme</a>
-                    <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="" ng-click="switch('light')" theme="light">Switch light theme</a> -->
-                </div>
             </div>
         </div>
         <nav class="navbar navbar-strip fixed-top navbar-expand-sm py-0 {{theme.navbar}} {{theme.bg}} border-bottom {{theme.border}}">
             <a href="#" class="d-block d-md-none" ng-click="showSideMenu($event)">
                 <ion-icon size="large" name="menu-outline"></ion-icon>
             </a>
-            <a class="navbar-brand myBrand order-sm-1" href="/"><span>M.</span>fd</a>
+            <a class="navbar-brand myBrand order-sm-1 mr-0 mr-md-3" href="/"><span>M.</span>fd</a>
             
             <a href="#searchMenu" data-toggle="collapse" data-target="#searchMenu" aria-controls="searchMenu"
                 aria-expanded="false" class="d-block d-md-none order-sm-3">
@@ -70,11 +66,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/js/xeditable.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
 
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 
     <script src="app.js"></script>
     <script src="public/js/controllers/mfd.js"></script>
     <script src="public/js/services/mfd.js"></script>
+    <script src="public/js/directive/swiper.js"></script>
 
     <script>
         
