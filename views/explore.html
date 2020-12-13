@@ -194,7 +194,8 @@
                                       'background-image':'url(../public/imgs/{{post.featured_img}})'
                                     } : {
                                       'background-image':'url(../public/imgs/postDefault.png)'
-                                    }"></div>                         
+                                    }">
+                                </div>                         
                             </a>
                         </div>
                         <div class="block_content">
@@ -208,8 +209,8 @@
                                     <img class="img-fluid" ng-src="../public/imgs/avarDefault.png" alt="">
                                 </a>
                             </span>
-                            <span class="meta_user_name">
-                                <a href="#" ng-repeat="user in users" ng-if="user.email == post.email">{{user.username}}</a>
+                            <span class="meta_user_name" ng-repeat="user in users" ng-if="user.email == post.email">
+                                <a ng-href="/{{user.username}}">{{user.name}}</a>
                             </span>
                         </div>
                         <div class="meta_like">

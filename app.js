@@ -16,9 +16,14 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             activetab: 'explore'
         })
         .when("/about",{
-            templateUrl: "/views/about.html",
+            templateUrl: "/views/home.html",
             controller: 'mainCtrl',
             activetab: 'about'
+        })
+        .when("/:user",{
+            templateUrl: "/views/home.html",
+            controller: 'mainCtrl',
+            activetab: 'user'
         })
         .when("/news",{
             templateUrl: "views/news.html",

@@ -2,18 +2,27 @@
 
 if ($this->method == 'GET'){
 	include './database/conn.php';
-	$getData = "select * from tbl_taikhoan";
+	$getData = null;
+	if($this->params){
+		$param = $this->params[0];
+		$getData = "call SP_Timtaikhoan('$param');";
+	}
+	else {
+		$getData = "call SP_Timtaikhoan('');";
+	}
 	$query = $connect->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
 		$data[] = array(
-			"email" => $row['Email'], 
-			"username" => $row['Tenhienthi'],
-			"birthday" => $row['Ngaysinh'],
-			"gender" => $row['Gioitinh'],
-			"job" => $row['Congviec'],
-			"createdate" => $row['Ngaytaotaikhoan'],
-			"avatar" => $row['Hinhdaidien']
+			"email" => $row['email'], 
+			"username" => $row['username'],
+			"name" => $row['viewname'],
+			"birthday" => $row['birthday'],
+			"gender" => $row['gender'],
+			"job" => $row['job'],
+			"createdate" => $row['createdate'],
+			"avatar" => $row['avatar'],
+			"status" => $row['userstatus']
 		);
 	}
 	$this->response(200, $data);
