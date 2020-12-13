@@ -13,3 +13,8 @@ begin
     select * from temp_tim_baiviet;
 end//
 delimiter ;
+
+drop procedure if exists tim_baiviet_ten;
+delimiter //
+
+delimiter ;

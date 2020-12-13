@@ -75,6 +75,7 @@
     <script src="app.js"></script>
     <script src="public/js/directive/swiper.js"></script>
     <script src="public/js/services/post.js"></script>
+    <script src="public/js/services/user.js"></script>
     <script src="public/js/controllers/mfd.js"></script>
     <script src="public/js/controllers/post.js"></script>
 </body>

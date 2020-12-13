@@ -209,7 +209,7 @@
                                 </a>
                             </span>
                             <span class="meta_user_name">
-                                <a href="#">{{post.email}}</a>
+                                <a href="#" ng-repeat="user in users" ng-if="user.email == post.email">{{user.username}}</a>
                             </span>
                         </div>
                         <div class="meta_like">

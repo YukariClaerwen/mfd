@@ -1,7 +1,7 @@
 <?php
 
 if ($this->method == 'GET'){
-	include '../database/conn.php';
+	include './database/conn.php';
 	$getData = "select * from tbl_taikhoan";
 	$query = $connect->query($getData);   
 	$data = array();
@@ -11,13 +11,12 @@ if ($this->method == 'GET'){
 			"username" => $row['Tenhienthi'],
 			"birthday" => $row['Ngaysinh'],
 			"gender" => $row['Gioitinh'],
-			"job" => $row['Congvien'],
+			"job" => $row['Congviec'],
 			"createdate" => $row['Ngaytaotaikhoan'],
 			"avatar" => $row['Hinhdaidien']
 		);
 	}
 	$this->response(200, $data);
-	
 	mysqli_close($connect);
 }
 elseif ($this->method == 'POST'){
