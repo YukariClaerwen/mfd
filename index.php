@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mfd - Meet Foodie</title>
+    <title>M.fd - Meet.Foodie</title>
     <base href="/">
 
     <link rel="stylesheet" href="public/css/libs/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/css/xeditable.min.css"/>
     <link rel="stylesheet" href="public/css/libs/swiper-bundle.min.css">
     
+    <link rel="stylesheet" href="public/css/customBT.css">
     <link rel="stylesheet" href="public/css/mfd.css">
 </head>
 <body>
@@ -72,12 +73,9 @@
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 
     <script src="app.js"></script>
-    <script src="public/js/controllers/mfd.js"></script>
-    <script src="public/js/services/mfd.js"></script>
     <script src="public/js/directive/swiper.js"></script>
-
-    <script>
-        
-    </script>
+    <script src="public/js/services/post.js"></script>
+    <script src="public/js/controllers/mfd.js"></script>
+    <script src="public/js/controllers/post.js"></script>
 </body>
 </html>

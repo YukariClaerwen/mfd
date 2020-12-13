@@ -1,6 +1,4 @@
-'use strict';
-
-app.controller("mainCtrl", ["$scope", "MfdServ", "$location", function($scope, MfdServ, $location){
+app.controller("mainCtrl", ["$scope", "$location", function($scope, $location){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
