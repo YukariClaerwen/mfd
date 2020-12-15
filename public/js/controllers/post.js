@@ -30,6 +30,14 @@ app.controller(
         $scope.isActive = function(route) {
             return route === $location.path();
         }
+        $scope.following = [];
+        $scope.followers = [];
+        UserServ.getfollowing($routeParams.user).then(function(response){
+            $scope.following = response.data;
+        })
+        UserServ.getfollowers($routeParams.user).then(function(response){
+            $scope.followers = response.data;
+        })
         
     }
 ])

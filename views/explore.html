@@ -128,8 +128,7 @@
                         <div class="meta_user d-flex justify-content-start align-items-center" ng-repeat="user in users" ng-if="user.email == post.email">
                             <span class="meta_user_avar">
                                 <a href="/{{user.username}}">
-                                    <img ng-if="user.avatar" class="img-fluid" ng-src="../public/imgs/{{user.avatar}}" alt="">
-                                    <img ng-if="!user.avatar" class="img-fluid" ng-src="../public/imgs/avarDefault.png" alt="">
+                                    <img class="img-fluid" ng-src="../public/imgs/{{user.avatar}}" alt="">
                                 </a>
                             </span>
                             <span class="meta_user_name">
