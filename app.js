@@ -7,29 +7,43 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
     $routeProvider
         .when("/",{
             templateUrl: "/views/explore.html",
-            controller: 'mainCtrl',
+            controller: 'PostCtrl',
             activetab: 'explore'
         })
         .when("/explore",{
             templateUrl: "/views/explore.html",
-            controller: 'mainCtrl',
+            controller: 'PostCtrl',
             activetab: 'explore'
         })
         .when("/about",{
-            templateUrl: "/views/about.html",
+            templateUrl: "/views/home.html",
             controller: 'mainCtrl',
             activetab: 'about'
         })
-        .when("/news",{
-            templateUrl: "views/news.html",
-            activetab: 'active'
+        .when("/:user",{
+            templateUrl: "/views/user.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
         })
-        .when("/contact",{
-            templateUrl: "views/contact.html",
-            activetab: 'active'
+        .when("/:user/posts",{
+            templateUrl: "views/userposts.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
         })
-        .when("/login",{
-            templateUrl: "views/login.html"
+        .when("/:user/likes",{
+            templateUrl: "views/userlikes.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
+        })
+        .when("/:user/plans",{
+            templateUrl: "views/userplans.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
+        })
+        .when("/:user/gallery",{
+            templateUrl: "views/usergallery.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
         })
         .when("/admin", {
             templateUrl: "views/admin.html"

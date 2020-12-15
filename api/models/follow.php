@@ -2,29 +2,18 @@
 
 if ($this->method == 'GET'){
 	include './database/conn.php';
-	$getData = null;
-	if($this->params){
-		$param = $this->params[0];
-		$getData = "call SP_Timtaikhoan('$param');";
-	}
-	else {
-		$getData = "call SP_Timtaikhoan('');";
-	}
-	$query = $connect->query($getData);   
+	$param = $this->params[0];
+	$getData = "call Sp_DemTheoDoi('$param');";
 	$data = array();
-	while($row = mysqli_fetch_assoc($query)){
-		$data[] = array(
-			"email" => $row['email'], 
-			"username" => $row['username'],
-			"name" => $row['viewname'],
-			"birthday" => $row['birthday'],
-			"gender" => $row['gender'],
-			"job" => $row['job'],
-			"createdate" => $row['createdate'],
-			"avatar" => $row['avatar'],
-			"status" => $row['userstatus']
-		);
-	}
+	if ($rs = $connect->query($getData)){
+		while($row = $rs->fetch_assoc()){
+			$data[] = array(
+				"following" => $row['following'], 
+				"followers" => $row['followers']
+			);
+		}
+	} 
+	
 	$this->response(200, $data);
 	mysqli_close($connect);
 }

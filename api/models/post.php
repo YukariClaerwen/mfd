@@ -5,10 +5,10 @@ if ($this->method == 'GET'){
 	$getData = null;
 	if($this->params){
 		$id = $this->params[0];
-		$getData = "call tim_baiviet('$id');";
+		$getData = "call SP_Timbaiviet('$id');";
 	}
 	else {
-		$getData = "call tim_baiviet(-1);";
+		$getData = "call SP_Timbaiviet(-1);";
 	}
 	$query = $connect->query($getData);   
 	$data = array();
