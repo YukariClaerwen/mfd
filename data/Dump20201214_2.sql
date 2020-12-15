@@ -69,9 +69,3 @@ end//
 delimiter ;
 
 alter table tbl_taikhoan modify column Ngaytaotaikhoan timestamp default current_timestamp;
-
-INSERT INTO tbl_taikhoan
-                SET
-                    Email= 'quyen@gmail.com', 
-                    Tentaikhoan= 'Quyen', 
-                    Matkhau=md5('123456');
