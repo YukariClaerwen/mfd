@@ -12,6 +12,21 @@
                     arraydivbaiviet[index].siblings("div").find("button[btn-name=xemthem]").css("display","block");
                 }      
             }*/
+        $("div[div-name=hinhbaiviet]").each(function() {
+            var arr = $(this).find("img[img-name=hinhbaiviet]").toArray();
+            console.log(arr.length);
+            if(arr.length ==1){
+               $(this).addClass("row-cols-1");
+            }
+            else if (arr.length == 2) {
+                $(this).addClass("row-cols-2");                
+            }else {
+                $(this).addClass("row-cols-3");                
+            }  
+        });
+            
+            
+
             $("div[div-name=baiviet]").each(function(){
                 if($(this).height() > 100){
                     $(this).css("height","100px");
@@ -61,116 +76,11 @@
 </head>
 <body>
     <div>
-    <form>
-        <div class="form-group">
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Trải nghiệm của bạn hôm nay là gì?">
-        </div>
-    </form>
-    </div>
-    <div class="col mt-4">
-        <div class="d-flex flex-row  justify-content-between">
-            <div class="d-flex flex-row">
-                <img src="../image/user-male.jpg" alt="" style="border-radius: 50%;" height="50px"; width="50px">
-                <div>
-                    <h3>Tên đại diện</h3>
-                    <p>12/02/2020 lúc 14:24</p>
-                </div>
-            </div>
-            <div class="d-flex flex-row align-self-center">
-                <button class="btn btn-outline-primary" >Theo dõi</button>
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Chỉnh sửa bài viết</a>
-                      <a class="dropdown-item" href="#">Báo cáo bài viết</a>
-                    </div>
-                  </div>
-            </div>
-        </div>
-        <h3>Tiêu đề bài viết</h3>
-        <div div-name="baiviet">
-            <p id="1" p-name="baiviet" >
-                Nhà mình đến ăn vào buổi trưa trong tuần khách cũng lai rai nên gọi món lên nhanh. Có 2 menu: 1 menu ngang thì kêu buffet thoải mái còn menu đứng là 1 số món cao cấp nên kêu là tính thêm tiền. Mình chọn lẩu 2 ngăn là lẩu Mala Đài Loan cho team ăn cay và lẩu nấm cho team ko cay :v Lẩu Mala cay khá là nồng ăn dễ bị sặc. Lẩu nấm thì nhẹ nhàng mà nhạt nhẽo :)) Ăn gì thì ghi vô trong tờ giấy số lượng món rồi đưa nhân viên nà.
-                _Gầu hoa bò Úc - cái món mà hay thấy trên mạng nè. Thịt đắp lên như núi lửa rồi toả khói nghi ngút á là người ta chỉ làm khói có 1 lần thôi nha. Nên lúc đem ra là sẵn sàng chụp bụp bụp liền nha tại khói nó bay nhanh lắm :v Thịt xắt siêu mỏng nên nhúng lẩu ăn vừa phải ko bị ngấy.
-                _Đĩa thịt tổng hợp - cũng nên kêu nè, đủ loại ăn cho đã.
-                _Xúc xích phô mai - cũng ngon lắm nha. Xúc xích miếng nhỏ ăn vừa miệng. Nhúng lẩu xong cắn đôi sẽ có phô mai chảy ra.
-                _Sủi cảo kim ngân - cũng khá ngon.
-                _Mì rong biển - ăn lạ miệng nên thử, mà phải nhúng lẩu khá lâu nó mới mềm ra.
-                Quầy tráng miệng cũng nhiều món ngon
-            </p>
-        </div>
-        <div class="d-block">
-            <button class="btn btn-outline-secondary" btn-name="xemthem" style="display: none;">Xem thêm</button>
-            <button class="btn btn-outline-secondary" btn-name="an" style="display: none;">Ẩn</button>
-            <p><ion-icon name="location-outline"></ion-icon> Địa chỉ quán</p>
-            <p><ion-icon name="time-outline"></ion-icon> 10:00-22:00 </p>
-            <p><ion-icon name="cash-outline"></ion-icon> 299k-339k</p>
-            <p><ion-icon name="restaurant-outline"></ion-icon> 8.5/10</p>
-        </div>
-        <div class="row  row-cols-sm-1 row-cols-md-2 row-cols-lg-3 mt-2">
-            <img src="../image/amthuc1.jpg" alt="">
-            <img src="../image/amthuc2.jpg" alt="">
-            <img src="../image/amthuc3.jpg" alt="">
-        </div>
-        <hr>
-        <div class="d-flex flex-row justify-content-between">
-            <div>
-                <ion-icon name="eye-outline"></ion-icon> 100 lượt xem
-                <ion-icon name="chatbox-ellipses-outline"></ion-icon> 2 bình luận
-            </div>
-            <div>
-                <button class="btn btn-outline-secondary"><ion-icon name="heart-outline" size="large"></ion-icon></button>
-                <button class="btn btn-outline-secondary"><ion-icon name="share-outline" size="large"></ion-icon></button>
-            </div>
-        </div>
-        <hr>
         <form>
             <div class="form-group">
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Bình luận">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Trải nghiệm của bạn hôm nay là gì?">
             </div>
         </form>
-
-        <div class="d-flex flex-row  mt-2">
-            <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan">
-                <p p-name="binhluan">
-                    Món ăn tạm được, giá cả ok
-                </p>
-                <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan" style="display: none;">Xem thêm</button>
-                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;" >Ẩn</button>
-                </div>
-            </div>
-        </div>                                                                                                                         
-        <div class="d-flex flex-row  mt-2">
-            <img src="../image/user-male.jpg" alt=""style="border-radius: 50%;"; height="70px"; width="70px">
-            <div class="d-flex flex-column justify-content-center pl-2" div-name="binhluan">
-                <p  p-name="binhluan">
-                    Nhà mình đến ăn vào buổi trưa trong tuần khách cũng lai rai nên gọi món lên nhanh.
-                    Có 2 menu: 1 menu ngang thì kêu buffet thoải mái còn menu đứng là 1 số món cao cấp nên kêu là tính thêm tiền.
-                    Mình chọn lẩu 2 ngăn là lẩu Mala Đài Loan cho team ăn cay và lẩu nấm cho team ko cay :v
-                    Lẩu Mala cay khá là nồng ăn dễ bị sặc. Lẩu nấm thì nhẹ nhàng mà nhạt nhẽo :)) 
-                    Ăn gì thì ghi vô trong tờ giấy số lượng món rồi đưa nhân viên nà.
-                </p>
-                <div class="d-block">
-                    <button class="btn btn-outline-secondary" btn-name="xemthem-binhluan" style="display: none;">Xem thêm</button>
-                    <button class="btn btn-outline-secondary" btn-name="an-binhluan" style="display: none;">Ẩn</button>
-                </div>
-            </div>
-        </div>
-
     </div>  
-
-    <div class="dropdown">
-        <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Chỉnh sửa bài viết</a></li>
-          <li><a class="dropdown-item" href="#">Báo cáo bài viết</a></li>
-        </ul>
-    </div>
 </body>
 </html>

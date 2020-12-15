@@ -7,7 +7,7 @@ app.config(function($routeProvider){
         templateUrl:"gioithieu.html"
     })
     .when("/baiviet",{
-        templateUrl:"baiviet.html"
+        templateUrl:"../php/baiviet.php"
     })
     .when("/kehoachkhampha",{
         templateUrl:"kehoachkhampha.html"

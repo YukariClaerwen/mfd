@@ -1,0 +1,40 @@
+</div>
+<div>
+    <button class='btn btn-outline-secondary'><ion-icon name='heart-outline' size='large'></ion-icon></button>
+    <button class='btn btn-outline-secondary'><ion-icon name='share-outline' size='large'></ion-icon></button>
+</div>
+</div>
+<hr>
+<form>
+<div class='form-group'>
+    <input type='text' class='form-control' id='exampleFormControlInput1' placeholder='Bình luận'>
+</div>
+</form>
+<div class='d-flex flex-row  mt-2'>
+<img src=' <?php echo "../".$baiviet->Hinhdaidien ?>' alt=''style='border-radius: 50%;'; height='70px'; width='70px'>
+<div class='d-flex flex-column justify-content-center pl-2' div-name='binhluan'>
+    <p p-name='binhluan'>
+        <?php echo $binhluan->Noidung ?>
+    </p>
+    <div class='d-block'>
+        <button class='btn btn-outline-secondary' btn-name='xemthem-binhluan' style='display: none;'>Xem thêm</button>
+        <button class='btn btn-outline-secondary' btn-name='an-binhluan' style='display: none;' >Ẩn</button>
+    </div>
+</div>
+</div>
+
+if($binhluan->slbl >0){ echo "
+    
+            <div class='d-flex flex-row  mt-2'>
+                <img src='../".$baiviet->Hinhdaidien."' alt=''style='border-radius: 50%;'; height='70px'; width='70px'>
+                <div class='d-flex flex-column justify-content-center pl-2' div-name='binhluan'>
+                <p p-name='binhluan'>"
+                    .$binhluan->Noidung.
+                "</p>
+                <div class='d-block'>
+                    <button class='btn btn-outline-secondary' btn-name='xemthem-binhluan' style='display: none;'>Xem thêm</button>
+                    <button class='btn btn-outline-secondary' btn-name='an-binhluan' style='display: none;' >Ẩn</button>
+                </div>
+            </div>";          
+        
+        }
