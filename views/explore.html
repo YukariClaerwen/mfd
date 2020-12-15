@@ -4,7 +4,7 @@
     <div class="container-fluid text-center my-auto top-section-content py-5">
         <div class="text-left mb-4 row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7">
-                <h1 class="display-4">Cùng chia sẻ món ngon mỗi ngày.</h1>
+                <h1 class="display-4">Cùng chia sẻ kinh nghiệm ẩm thực theo cách riêng của bạn.</h1>
             </div>
         </div>
         <div class="searchForm mb-5 mt-2" id="top_search">
@@ -88,85 +88,7 @@
                                 </a>
                             </span>
                             <span class="meta_user_name">
-                                <a href="">Meet.Foodie</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="block_type_1">
-                    <div class="block_inner d-flex">
-                        <div class="block_bg">
-                            <a class="block_link" href="#" tabindex="-1">					
-                                <div class="block_bg_img" style="background-image: url('../public/imgs/collection_1.jpg')"></div>                         
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h4 class="block_title">Các món cuốn</h4>
-                        </div>
-                    </div>
-                    <div class="block_meta mt-2">
-                        <div class="meta_user d-flex justify-content-start align-items-center">
-                            <span class="meta_user_avar">
-                                <a href="#">
-                                    <img class="img-fluid" src="../public/imgs/avarDefault.png" alt="">
-                                </a>
-                            </span>
-                            <span class="meta_user_name">
-                                <a href="">Meet.Foodie</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="block_type_1">
-                    <div class="block_inner d-flex">
-                        <div class="block_bg">
-                            <a class="block_link" href="#" tabindex="-1">					
-                                <div class="block_bg_img" style="background-image: url('../public/imgs/collection_1.jpg')"></div>                         
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h4 class="block_title">Các món cuốn</h4>
-                        </div>
-                    </div>
-                    <div class="block_meta mt-2">
-                        <div class="meta_user d-flex justify-content-start align-items-center">
-                            <span class="meta_user_avar">
-                                <a href="#">
-                                    <img class="img-fluid" src="../public/imgs/avarDefault.png" alt="">
-                                </a>
-                            </span>
-                            <span class="meta_user_name">
-                                <a href="">Meet.Foodie</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="block_type_1">
-                    <div class="block_inner d-flex">
-                        <div class="block_bg">
-                            <a class="block_link" href="#" tabindex="-1">					
-                                <div class="block_bg_img" style="background-image: url('../public/imgs/collection_1.jpg')"></div>                         
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h4 class="block_title">Các món cuốn</h4>
-                        </div>
-                    </div>
-                    <div class="block_meta mt-2">
-                        <div class="meta_user d-flex justify-content-start align-items-center">
-                            <span class="meta_user_avar">
-                                <a href="#">
-                                    <img class="img-fluid" src="../public/imgs/avarDefault.png" alt="">
-                                </a>
-                            </span>
-                            <span class="meta_user_name">
-                                <a href="">Meet.Foodie</a>
+                                <a href="/Meet.Foodie">Meet.Foodie</a>
                             </span>
                         </div>
                     </div>
@@ -176,7 +98,7 @@
     </div>
 </section>
 
-<section class="section" id="collections" ng-controller="PostCtrl">
+<section class="section" id="collections">
     <div class="container-fluid mb-5">
         <div class="row mb-3">
             <div class="col">
@@ -203,13 +125,14 @@
                         </div>
                     </div>
                     <div class="block_meta mt-2 d-flex justify-content-between align-items-center">
-                        <div class="meta_user d-flex justify-content-start align-items-center">
+                        <div class="meta_user d-flex justify-content-start align-items-center" ng-repeat="user in users" ng-if="user.email == post.email">
                             <span class="meta_user_avar">
-                                <a href="#">
-                                    <img class="img-fluid" ng-src="../public/imgs/avarDefault.png" alt="">
+                                <a href="/{{user.username}}">
+                                    <img ng-if="user.avatar" class="img-fluid" ng-src="../public/imgs/{{user.avatar}}" alt="">
+                                    <img ng-if="!user.avatar" class="img-fluid" ng-src="../public/imgs/avarDefault.png" alt="">
                                 </a>
                             </span>
-                            <span class="meta_user_name" ng-repeat="user in users" ng-if="user.email == post.email">
+                            <span class="meta_user_name">
                                 <a ng-href="/{{user.username}}">{{user.name}}</a>
                             </span>
                         </div>

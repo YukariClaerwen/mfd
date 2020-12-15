@@ -9,7 +9,8 @@
     --gradient-end: #4fd6c8;
     --content-color: #232323;
     --light-bg-color: #fff;
-    --light-text-color: #000;
+    --light-text-color: #5c5c5c;
+    --light-sub-text-color: rgba(0, 0, 0, 0.62);
     --light-content-color: #232323;
     --dark-bg-color: #111;
     --dark-text-color: #fff;
@@ -351,6 +352,82 @@ a.swiper-slide:hover {
     z-index: 1;
 }
 /* \search bar */
+
+/* user profile */
+.head-profile-cover {
+    position: relative;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.02);
+    
+    min-height: 176px;
+}
+.head-profile-has-cover {
+    height: 50vh;
+    max-height: 640px;
+}
+.head-profile-avar {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 124px;
+    height: 100px;
+    position: absolute;
+    top: -24px;
+}
+.head-profile-avar-border {
+    border-radius: 50%;
+    border: 1px dashed var(--primary-color);
+    width: 102px;
+    height: 102px;
+    background: rgba(255,255,255,0.55)
+}
+.head-profile-avar-img {
+    display: block;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    overflow: hidden;
+    width: 96px;
+    height: 96px;
+    border: 2px solid var(--light-bg-color);
+    margin: -2px;
+    position: relative;
+}
+.head-profile-avar-img > img {
+    object-fit: cover; 
+    object-position: center top;
+    width: 96px;
+    height: 96px;
+}
+.head-profile-title {
+    padding-top: 24px;
+    padding-left: 124px;
+}
+.head-profile-title .head-profile-title-inner > h4 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 28px;
+    margin: 0px;
+    color: var(--light-text-color);
+}
+.head-profile-meta {
+    margin-top: 2px;
+    padding-left: 124px;
+}
+.head-profile-meta a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+.head-profile-meta span {
+    color: var(--light-sub-text-color);
+}
+.head-profile-meta span.number {
+    font-weight: 700;
+    color: var(--light-text-color);
+}
+/* \user profile*/
 
 
 @media (min-width: 576px) { 

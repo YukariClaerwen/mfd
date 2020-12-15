@@ -5,6 +5,9 @@ app.factory("UserServ", ["$http", function($http){
         },
         getuser: function(id){
             return $http.get("http://mfd.local/api/v1/user/"+id);
+        },
+        getfollow: function(id){
+            return $http.get("http://mfd.local/api/v1/follow/"+id);
         }
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);
