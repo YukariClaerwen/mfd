@@ -4,61 +4,72 @@ if ($this->method == 'GET'){
 	
 	$cn = new connection();
 	$getData = null;
-	if($this->params){
-		$param = $this->params[0];
-		$getData = "call SP_Timtaikhoan('$param');";
+	$data = array();
+	$avardefault = "avarDefault.png";
+	if(isset($this->params[1])){
+		/**
+		* Lấy danh sách theo dõi
+		* Link 1: user/<username>/<following>
+		* Link 2: user/<username>/<followers>
+		*/
+		if($this->params[1] == "following"){
+			$getData = "call SP_Dangtheodoi('".$this->params[0]."');";
+			if($rs = $cn->connect()->query($getData)){
+				while($row = $rs->fetch_assoc()){
+					$data[] = array(
+						"username" 	=> $row['following'],
+						"name" 		=> $row['viewname'],
+						"avatar" 	=> (isset($row['avatar']) ? $row['avatar'] : $avardefault)
+					);
+				}
+			}
+		} else {
+			$getData = "call SP_Nguoitheodoi('".$this->params[0]."');";
+			if($rs = $cn->connect()->query($getData)){
+				while($row = $rs->fetch_assoc()){
+					$data[] = array(
+						"username" 	=> $row['followers'],
+						"name" 		=> $row['viewname'],
+						"avatar" 	=> (isset($row['avatar']) ? $row['avatar'] : $avardefault)
+					);
+				}
+			}
+		}
 	}
 	else {
-		$getData = "call SP_Timtaikhoan('');";
-	}
-	// $query = $connect->query($getData);   
-	$data = array();
-	$user;
-	if ($rs = $cn->connect()->query($getData)){
-		while($row = $rs->fetch_assoc()){
-			$getFL = "call Sp_DemTheoDoi('".$row['username']."');";
-			if ($kq = $cn->connect()->query($getFL)){
-				$follow = $kq->fetch_object();
-			}
-
-			$data[] = array(
-				"email" 		=> $row['email'], 
-				"username" 		=> $row['username'],
-				"name" 			=> $row['viewname'],
-				"birthday" 		=> $row['birthday'],
-				"gender" 		=> $row['gender'],
-				"job" 			=> $row['job'],
-				"createdate" 	=> $row['createdate'],
-				"avatar" 		=> $row['avatar'],
-				"status" 		=> $row['userstatus'],
-				"following" 	=> $follow->following, 
-				"followers" 	=> $follow->followers
-			);
+		/**
+		* Lấy danh sách các user: /user
+		* Lấy 1 user: user/<username>
+		*/
+		if(isset($this->params[0])){
+			$getData = "call SP_Timtaikhoan('".$this->params[0]."');";
 		}
-	} 
+		else {
+			$getData = "call SP_Timtaikhoan('');";
+		}  
+		if ($rs = $cn->connect()->query($getData)){
+			while($row = $rs->fetch_assoc()){
+				$getFL = "call Sp_DemTheoDoi('".$row['username']."');";
+				if ($kq = $cn->connect()->query($getFL)){
+					$follow = $kq->fetch_object();
+				}
 
-	// if ($rs = $cn->connect()->query($getFL)){
-	// 	while($row = $rs->fetch_assoc()){
-	// 		$data[0] += [ 
-	// 			"following" => $row['following'], 
-	// 			"followers" => $row['followers']
-	// 		];
-	// 	}
-	// } 
-	// $cn->close();
-	// while($row = mysqli_fetch_assoc($query)){
-	// 	$data[] = array(
-	// 		"email" 		=> $row['email'], 
-	// 		"username" 		=> $row['username'],
-	// 		"name" 			=> $row['viewname'],
-	// 		"birthday" 		=> $row['birthday'],
-	// 		"gender" 		=> $row['gender'],
-	// 		"job" 			=> $row['job'],
-	// 		"createdate" 	=> $row['createdate'],
-	// 		"avatar" 		=> $row['avatar'],
-	// 		"status" 		=> $row['userstatus']
-	// 	);
-	// }
+				$data[] = array(
+					"email" 		=> $row['email'], 
+					"username" 		=> $row['username'],
+					"name" 			=> $row['viewname'],
+					"birthday" 		=> $row['birthday'],
+					"gender" 		=> $row['gender'],
+					"job" 			=> $row['job'],
+					"createdate" 	=> $row['createdate'],
+					"avatar" 		=> (isset($row['avatar']) ? $row['avatar'] : $avardefault),
+					"status" 		=> $row['userstatus'],
+					"following" 	=> $follow->following, 
+					"followers" 	=> $follow->followers
+				);
+			}
+		} 
+	}
 	$this->response(200, $data);
 }
 elseif ($this->method == 'POST'){

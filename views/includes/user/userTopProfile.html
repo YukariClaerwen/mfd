@@ -9,8 +9,7 @@
         <div class="head-profile-avar">
             <div size="102" class="head-profile-avar-border d-flex justify-content-center align-items-center">
                 <div size="96" title="{{user.name}}" role="img" class="head-profile-avar-img">
-                    <img ng-if="user.avatar" src="../public/imgs/{{user.avatar}}" alt="{{user.name}}">
-                    <img ng-if="!user.avatar" src="../public/imgs/avarDefault" alt="{{user.name}}">
+                    <img src="../public/imgs/{{user.avatar}}" alt="{{user.name}}">
                 </div>
             </div>
         </div>
@@ -23,11 +22,11 @@
             </div>
         </div>
         <div class="head-profile-meta d-flex align-items-center">
-            <a class="mr-4" href="#">
+            <a class="mr-4" ng-href="/{{user.username}}/followers">
                 <span class="number">{{user.followers}}</span>
                 <span>Người theo dõi</span>
             </a>
-            <a href="#">
+            <a  ng-href="/{{user.username}}/following">
                 <span class="number">{{user.following}}</span>
                 <span>Đang theo dõi</span>
             </a>
