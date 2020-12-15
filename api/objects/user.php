@@ -37,7 +37,8 @@ class User{
                 SET
                     Email=:email, 
                     Tentaikhoan=:username, 
-                    Matkhau=md5('123456')";
+                    Matkhau=md5('123456'),
+                    Tenhienthi= :username";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
