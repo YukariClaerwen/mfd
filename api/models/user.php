@@ -4,8 +4,8 @@ if ($this->method == 'GET'){
 	
 	$cn = new connection();
 	$getData = null;
-	$param = $this->params[0];
 	if($this->params){
+		$param = $this->params[0];
 		$getData = "call SP_Timtaikhoan('$param');";
 	}
 	else {
@@ -13,8 +13,14 @@ if ($this->method == 'GET'){
 	}
 	// $query = $connect->query($getData);   
 	$data = array();
+	$user;
 	if ($rs = $cn->connect()->query($getData)){
 		while($row = $rs->fetch_assoc()){
+			$getFL = "call Sp_DemTheoDoi('".$row['username']."');";
+			if ($kq = $cn->connect()->query($getFL)){
+				$follow = $kq->fetch_object();
+			}
+
 			$data[] = array(
 				"email" 		=> $row['email'], 
 				"username" 		=> $row['username'],
@@ -24,17 +30,10 @@ if ($this->method == 'GET'){
 				"job" 			=> $row['job'],
 				"createdate" 	=> $row['createdate'],
 				"avatar" 		=> $row['avatar'],
-				"status" 		=> $row['userstatus']
+				"status" 		=> $row['userstatus'],
+				"following" 	=> $follow->following, 
+				"followers" 	=> $follow->followers
 			);
-			$user = $row['username'];
-			$getFL = "call Sp_DemTheoDoi('$user');";
-			if ($rs = $cn->connect()->query($getFL)){
-				$follow = $rs->fetch_object();
-				$data[0] += [ 
-					"following" => $follow->following, 
-					"followers" => $follow->followers
-				];
-			} 
 		}
 	} 
 

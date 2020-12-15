@@ -1,3 +1,4 @@
+
 <?php
 
 class connection  {
@@ -13,14 +14,14 @@ class connection  {
             die('Could not connect to database!<br>');
         } else {
             $this->mydb = $con;
-            echo 'Connection established!<br>';
+            // echo 'Connection established!<br>';
         }
         return $this->mydb;
     }
 
     function close() {
         mysqli_close($this->mydb);
-        echo '<br>Connection closed!';
+        // echo '<br>Connection closed!';
     }
 
 }
