@@ -77,21 +77,24 @@ elseif ($this->method == 'POST'){
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 	$cn = new connection();
 	// get posted data
-	$email 		= $this->params['email'];
-	$username 	= $this->params['username'];
+	$data = array(
+		"email" 	=> $this->params['email'],
+		"username" 	=> $this->params['username']
+	);
 	if(
-		!empty($this->params['username']) &&
-		!empty($this->params['username']) 
+		!empty($data['username']) &&
+		!empty($data['email']) 
 	){
-		$data = array(
-			"email" 	=> $this->params['email'],
-			"username" 	=> $this->params['username']
-		);
 				
-		$sql = "select * from tbl_Taikhoan where Tentaikhoan = '$username'";
-		$cn->connect()->query($sql);
-		if($cn->connect()->affected_rows>0){
+		$sql = "select * from tbl_Taikhoan where Tentaikhoan = '".$data['username']."';";
+		$sql2 = "select * from tbl_Taikhoan where Email = '".$data['email']."';";
+		// $kq = $cn->connect()->query($sql);
+		if($cn->connect()->query($sql)->num_rows>0){
 			echo json_encode(array("message" => "tai khoan da co"));
+		}
+		// $kq = $cn->connect()->query($sql2);
+		if($cn->connect()->query($sql2)->num_rows>0){
+			echo json_encode(array("message" => "email da co"));
 		}
 		else{//thêm vào CSDL
 			// $pass = md5($matkhau);
@@ -111,7 +114,7 @@ elseif ($this->method == 'POST'){
         
 			else //nếu thêm thất bại
 			{
-				echo $query;
+				echo json_encode(array("message" => "Unable to create user. Data is incomplete."));
 				// echo '<script language="javascript">alert("Chúng tôi rất tiếc rằng Máy chủ đang gặp sự cố, vui lòng quay lại sau!");window.location="../view/index.php?p=themnv";</script>';
 			}
 		}

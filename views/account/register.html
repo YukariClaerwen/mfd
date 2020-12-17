@@ -1,0 +1,28 @@
+
+
+<div class="jumbotron jumbotron-slideshow mx-0 my-0 d-flex justify-content-center align-items-center">
+    <div ng-include="'views/includes/account/background.html'"></div>
+        
+
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-4" style="background: rgba(255,255,255,0.9); border-radius: 4px;">
+                <div class="p-4">
+                    <div class="display-3 myBrand"><span>M.</span>fd</div>
+                    
+                    <form method="POST">
+                        <div class="form-group">
+                            <input type="email" ng-model="regForm.email" class="form-control" name="email" id="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ng-model="regForm.username" class="form-control" name="username" id="username" placeholder="Tên đại diện">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-success" ng-click="addUser()"  ng-disabled="!regForm.email">Đăng ký</button>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

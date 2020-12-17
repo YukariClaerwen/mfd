@@ -1,4 +1,4 @@
-app.controller("mainCtrl", ["$scope", "$location", function($scope, $location){
+app.controller("mainCtrl", ["$scope", "$location", "UserServ", function($scope, $location, UserServ){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
@@ -46,6 +46,26 @@ app.controller("mainCtrl", ["$scope", "$location", function($scope, $location){
     }
     $scope.topMargin = {
         "margin-top" : $("nav").height()
+    }
+
+    
+    $scope.regForm = {};
+
+    $scope.addUser = function(){
+        var user = {
+            email: $scope.regForm.email,
+            username: $scope.regForm.username
+        };
+        $scope.regForm.email = "";
+        console.log(user);
+        // $scope.loading = true;
+        UserServ.add(user).then(function(response){
+            $scope.user = response.data;
+            $scope.regForm.email = "";
+            $scope.regForm.username = "";
+            console.log($scope.user);
+            // $scope.loading = false;
+        })
     }
 
 }])

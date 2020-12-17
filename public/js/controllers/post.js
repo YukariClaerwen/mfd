@@ -6,6 +6,10 @@ app.controller(
         PostServ.get().then(function(response){
             $scope.posts = response.data;
         })
+        $scope.post = {};
+        PostServ.getpost($routeParams.id).then(function(response){
+            $scope.post = response.data[0];
+        })
         $scope.postbg = function(bg) {
             return bg;
         }
@@ -38,6 +42,7 @@ app.controller(
         UserServ.getfollowers($routeParams.user).then(function(response){
             $scope.followers = response.data;
         })
+
         
     }
 ])

@@ -17,14 +17,14 @@
 </head>
 <body>
     <header>
-        <div id="sideMenu" class="sidemenu" ng-click="">
-            <ul ng-include="'views/includes/mainMenu.html'"></ul>
+        <div id="sideMenu" class="sidemenu">
+            <ul ng-include="'views/includes/mainMenu.html'"  ng-hide="isActive('/login')"></ul>
             <div class="dropdown">
                 <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
             </div>
         </div>
         <nav class="navbar navbar-strip fixed-top navbar-expand-sm py-0 {{theme.navbar}} {{theme.bg}} border-bottom {{theme.border}}">
-            <a href="#" class="d-block d-md-none" ng-click="showSideMenu($event)">
+            <a href="#" class="d-block d-md-none" ng-click="showSideMenu($event)" ng-class="{'d-none':isActive('/login')}">
                 <ion-icon size="large" name="menu-outline"></ion-icon>
             </a>
             <a class="navbar-brand myBrand order-sm-1 mr-0 mr-md-3" href="/"><span>M.</span>fd</a>
@@ -34,13 +34,13 @@
                 <ion-icon size="large" name="search-outline"></ion-icon>
             </a>
             <div class="collapse navbar-collapse order-sm-2" id="mainMenu">
-                <ul class="navbar-nav mr-auto" ng-include="'views/includes/mainMenu.html'"></ul>
+                <ul class="navbar-nav mr-auto" ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login')"></ul>
                 
                 <form class="form-inline my-2 my-lg-0 d-none d-lg-block">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <div class="dropdown">
+                <div class="dropdown" ng-hide="isActive('/login')">
                     <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
                     <div class="dropdown-menu dropdown-menu-right {{theme.bg}} {{theme.border}} " aria-labelledby="dropdownId">
                         <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="/#/admin">Quản lý</a>
@@ -76,6 +76,7 @@
 
     <script src="app.js"></script>
     <script src="public/js/directive/swiper.js"></script>
+    <script src="public/js/directive/bgSlide.js"></script>
     <script src="public/js/services/post.js"></script>
     <script src="public/js/services/user.js"></script>
     <script src="public/js/controllers/mfd.js"></script>
