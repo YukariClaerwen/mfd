@@ -1,7 +1,7 @@
 app.factory("UserServ", ["$http", function($http){
     return {
         get: function(){
-            return $http.get("http://mfd.local/api/v1/user");
+           return $http.get("http://mfd.local/api/v1/user");
         },
         getuser: function(id){
             return $http.get("http://mfd.local/api/v1/user/"+id);
@@ -19,4 +19,4 @@ app.factory("UserServ", ["$http", function($http){
         //     return $http.put("http://171.244.37.97:9119/api/todo", data);
         // }
     }
-}])
+}]) 

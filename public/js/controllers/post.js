@@ -17,6 +17,7 @@ app.controller(
 
     }
 ])
+// nhớ hỏi
 app.controller(
     "UserCtrl", ["$scope", "UserServ", "$routeParams", "$location",
     function($scope, UserServ, $routeParams, $location){
