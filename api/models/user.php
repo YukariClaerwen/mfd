@@ -103,10 +103,10 @@ elseif ($this->method == 'POST'){
 			// $manv++;
 			$query = "INSERT INTO tbl_Taikhoan
 			SET
-				Email='$email', 
-				Tentaikhoan='$username', 
+				Email='".$data['email']."', 
+				Tentaikhoan='".$data['username']."', 
 				Matkhau=md5('123456'),
-				Tenhienthi='$username'";
+				Tenhienthi='".$data['username']."';";
 			//nếu thêm thành công		
 			if ($result = $cn->connect()->query($query)) {
 				$this->response(200, $data);
