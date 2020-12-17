@@ -1,0 +1,151 @@
+
+<section class="section" ng-style="topMargin" ng-include="'views/includes/user/userTopProfile.html'">
+    
+</section>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group" ng-include="'views/includes/user/userSidebar.html'">
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <!-- Button trigger modal thêm kế hoạch -->
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" title="Thêm kế hoạch">
+        <ion-icon name="add-circle-outline" size="large">
+    </button>
+    <div class="d-flex flex-row mt-3">
+        <h4>Kế hoạch 1</h4> 
+        <h4>Đà lạt</h4>
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+            <ion-icon name="chevron-down-outline" title="Chi tiết"></ion-icon>
+        </button>
+        <!-- Button trigger modal thêm kế hoạch -->
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1" title="Thêm hoạt động">
+            <ion-icon name="add-outline"></ion-icon>
+        </button>
+    </div>
+    <div class="collapse" id="collapseExample">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex flex-row mt-3">
+        <h4>Kế hoạch 2</h4> 
+        <h4>Vũng tàu</h4>
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample1"
+            aria-expanded="false" aria-controls="collapseExample1">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1">
+            <ion-icon name="add-outline"></ion-icon>
+        </button>
+    </div>
+    <div class="collapse" id="collapseExample1">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Hoạt động 1</td>
+                    <td>Địa chỉ quán</td>
+                    <td>12/01/2021</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Button trigger modal -->
+
+  
+  <!-- Modal tạo kế hoạch -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm kế hoạch khám phá</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Tên kế hoạch">
+                    <select class="custom-select" id="inputGroupSelect02">
+                        <option selected>Chọn...</option>
+                        <option value="1">Đà lạt</option>
+                        <option value="2">Vũng Tàu</option>
+                        <option value="3">Hà Nội</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">Tạo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal thêm hoạt động -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Thêm hoạt động</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Tên hoạt động">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Địa chỉ quán ăn">
+                        <input type="date" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary">Thêm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+            </div>
+        </div>
+    </div>
+</section>

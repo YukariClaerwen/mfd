@@ -1,0 +1,48 @@
+<style>
+    .jumbotron-slideshow {
+        position: relative;
+        background-color: transparent;
+        min-height: 100vh;
+    }
+    .jumbotron-slideshow .slideshow {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: fixed;
+        top: 0;
+        bottom:0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+
+        transition: opacity 1s;
+        opacity: 0;
+    }
+    .jumbotron-slideshow .slideshow.visible {
+        transition: none;
+        opacity: 1;
+        z-index: -1;
+    }
+    .navbar {
+        border: none!important;
+        background: transparent!important;
+    }
+    .navbar.navbar-light .navbar-brand, .navbar.navbar-light .navbar-brand * {
+        color: white!important;
+        text-shadow: 0 0 10px gray;
+        }
+</style>
+
+<div ng-bg-slideshow="
+        ['../public/imgs/mfd/bg1-min.jpg'
+        ,'../public/imgs/mfd/bg2-min.jpg'
+        ,'../public/imgs/mfd/bg3-min.jpg'
+        ,'../public/imgs/mfd/bg4-min.jpg'
+        ,'../public/imgs/mfd/bg5-min.jpg'
+        ,'../public/imgs/mfd/bg6-min.jpg'
+        ,'../public/imgs/mfd/bg7-min.jpg'
+        ,'../public/imgs/mfd/bg8-min.jpg'
+        ,'../public/imgs/mfd/bg9-min.jpg'
+        ,'../public/imgs/mfd/bg10-min.jpg']">
+
+    </div>

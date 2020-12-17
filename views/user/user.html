@@ -1,0 +1,51 @@
+
+<section class="section" ng-style="topMargin" ng-include="'views/includes/user/userTopProfile.html'">
+    
+</section>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group" ng-include="'views/includes/user/userSidebar.html'">
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div>
+                    <h4><span>
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </span>{{user.email}}</h4>
+                    <h4><span>
+                            <ion-icon name="transgender-outline"></ion-icon>
+                        </span>{{user.gender}}</h4>
+                    <h4><span>
+                            <ion-icon name="medkit-outline"></ion-icon>
+                        </span>{{user.job}}</h4>
+                    <h4><span>
+                            <ion-icon name="calendar-outline"></ion-icon>
+                        </span> {{user.birthday}}
+                    </h4>
+                    <button class="btn btn-primary">Sửa thông tin</button>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Đổi mật khẩu
+                    </button>
+                    <button class="btn btn-primary">Xóa tài khoản</button>
+            
+                    <div class="collapse mt-4" id="collapseExample">
+                        <form>
+                            <div class="form-group">
+                              <input type="password" class="form-control" id="exampleInputPassword" placeholder="Mật khẩu hiện tại">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu mới">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Nhập lại mật khẩu mới">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                          </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

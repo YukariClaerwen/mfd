@@ -1,11 +1,11 @@
 <?php
 
 if ($this->method == 'GET'){
-	include './database/conn.php';
+	$cn = new connection();
 	$param = $this->params[0];
 	$getData = "call Sp_DemTheoDoi('$param');";
 	$data = array();
-	if ($rs = $connect->query($getData)){
+	if ($rs = $cn->connect()->query($getData)){
 		while($row = $rs->fetch_assoc()){
 			$data[] = array(
 				"following" => $row['following'], 
@@ -15,7 +15,7 @@ if ($this->method == 'GET'){
 	} 
 	
 	$this->response(200, $data);
-	mysqli_close($connect);
+	$cn->close();
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây

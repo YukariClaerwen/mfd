@@ -1,5 +1,5 @@
 // angular
-var app = angular.module("MfdApp",["ngRoute","app.swiper"])
+var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide"])
 
 // app route
 app.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider){
@@ -20,30 +20,55 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'mainCtrl',
             activetab: 'about'
         })
+        .when("/login",{
+            templateUrl: "views/account/login.html",
+            controller: 'mainCtrl',
+            activetab: 'login'
+        })
+        .when("/register",{
+            templateUrl: "views/account/register.html",
+            controller: 'mainCtrl',
+            activetab: 'login'
+        })
         .when("/:user",{
-            templateUrl: "/views/user.html",
+            templateUrl: "/views/user/user.html",
             controller: 'UserCtrl',
             activetab: 'user'
         })
         .when("/:user/posts",{
-            templateUrl: "views/userposts.html",
+            templateUrl: "views/user/userposts.html",
             controller: 'UserCtrl',
             activetab: 'user'
         })
         .when("/:user/likes",{
-            templateUrl: "views/userlikes.html",
+            templateUrl: "views/user/userlikes.html",
             controller: 'UserCtrl',
             activetab: 'user'
         })
         .when("/:user/plans",{
-            templateUrl: "views/userplans.html",
+            templateUrl: "views/user/userplans.html",
             controller: 'UserCtrl',
             activetab: 'user'
         })
         .when("/:user/gallery",{
-            templateUrl: "views/usergallery.html",
+            templateUrl: "views/user/usergallery.html",
             controller: 'UserCtrl',
             activetab: 'user'
+        })
+        .when("/:user/following",{
+            templateUrl: "views/user/userfollowing.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
+        })
+        .when("/:user/followers",{
+            templateUrl: "views/user/userfollowers.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
+        })
+        .when("/post/:id",{
+            templateUrl: "views/post/post.html",
+            controller: 'PostCtrl',
+            activetab: 'post'
         })
         .when("/admin", {
             templateUrl: "views/admin.html"

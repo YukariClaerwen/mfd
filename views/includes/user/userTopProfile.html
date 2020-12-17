@@ -1,0 +1,35 @@
+<style>
+    .head-profile-has-cover {
+        background-image:url(../public/imgs/{{cover}});
+    }
+</style>
+<div class="head-profile mb-5">
+    <div ng-class="cover ? 'head-profile-cover head-profile-has-cover' : 'head-profile-cover'"></div>
+    <div class="container head-profile-inner d-flex flex-column position-relative">
+        <div class="head-profile-avar">
+            <div size="102" class="head-profile-avar-border d-flex justify-content-center align-items-center">
+                <div size="96" title="{{user.name}}" role="img" class="head-profile-avar-img">
+                    <img src="../public/imgs/{{user.avatar}}" alt="{{user.name}}">
+                </div>
+            </div>
+        </div>
+        <div class="head-profile-title d-flex justify-content-between align-items-center">
+            <div class="head-profile-title-inner">
+                <h4>{{user.name}}</h4>
+            </div>
+            <div class="head-profile-title-btn">
+                <button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block">Theo dõi</button>
+            </div>
+        </div>
+        <div class="head-profile-meta d-flex align-items-center">
+            <a class="mr-4" ng-href="/{{user.username}}/followers">
+                <span class="number">{{user.followers}}</span>
+                <span>Người theo dõi</span>
+            </a>
+            <a  ng-href="/{{user.username}}/following">
+                <span class="number">{{user.following}}</span>
+                <span>Đang theo dõi</span>
+            </a>
+        </div>
+    </div>    
+</div>

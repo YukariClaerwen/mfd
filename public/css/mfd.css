@@ -6,6 +6,8 @@
     --primary-color: #4fd675;
     --primary-color-semi: rgba(79, 214, 117, 0.3);
     --gradient-start: #4fd675;
+    --gradient-start-opacity: rgba(79,214,117,0.9);
+    --gradient-end-opacity: rgba(79,214,200,0.9);
     --gradient-end: #4fd6c8;
     --content-color: #232323;
     --light-bg-color: #fff;
@@ -17,13 +19,18 @@
     --dark-content-color: #eee;
 
 }
-
-body {
+html {
     width: 100%;
+    background: transparent;
+    box-shadow: none
+}
+body {
+    /* width: 100%; */
     height: auto;
-    margin: 0 auto;
-    background: var(--light-bg-color);
-    color: var(--content-color);
+    margin: 0!important;
+    padding: 0!important;
+    background: transparent;
+    color: var(--content-color);;
 }
 
 body, input, select, textarea, blockquote cite, a {
@@ -48,10 +55,15 @@ a:hover, a:active, a:focus {
 /* navbar */
 .myBrand {
     font-family: var(--heading-font);
+}
+/* .myBrand > span{
+    color: var(--primary-color);
+} */
+.navbar .myBrand {
     font-size: 1.8rem;
 }
-.myBrand>span{
-    font-size: 2rem;
+.myBrand > span{
+    font-size: 110%;
     color: var(--primary-color);
 }
 header:not(.sideMenuOpen) .navbar-strip:after {
@@ -152,8 +164,8 @@ header:not(.sideMenuOpen) .sidemenu {
 }
 a.swiper-slide:hover {
     color: var(--light-dark-color);
-    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-    opacity: 0.9;
+    background: linear-gradient(to right, var(--gradient-start-opacity), var(--gradient-end-opacity));
+    /* opacity: 0.9; */
     text-decoration: none;
 }
 .swiper-button-next, .swiper-button-prev {
