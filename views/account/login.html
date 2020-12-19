@@ -2,75 +2,57 @@
 
 <div class="jumbotron jumbotron-slideshow mx-0 my-0 d-flex justify-content-center align-items-center">
     <div ng-include="'views/includes/account/background.html'"></div>
-        
 
-        <div class="container">
-                        
-            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
-                <div class="login clearfix">
-                    <h4>Login</h4>    
-                    <form name="loginform" ng-submit="login()">
-                        <div class="header header-primary text-center">
-                            <div class="logo-container">
-                                <img src="../assets/img/now-logo.png" alt="">
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="input-group form-group-no-border input-lg">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                                <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email..."  required/>
-                            </div>
-                            <div class="alert alert-danger" ng-show="loginform.email.$dirty && loginform.email.$invalid">
-                                <span ng-show="loginform.email.$error.required">Email is required.</span>
-                                <span ng-show="loginform.email.$error.email">Invalid email address.</span>
-                            </div>
-                            <div class="input-group form-group-no-border input-lg">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-lock"></i>
-                                </span>
-                                <input type="password" name="pass" ng-model="pass" placeholder="Password..." ng-minlength="6" ng-maxlength="15" class="form-control" required/>
-                            </div>
-                            <div class="alert alert-danger" ng-show="loginform.pass.$dirty && loginform.pass.$invalid">
-                                <span ng-show="loginform.pass.$error.required">Password is required.</span>
-                                <span ng-if="!loginform.pass.$valid">
-                                    <span ng-show="loginform.pass.$error.minlength">The length is too short.</span>
-                                    <span ng-show="loginform.pass.$error.maxlength">The length is too long.</span>
-                                </span>
-                            </div>
-                            <span class="badge" ng-bind-html="loginMessage"></span>
-                        </div>
-                        <div class="footer col-xs-12 text-center">
-                            <button type="submit" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="loginform.$invalid">Log In</button>
-                        </div>
-                        <div class="col-xs-12">
-                            <h6 class="text-center">
-                                <a href="#/forgotpass" class="link">Forgot Password?</a>
-                            </h6>
-                        </div>
-                    </form>
-                </div>
-            </div>
-    </div>
-
-    <div class="container d-none">
+    <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-md-4" style="background: rgba(255,255,255,0.9); border-radius: 4px;">
                 <div class="p-4">
                     <div class="display-3 myBrand"><span>M.</span>fd</div>
                     
-                    <form action="" method="POST">
-                        <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-block btn-success">Đăng nhập</button>
-                        </div>    
-                    </form>
+                    <div class="login clearfix">
+                        <h4>Login</h4>    
+                        <form name="loginform" ng-submit="login()">
+                            <div class="header header-primary text-center">
+                                <div class="logo-container">
+                                    <img src="../assets/img/now-logo.png" alt="">
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="input-group form-group-no-border input-lg">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="loginform.email.$dirty && loginform.email.$invalid">
+                                    <span ng-show="loginform.email.$error.required">Email is required.</span>
+                                    <span ng-show="loginform.email.$error.email">Invalid email address.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                    <input type="password" name="pass" ng-model="pass" placeholder="Password..." ng-minlength="6" ng-maxlength="15" class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="loginform.pass.$dirty && loginform.pass.$invalid">
+                                    <span ng-show="loginform.pass.$error.required">Password is required.</span>
+                                    <span ng-if="!loginform.pass.$valid">
+                                        <span ng-show="loginform.pass.$error.minlength">The length is too short.</span>
+                                        <span ng-show="loginform.pass.$error.maxlength">The length is too long.</span>
+                                    </span>
+                                </div>
+                                <span class="badge" ng-bind-html="loginMessage"></span>
+                            </div>
+                            <div class="footer col-xs-12 text-center">
+                                <button type="submit" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="loginform.$invalid">Log In</button>
+                            </div>
+                            <div class="col-xs-12">
+                                <h6 class="text-center">
+                                    <a href="#/forgotpass" class="link">Forgot Password?</a>
+                                </h6>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

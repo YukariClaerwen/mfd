@@ -1,4 +1,5 @@
-app.controller('loginCtrl', function($scope,$location,$rootScope,$sce,UserServ){
+app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ", function($scope,$location,$rootScope,$sce,UserServ){
+    // $scope.check = checkAuth.getuserInfo();
     $rootScope.isLoggedIn = false;
     $scope.login = function(){
         
@@ -7,15 +8,14 @@ app.controller('loginCtrl', function($scope,$location,$rootScope,$sce,UserServ){
                 email: $scope.email,
                 password: $scope.pass
             };
-            console.log(user);
             
             UserServ.login(user).then(function(response){
-                $scope.result = response.data[0];
-                if($scope.result.success == 1)
+                $scope.result = response.data[0].success;
+                if($scope.result == 2)
                 {
                     alert('login successful');
                     $rootScope.isLoggedIn = true;
-                    $scope.UserId = $scope.email;
+                    $scope.UserId = user.email;
                     $scope.session = $scope.email;
                     $scope.sessionName = 'admin';
                     window.localStorage.setItem("SessionId", $scope.session);
@@ -29,19 +29,26 @@ app.controller('loginCtrl', function($scope,$location,$rootScope,$sce,UserServ){
                 else{
                     $rootScope.isLoggedIn = false;
                     window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
-                    $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
-                    console.log($scope.loginMessage);
-                    console.log($scope.result);
+                    if($scope.result == 1) {
+                        $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> please verify your account');
+                    }
+                    else if ($scope.result == 3) {
+                        $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> your account was blocked, please contact admin for more infomation');
+                    }
+                    else if ($scope.result == 4) {
+                        $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> your account was deleted, please contact admin for more infomation');
+                    }
+                    else {
+                        $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
+                    }
                 }
             })
             
         }
             
     } 
-    
-});
-
-app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "checkAuth", function($scope, $location, $rootScope, UserServ, checkAuth){
+}]);
+app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", function($scope, $location, $rootScope, UserServ){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
@@ -49,9 +56,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "ch
     $rootScope.session = window.localStorage.getItem("SessionId");
     $rootScope.userName = window.localStorage.getItem("SessionName");
     $rootScope.isLoggedIn = window.localStorage.getItem("isLoggedIn");
-
+    console.log($rootScope.isLoggedIn);
     // Call checkAuth factory for cheking login details
-    $scope.check = checkAuth.getuserInfo();
+    // $scope.check = checkAuth.getuserInfo();
 
     $scope.logout = function () {
         window.localStorage.clear();

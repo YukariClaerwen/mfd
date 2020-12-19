@@ -104,21 +104,21 @@ elseif ($this->method == 'POST'){
 		}
 		else if($mess == 2) {
 			$result []=array(
-				"success"=> 1,
+				"success"=> 2,
 				"message" =>"Email da ton tai"
 			);
 			$this->response(200, $result);
 		}
 		else if($mess == 3) {
 			$result []=array(
-				"success"=> 1,
+				"success"=> 3,
 				"message" =>"Mat khau nhap lai chua dung "
 			);
 			$this->response(200, $result);
 		}
 		else{
 			$result []=array(
-				"success"=> 1,
+				"success"=> 0,
 				"message" =>"Dang ky thanh cong"
 			);
 			$this->response(200, $result);

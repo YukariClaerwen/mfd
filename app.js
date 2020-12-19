@@ -2,18 +2,24 @@
 var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide"])
 
 // app route
-app.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider){
+app.config(['$routeProvider','$locationProvider' , function($routeProvider, $locationProvider){
     
     $routeProvider
         .when("/",{
             templateUrl: "/views/explore.html",
             controller: 'PostCtrl',
-            activetab: 'explore'
+            activetab: 'explore',
+            resolve: {
+                // loggedin: checklogin
+            }
         })
         .when("/explore",{
             templateUrl: "/views/explore.html",
             controller: 'PostCtrl',
-            activetab: 'explore'
+            activetab: 'explore',
+            resolve: {
+                // loggedin: checklogin
+            }
         })
         .when("/about",{
             templateUrl: "/views/home.html",
@@ -75,11 +81,11 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'PostCtrl',
             activetab: 'post'
         })
-        .when("/admin", {
-            templateUrl: "views/admin.html"
-            // resolve: {
-            //     loggedin: checklogin
-            // }
+        .when("/admin/dashboard", {
+            templateUrl: "views/about.html",
+            resolve: {
+                loggedin: checklogin
+            }
         })
         .when("/error", {
             templateUrl: "views/error.html"
@@ -99,9 +105,28 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
 app.factory("checkAuth", function($location,$rootScope){
     return {
         getuserInfo : function(){
-			if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null){
+            console.log($rootScope.isLoggedIn)
+			if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null || $rootScope.isLoggedIn === false){
 				$location.path('/login');
-			}
-		}
+            }
+            else {
+                $location.path('/');
+            }
+        },
     };
 });
+
+var checklogin = function($q, $rootScope, $location){
+    var deferred = $q.defer();
+    if($rootScope.isLoggedIn === false){
+        // console.log($rootScope.isLoggedIn);
+        // ;
+        deferred.resolve();
+        $location.path('/');
+    } else {
+        // $rootScope.isLoggedIn = false;
+        deferred.reject();
+        $location.url("/login");
+    }
+    return deferred.promise;
+}
