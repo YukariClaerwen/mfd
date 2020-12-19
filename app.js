@@ -22,7 +22,7 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
         })
         .when("/login",{
             templateUrl: "views/account/login.html",
-            controller: 'mainCtrl',
+            controller: 'loginCtrl',
             activetab: 'login'
         })
         .when("/register",{
@@ -98,10 +98,10 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
 /* Create factory to Disable Browser Back Button only after Logout */
 app.factory("checkAuth", function($location,$rootScope){
     return {
-    getuserInfo : function(){
-            if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null){
-                $location.path('/');
-            }
-        }
+        getuserInfo : function(){
+			if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null){
+				$location.path('/login');
+			}
+		}
     };
 });

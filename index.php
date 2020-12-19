@@ -33,6 +33,7 @@
                 aria-expanded="false" class="d-block d-md-none order-sm-3">
                 <ion-icon size="large" name="search-outline"></ion-icon>
             </a>
+            
             <div class="collapse navbar-collapse order-sm-2" id="mainMenu">
                 <ul class="navbar-nav mr-auto" ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login') || isActive('/register')"></ul>
                 
@@ -40,6 +41,12 @@
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
+                <div class="login my-2 my-lg-0 d-none d-lg-block" ng-show="isLoggedIn">
+                    <div class=" my-2 my-lg-0 d-none d-lg-block">
+                        <a class="btn btn-success" href="#" ng-click="logout()">Log out</a>
+                        <span>{{userName}}</span>
+                    </div>        
+                </div>
                 <div class="dropdown" ng-hide="isActive('/login') || isActive('/register')">
                     <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
                     <div class="dropdown-menu dropdown-menu-right {{theme.bg}} {{theme.border}} " aria-labelledby="dropdownId">
