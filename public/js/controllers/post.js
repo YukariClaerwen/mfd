@@ -13,7 +13,21 @@ app.controller(
         $scope.postbg = function(bg) {
             return bg;
         }
+        $scope.users = [];
+        UserServ.get().then(function(response){
+            $scope.users = response.data;
+        })
 
+    }
+])
+app.controller(
+    "PostbyCtrl", ["$scope", "PostServ", "UserServ", "$location", "$routeParams", 
+    function($scope, PostServ, UserServ, $location, $routeParams){
+
+        $scope.posts = [];
+        PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
+            $scope.posts= response.data;
+        })
         $scope.users = [];
         UserServ.get().then(function(response){
             $scope.users = response.data;

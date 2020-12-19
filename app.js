@@ -30,6 +30,11 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'mainCtrl',
             activetab: 'login'
         })
+        .when("/post/hashtag/:hashtag",{
+            templateUrl: "/views/explore.html",
+            controller: 'PostbyCtrl',
+            activetab: 'explore'
+        })
         .when("/:user",{
             templateUrl: "/views/user/user.html",
             controller: 'UserCtrl',

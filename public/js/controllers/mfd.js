@@ -54,16 +54,20 @@ app.controller("mainCtrl", ["$scope", "$location", "UserServ", function($scope, 
     $scope.addUser = function(){
         var user = {
             email: $scope.regForm.email,
-            username: $scope.regForm.username
+            username: $scope.regForm.username,
+            password1: $scope.regForm.password1,
+            password2: $scope.regForm.password2
         };
-        $scope.regForm.email = "";
         console.log(user);
         // $scope.loading = true;
         UserServ.add(user).then(function(response){
-            $scope.user = response.data;
+            $scope.result = response.data;
             $scope.regForm.email = "";
             $scope.regForm.username = "";
-            console.log($scope.user);
+            $scope.regForm.password1 = "";
+            $scope.regForm.password2 = "";        
+            console.log($scope.result[0].message);
+            alert($scope.result[0].message);
             // $scope.loading = false;
         })
     }
