@@ -88,3 +88,15 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
 }])
 
 // end app route
+
+
+/* Create factory to Disable Browser Back Button only after Logout */
+app.factory("checkAuth", function($location,$rootScope){
+    return {
+    getuserInfo : function(){
+            if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null){
+                $location.path('/');
+            }
+        }
+    };
+});

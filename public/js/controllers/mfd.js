@@ -1,7 +1,20 @@
-app.controller("mainCtrl", ["$scope", "$location", "UserServ", function($scope, $location, UserServ){
+app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "checkAuth", function($scope, $location, $rootScope, UserServ, checkAuth){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
+
+    // $rootScope.session = window.localStorage.getItem("SessionId");
+    // $rootScope.userName = window.localStorage.getItem("SessionName");
+    // $rootScope.isLoggedIn = window.localStorage.getItem("isLoggedIn");
+
+    // // Call checkAuth factory for cheking login details
+    // $scope.check = checkAuth.getuserInfo();
+
+    // $scope.logout = function () {
+    //     window.localStorage.clear();
+    //     $rootScope.isLoggedIn = false;
+    //     $location.path("/login");
+    // };
 
     $scope.themesData = {
         "light" : {
@@ -67,5 +80,4 @@ app.controller("mainCtrl", ["$scope", "$location", "UserServ", function($scope, 
             // $scope.loading = false;
         })
     }
-
 }])

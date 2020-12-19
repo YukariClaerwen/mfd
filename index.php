@@ -18,7 +18,7 @@
 <body>
     <header>
         <div id="sideMenu" class="sidemenu">
-            <ul ng-include="'views/includes/mainMenu.html'"  ng-hide="isActive('/login')"></ul>
+            <ul ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login') || isActive('/register')"></ul>
             <div class="dropdown">
                 <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
             </div>
@@ -34,13 +34,13 @@
                 <ion-icon size="large" name="search-outline"></ion-icon>
             </a>
             <div class="collapse navbar-collapse order-sm-2" id="mainMenu">
-                <ul class="navbar-nav mr-auto" ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login')"></ul>
+                <ul class="navbar-nav mr-auto" ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login') || isActive('/register')"></ul>
                 
                 <form class="form-inline my-2 my-lg-0 d-none d-lg-block">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <div class="dropdown" ng-hide="isActive('/login')">
+                <div class="dropdown" ng-hide="isActive('/login') || isActive('/register')">
                     <a class="btn btn-secondary {{theme.bg}} {{theme.txt}} border-0 dropdown-toggle  rounded-pill" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
                     <div class="dropdown-menu dropdown-menu-right {{theme.bg}} {{theme.border}} " aria-labelledby="dropdownId">
                         <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="/#/admin">Quản lý</a>
