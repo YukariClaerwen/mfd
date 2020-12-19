@@ -11,6 +11,7 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             
             UserServ.login(user).then(function(response){
                 $scope.result = response.data[0].success;
+                console.log($scope.result);
                 if($scope.result == 2)
                 {
                     alert('login successful');

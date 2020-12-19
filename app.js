@@ -86,13 +86,6 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             controller: 'PostCtrl',
             activetab: 'post'
         })
-<<<<<<< HEAD
-        .when("/admin/dashboard", {
-            templateUrl: "views/about.html",
-            resolve: {
-                loggedin: checklogin
-            }
-=======
         .when("/post/hashtag/:hashtag",{
             templateUrl: "/views/explore.html",
             controller: 'PostCtrl',
@@ -103,7 +96,6 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             // resolve: {
             //     loggedin: checklogin
             // }
->>>>>>> 8c8ff1fe0817b48fbf4e8b4163548da4399ee07c
         })
         .when("/error", {
             templateUrl: "views/error.html"
