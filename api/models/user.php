@@ -71,6 +71,7 @@ if ($this->method == 'GET'){
 		} 
 	}
 	$this->response(200, $data);
+	$cn->close();
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây
@@ -79,14 +80,51 @@ elseif ($this->method == 'POST'){
 	// get posted data
 	$data = array(
 		"email" 	=> $this->params['email'],
-		"username" 	=> $this->params['username']
+		"username" 	=> $this->params['username'],
+		"password1" => md5($this->params['password1']),
+		"password2" => md5($this->params['password2'])
 	);
+	$result = array();
 	if(
 		!empty($data['username']) &&
 		!empty($data['email']) 
 	){
-				
-		$sql = "select * from tbl_Taikhoan where Tentaikhoan = '".$data['username']."';";
+		$createUser = "call Sp_dangky('".$data['username']."','".$data['email']."','".$data['password1']."','".$data['password2']."',@mess);";
+		//echo $createUser;
+		$query = $cn->connect()->query($createUser);
+		while($row = mysqli_fetch_assoc($query)){
+			$mess=$row["mess"];
+		}
+		if($mess == 1) {
+			$result []=array(
+				"success"=> 1,
+				"message" =>"Tai khoan da ton tai"
+			);
+			$this->response(200, $result);
+		}
+		else if($mess == 2) {
+			$result []=array(
+				"success"=> 1,
+				"message" =>"Email da ton tai"
+			);
+			$this->response(200, $result);
+		}
+		else if($mess == 3) {
+			$result []=array(
+				"success"=> 1,
+				"message" =>"Mat khau nhap lai chua dung "
+			);
+			$this->response(200, $result);
+		}
+		else{
+			$result []=array(
+				"success"=> 1,
+				"message" =>"Dang ky thanh cong"
+			);
+			$this->response(200, $result);
+		}
+
+		/*$sql = "select * from tbl_Taikhoan where Tentaikhoan = '".$data['username']."';";
 		$sql2 = "select * from tbl_Taikhoan where Email = '".$data['email']."';";
 		// $kq = $cn->connect()->query($sql);
 		if($cn->connect()->query($sql)->num_rows>0){
@@ -101,6 +139,7 @@ elseif ($this->method == 'POST'){
 			// if ($rs = $connect->query($query)) $count = $rs->fetch_object();
 			// $manv = $count->sumnv;
 			// $manv++;
+			// Trang thái 1-Chưa xác nhận 2-Xác nhận(Mặc định khi tạo tài khoản) 3-Bị khóa
 			$query = "INSERT INTO tbl_Taikhoan
 			SET
 				Email='".$data['email']."', 
@@ -117,7 +156,7 @@ elseif ($this->method == 'POST'){
 				echo json_encode(array("message" => "Unable to create user. Data is incomplete."));
 				// echo '<script language="javascript">alert("Chúng tôi rất tiếc rằng Máy chủ đang gặp sự cố, vui lòng quay lại sau!");window.location="../view/index.php?p=themnv";</script>';
 			}
-		}
+		}*/
 	}
 	  
 	// tell the user data is incomplete
