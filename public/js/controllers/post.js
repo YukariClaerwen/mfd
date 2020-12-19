@@ -26,7 +26,7 @@ app.controller(
                 console.log($scope.posts);
             })
         }
-        else{
+        else if(Loa){
             $scope.searchKey = function(){
             console.log($scope.key);
             /*PostServ.getpostbyKey($scope.key).then(function(response){
