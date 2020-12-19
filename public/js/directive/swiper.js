@@ -1,3 +1,5 @@
+// const { default: Swiper } = require("swiper");
+
 angular.module('app.swiper', []).directive('swiper', function() {
     function link(scope, element, attrs) {              
         $(document).ready(function () {
@@ -6,6 +8,7 @@ angular.module('app.swiper', []).directive('swiper', function() {
                 slidesPerView: 'auto',
                 spaceBetween: 5,
                 centeredSlides: false,
+                observer: true,
                 pagination: {
                   el: '.swiper-pagination',
                   clickable: true
