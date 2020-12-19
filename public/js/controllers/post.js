@@ -1,12 +1,42 @@
 app.controller(
     "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", 
     function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams){
-        console.log($routeParams.hashtag);
+        console.log("path" + $location.path());
+        console.log("url" + $location.url());
+        console.log("search" + $location.search());   
+        $scope.path=$location.path().split('/');
+        console.log($scope.path);
         $scope.posts = [];
-        
         $scope.post = {};
-        if($routeParams.hashtag === undefined || $routeParams.hashtag === null) {
-            console.log("dsff");
+        $scope.key= "";
+        if($location.path() == "/"){
+            PostServ.get().then(function(response){
+                $scope.posts = response.data;
+            })
+        }
+        else if($scope.path[2] == "hashtag"){
+            PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
+                $scope.posts= response.data;
+                console.log($scope.posts);
+            })
+        }
+        else if($scope.path[2] == "location"){
+            PostServ.getpostbyHashtag($routeParams.location).then(function(response){
+                $scope.posts= response.data;
+                console.log($scope.posts);
+            })
+        }
+        else{
+            $scope.searchKey = function(){
+            console.log($scope.key);
+            /*PostServ.getpostbyKey($scope.key).then(function(response){
+                $scope.posts = response.data;
+            })*/
+            alert($scope.key);
+        }
+        }
+        
+        /*if($routeParams.hashtag === undefined || $routeParams.hashtag === null) {
             PostServ.get().then(function(response){
                 $scope.posts = response.data;
             })
@@ -16,7 +46,7 @@ app.controller(
                 $scope.posts= response.data;
                 console.log($scope.posts);
             })
-        }
+        }*/
         PostServ.getpost($routeParams.id).then(function(response){
             $scope.post = response.data[0];
         })
@@ -33,37 +63,6 @@ app.controller(
         })
         
         /* Đưa từ khóa lên url */ 
-        /*$scope.key="";
-        $scope.searchKey= function(){
-            PostServ.getpostbyKey($scope.key).then(function(response){
-                $scope.posts = response.data;
-            })
-        }*/
-    }
-])
-app.controller(
-    "PostbyCtrl", ["$scope", "PostServ", "UserServ","HashtagServ", "$location", "$routeParams", 
-    function($scope, PostServ, UserServ, HashtagServ ,$location, $routeParams){
-
-        $scope.posts = [];
-        PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
-            $scope.posts= response.data;
-        })
-        /*PostServ.getpostbyKey($routeParams.key).then(function(response){
-            $scope.posts = response.data;
-        })*/
-        /*PostServ.getpostbyLocation($routeParams.location).then(function(response){
-            $scope.posts = response.data;
-        })*/
-        $scope.users = [];
-        UserServ.get().then(function(response){
-            $scope.users = response.data;
-        })
-        $scope.hashtags = [];
-        HashtagServ.gethashtag().then(function(response){
-            $scope.hashtags= response.data;
-        })
-
     }
 ])
 // nhớ hỏi

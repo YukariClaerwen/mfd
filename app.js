@@ -30,14 +30,14 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'mainCtrl',
             activetab: 'login'
         }) 
-        /*.when("/post/key/:key",{
+        .when("/post/key/:key",{
             templateUrl: "/views/explore.html",
-            controller: 'PostbyCtrl',
+            controller: 'PostCtrl',
             activetab: 'explore'
-        })*/
+        })
         .when("/post/location/:location",{
             templateUrl: "/views/explore.html",
-            controller: 'PostbyCtrl',
+            controller: 'PostCtrl',
             activetab: 'explore'
         })
         .when("/:user",{
