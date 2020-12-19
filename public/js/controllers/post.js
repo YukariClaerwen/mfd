@@ -5,7 +5,7 @@ app.controller(
         console.log("url" + $location.url());
         console.log("search" + $location.search());   
         $scope.path=$location.path().split('/');
-        console.log($scope.path);
+        // console.log($scope.path);
         $scope.posts = [];
         $scope.post = {};
         $scope.key= "";
@@ -67,8 +67,8 @@ app.controller(
 ])
 // nhớ hỏi
 app.controller(
-    "UserCtrl", ["$scope", "UserServ", "$routeParams", "$location",
-    function($scope, UserServ, $routeParams, $location){
+    "UserCtrl", ["$scope", "UserServ", "$routeParams", "$location", "checkAuth",
+    function($scope, UserServ, $routeParams, $location,checkAuth){
         $scope.user = {};
         $scope.cover = null;
         UserServ.getuser($routeParams.user).then(function(response){
@@ -86,7 +86,11 @@ app.controller(
         })
         UserServ.getfollowers($routeParams.user).then(function(response){
             $scope.followers = response.data;
-        })
+        });
+        
+        // $scope.check = checkAuth.getuserInfo();
+
+        // console.log($routeParams);
 
         
     }

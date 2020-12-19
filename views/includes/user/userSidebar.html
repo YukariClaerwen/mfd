@@ -14,4 +14,8 @@
 <a href="/{{user.username}}/gallery" 
     class="list-group-item list-group-item-action" 
     ng-class="{active : isActive('/'+user.username+'/gallery')}">Hình ảnh & Video</a>
+<a href="/{{user.username}}/settings" 
+    class="list-group-item list-group-item-action" 
+    ng-class="{active : isActive('/'+user.username+'/settings')}"
+    ng-if="user.username === userName">Settings</a>
 

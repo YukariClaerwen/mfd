@@ -35,7 +35,8 @@ elseif ($this->method == 'POST'){
 					$kq[] = array(
 						"success" 		=> $flag[0], 
 						"message" 		=> "Dang nhap thanh cong",
-						"username"		=> $user->Tentaikhoan
+						"username"		=> $user->Tentaikhoan,
+						"roll"			=> (($user->Idquyen == 0) ? "member" : "admin")
 					);
 					$this->response(200, $kq);
 				}

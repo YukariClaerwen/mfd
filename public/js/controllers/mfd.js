@@ -10,33 +10,45 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             };
             
             UserServ.login(user).then(function(response){
-                $scope.result = response.data[0].success;
+                $scope.result = response.data[0];
                 console.log($scope.result);
-                if($scope.result == 2)
+                if($scope.result.success == 2)
                 {
                     alert('login successful');
                     $rootScope.isLoggedIn = true;
-                    $scope.UserId = user.email;
-                    $scope.session = $scope.email;
-                    $scope.sessionName = 'admin';
-                    window.localStorage.setItem("SessionId", $scope.session);
-                    window.localStorage.setItem("SessionName", $scope.sessionName);
-                    window.localStorage.setItem("isLoggedIn", $scope.isLoggedIn);
+                    const mfdSession = [{
+                        email: user.email,
+                        userid : $scope.result.username,
+                        roll : $scope.result.roll,
+                        isLoggedIn : $scope.isLoggedIn
+                    }] ;
+                    const setjson = JSON.stringify(mfdSession);
+                    window.localStorage.setItem("mfdssn", setjson);
+                    // console.log(window.localStorage.getItem("mfdssn"));
+                    // $scope.UserId = user.email;
+                    // $scope.session = $scope.result.username;
+                    // $scope.sessionName = $scope.result.roll;
+                    // window.localStorage.setItem("SessionId", $scope.session);
+                    // window.localStorage.setItem("SessionName", $scope.sessionName);
+                    // window.localStorage.setItem("isLoggedIn", $scope.isLoggedIn);
                     
                     //userDetails.SessionId = $scope.session;
                     
                     $location.path('/');
+                    $rootScope.session = user.email;
+                    $rootScope.userName = $scope.result.username;
+                    $rootScope.isLoggedIn = $scope.isLoggedIn;
                 }
                 else{
                     $rootScope.isLoggedIn = false;
-                    window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
-                    if($scope.result == 1) {
+                    // window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
+                    if($scope.result.success == 1) {
                         $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> please verify your account');
                     }
-                    else if ($scope.result == 3) {
+                    else if ($scope.result.success == 3) {
                         $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> your account was blocked, please contact admin for more infomation');
                     }
-                    else if ($scope.result == 4) {
+                    else if ($scope.result.success == 4) {
                         $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> your account was deleted, please contact admin for more infomation');
                     }
                     else {
@@ -53,18 +65,28 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
     $scope.isActive = function(route) {
         return route === $location.path();
     }
-
-    $rootScope.session = window.localStorage.getItem("SessionId");
-    $rootScope.userName = window.localStorage.getItem("SessionName");
-    $rootScope.isLoggedIn = window.localStorage.getItem("isLoggedIn");
-    console.log($rootScope.isLoggedIn);
+    $rootScope.isLoggedIn = false;
+    if (localStorage.getItem("mfdssn") !== null) {
+        $scope.mfdSession = JSON.parse(window.localStorage.getItem("mfdssn"))[0];
+    
+        $rootScope.session = $scope.mfdSession.email;
+        $rootScope.userName = $scope.mfdSession.userid;
+        $rootScope.isLoggedIn = $scope.mfdSession.isLoggedIn;
+        // $scope.check = checkAuth.getuserInfo();
+        // console.log($rootScope.isLoggedIn);
+        // console.log($scope.check);
+        
+    }
+    // console.log($rootScope.isLoggedIn);
+    // console.log($scope.mfdSession);
     // Call checkAuth factory for cheking login details
-    // $scope.check = checkAuth.getuserInfo();
 
     $scope.logout = function () {
-        window.localStorage.clear();
+        window.localStorage.removeItem("mfdssn");
         $rootScope.isLoggedIn = false;
-        $location.path("/login");
+        $rootScope.session = null;
+        $rootScope.userName = null;
+        $location.path("/");
     };
 
     $scope.themesData = {

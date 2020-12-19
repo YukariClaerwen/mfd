@@ -81,6 +81,14 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             controller: 'UserCtrl',
             activetab: 'user'
         })
+        .when("/:user/settings",{
+            templateUrl: "views/user/usersetting.html",
+            controller: 'UserCtrl',
+            activetab: 'user',
+            resolve: {
+                loggedin: checklogin
+            }
+        })
         .when("/post/:id",{
             templateUrl: "views/post/post.html",
             controller: 'PostCtrl',
@@ -110,31 +118,36 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
 
 // end app route
 
-
 /* Create factory to Disable Browser Back Button only after Logout */
-app.factory("checkAuth", function($location,$rootScope){
+app.factory("checkAuth", function($location,$rootScope,$routeParams){
     return {
         getuserInfo : function(){
-            console.log($rootScope.isLoggedIn)
 			if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null || $rootScope.isLoggedIn === false){
-				$location.path('/login');
+                // console.log($rootScope.isLoggedIn)
+				// $location.path('/login');
             }
             else {
-                $location.path('/');
+                console.log($location.path())
+                console.log($routeParams.id)
+                // $location.path('/');
             }
         },
     };
 });
 
-var checklogin = function($q, $rootScope, $location){
+var checklogin = function($q, $location,$rootScope,$route){
     var deferred = $q.defer();
-    if($rootScope.isLoggedIn === false){
-        // console.log($rootScope.isLoggedIn);
-        // ;
-        deferred.resolve();
-        $location.path('/');
-    } else {
-        // $rootScope.isLoggedIn = false;
+    if($rootScope.isLoggedIn){
+        var route = $route.current.params.user;
+        if(route === $rootScope.userName){           
+            deferred.resolve();
+        }
+        else{
+            deferred.reject();
+            $location.url("/"+$rootScope.userName);
+        }
+    }
+    else {
         deferred.reject();
         $location.url("/login");
     }
