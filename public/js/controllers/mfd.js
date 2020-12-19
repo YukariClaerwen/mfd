@@ -122,7 +122,7 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "ch
             $scope.regForm.username = "";
             $scope.regForm.password1 = "";
             $scope.regForm.password2 = "";        
-            console.log($scope.result[0].message);
+            //console.log($scope.result[0].message);
             alert($scope.result[0].message);
             // $scope.loading = false;
         })

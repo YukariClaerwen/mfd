@@ -29,8 +29,13 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             templateUrl: "views/account/register.html",
             controller: 'mainCtrl',
             activetab: 'login'
-        })
-        .when("/post/hashtag/:hashtag",{
+        }) 
+        /*.when("/post/key/:key",{
+            templateUrl: "/views/explore.html",
+            controller: 'PostbyCtrl',
+            activetab: 'explore'
+        })*/
+        .when("/post/location/:location",{
             templateUrl: "/views/explore.html",
             controller: 'PostbyCtrl',
             activetab: 'explore'
@@ -75,6 +80,11 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
             controller: 'PostCtrl',
             activetab: 'post'
         })
+        .when("/post/hashtag/:hashtag",{
+            templateUrl: "/views/explore.html",
+            controller: 'PostCtrl',
+            activetab: 'explore'
+        }) 
         .when("/admin", {
             templateUrl: "views/admin.html"
             // resolve: {

@@ -1,14 +1,28 @@
 app.controller(
-    "PostCtrl", ["$scope", "PostServ", "UserServ", "$location", "$routeParams", 
-    function($scope, PostServ, UserServ, $location, $routeParams){
-
+    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", 
+    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams){
+        console.log($routeParams.hashtag);
         $scope.posts = [];
-        PostServ.get().then(function(response){
-            $scope.posts = response.data;
-        })
+        
         $scope.post = {};
+        if($routeParams.hashtag === undefined || $routeParams.hashtag === null) {
+            console.log("dsff");
+            PostServ.get().then(function(response){
+                $scope.posts = response.data;
+            })
+        }
+        else {
+            PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
+                $scope.posts= response.data;
+                console.log($scope.posts);
+            })
+        }
         PostServ.getpost($routeParams.id).then(function(response){
             $scope.post = response.data[0];
+        })
+        $scope.hashtags = [];
+        HashtagServ.gethashtag().then(function(response){
+            $scope.hashtags= response.data;
         })
         $scope.postbg = function(bg) {
             return bg;
@@ -17,20 +31,37 @@ app.controller(
         UserServ.get().then(function(response){
             $scope.users = response.data;
         })
-
+        
+        /* Đưa từ khóa lên url */ 
+        /*$scope.key="";
+        $scope.searchKey= function(){
+            PostServ.getpostbyKey($scope.key).then(function(response){
+                $scope.posts = response.data;
+            })
+        }*/
     }
 ])
 app.controller(
-    "PostbyCtrl", ["$scope", "PostServ", "UserServ", "$location", "$routeParams", 
-    function($scope, PostServ, UserServ, $location, $routeParams){
+    "PostbyCtrl", ["$scope", "PostServ", "UserServ","HashtagServ", "$location", "$routeParams", 
+    function($scope, PostServ, UserServ, HashtagServ ,$location, $routeParams){
 
         $scope.posts = [];
         PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
             $scope.posts= response.data;
         })
+        /*PostServ.getpostbyKey($routeParams.key).then(function(response){
+            $scope.posts = response.data;
+        })*/
+        /*PostServ.getpostbyLocation($routeParams.location).then(function(response){
+            $scope.posts = response.data;
+        })*/
         $scope.users = [];
         UserServ.get().then(function(response){
             $scope.users = response.data;
+        })
+        $scope.hashtags = [];
+        HashtagServ.gethashtag().then(function(response){
+            $scope.hashtags= response.data;
         })
 
     }

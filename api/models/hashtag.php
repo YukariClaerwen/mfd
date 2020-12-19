@@ -1,18 +1,19 @@
 <?php
 
 if ($this->method == 'GET'){
-	include './database/conn.php';
+	$cn= new connection();
 	$getData = "select * from tbl_hashtag";
-	$query = $connect->query($getData);   
+	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
 		$data[] = array(
 			"IDtag" => $row['Idtag'], 
-			"tagname" => $row['Tentag']
+			"tag" => $row['Tentag'],
+			"tagname" => $row['tenhashtag']
 		);
 	}
 	$this->response(200, $data);
-	mysqli_close($connect);
+	$cn->close();
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây

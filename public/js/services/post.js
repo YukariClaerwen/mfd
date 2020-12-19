@@ -7,7 +7,13 @@ app.factory("PostServ", ["$http", function($http){
             return $http.get("http://mfd.local/api/v1/post/"+id);
         },
         getpostbyHashtag: function(hashtag){
-            return $http.get("http://mfd.local/api/v1/post/"+hashtag);
+            return $http.get("http://mfd.local/api/v1/post/hashtag/"+hashtag);
+        },
+        getpostbyKey: function(key){
+            return $http.get("http://mfd.local/api/v1/post/key/"+key);
+        },
+        getpostbyLocation: function(location){
+            return $http.get("http://mfd.local/api/v1/post/location/"+location);
         }
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);

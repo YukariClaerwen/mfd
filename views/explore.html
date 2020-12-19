@@ -12,8 +12,8 @@
                 <div class="col-12 col-md-9 col-lg-7">
                     <form action="">
                         <div class="search_bar d-flex justify-content-between">
-                            <input class="form-control" id="search" name="search" placeholder="Tìm kiếm" required="required" type="text" value="">
-                            <button id="search-action" title="Search">
+                            <input class="form-control" ng-model="key" id="search" name="search" placeholder="Tìm kiếm" required="required" type="text" value="">
+                            <button type="submit" ng-click="searchKey()" id="search-action" title="Search">
                                 <ion-icon size="large" name="search-outline"></ion-icon>
                             </button>
                         </div>
@@ -25,29 +25,9 @@
             <!-- Swiper -->
             <div class="swiper-container" swiper>
                 <div class="swiper-wrapper">
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Bánh mì</span>
-                        <span>#banh_mi</span>
-                    </a>
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Trà sữa</span>
-                        <span>#tra_sua</span>
-                    </a>
-                    <a ng-href="/post/hashtag/{{'com_tam'}}" class="swiper-slide flex-column">
-                        <span>Cơm tấm</span>
-                        <span>#com_tam</span>
-                    </a>
-                    <a ng-href="/post/hashtag/{{'ca_phe'}}" class="swiper-slide flex-column">
-                        <span>Cà phê</span>
-                        <span>#ca_phe</span>
-                    </a>
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Bánh tráng trộn</span>
-                        <span>#banh_trang_tron</span>
-                    </a>
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Bánh canh cua</span>
-                        <span>#banh_canh_cua</span>
+                    <a ng-href="/post/hashtag/{{hashtag.tag}}" class="swiper-slide flex-column" ng-repeat="hashtag in hashtags">
+                        <span>{{hashtag.tagname}}</span>
+                        <span>{{hashtag.tag}}</span>
                     </a>
                 </div>
                 <!-- Add Scrollbar -->
