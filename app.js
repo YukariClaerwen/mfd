@@ -35,10 +35,15 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             templateUrl: "views/account/register.html",
             controller: 'mainCtrl',
             activetab: 'login'
-        })
-        .when("/post/hashtag/:hashtag",{
+        }) 
+        .when("/post/key/:key",{
             templateUrl: "/views/explore.html",
-            controller: 'PostbyCtrl',
+            controller: 'PostCtrl',
+            activetab: 'explore'
+        })
+        .when("/post/location/:location",{
+            templateUrl: "/views/explore.html",
+            controller: 'PostCtrl',
             activetab: 'explore'
         })
         .when("/:user",{
@@ -81,11 +86,24 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             controller: 'PostCtrl',
             activetab: 'post'
         })
+<<<<<<< HEAD
         .when("/admin/dashboard", {
             templateUrl: "views/about.html",
             resolve: {
                 loggedin: checklogin
             }
+=======
+        .when("/post/hashtag/:hashtag",{
+            templateUrl: "/views/explore.html",
+            controller: 'PostCtrl',
+            activetab: 'explore'
+        }) 
+        .when("/admin", {
+            templateUrl: "views/admin.html"
+            // resolve: {
+            //     loggedin: checklogin
+            // }
+>>>>>>> 8c8ff1fe0817b48fbf4e8b4163548da4399ee07c
         })
         .when("/error", {
             templateUrl: "views/error.html"

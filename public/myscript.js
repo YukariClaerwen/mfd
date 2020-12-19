@@ -1,4 +1,4 @@
-var app = angular.module("Review",["ngRoute"]);
+/*var app = angular.module("Review",["ngRoute"]);
 
 //định tuyến
 app.config(function($routeProvider){
@@ -21,7 +21,7 @@ app.config(function($routeProvider){
     .otherwise({
         redirectTo: "/"
     })
-});
+});*/
 
 
 

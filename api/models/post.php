@@ -8,9 +8,20 @@ if ($this->method == 'GET'){
 			$id = $this->params[0];
 			$getData = "call SP_Timbaiviet('$id');";
 		}
-		else{
-			$hashtag= $this->params[0];
+		elseif($this->params[0] =='hashtag'){
+			$hashtag= $this->params[1];
 			$getData= "call SP_TimbaivietTheoHashTag('$hashtag');";
+		}
+		elseif($this->params[0] =='key'){
+			$key= $this->params[1];
+			$getData= "call Sp_TimbaivietTheoTuKhoa('$key');";
+		}
+		elseif($this->params[0] =='location'){
+			$location= $this->params[1];
+			$getData= "call Sp_TimbaivietTheoTuKhoa('$location');";
+		}
+		else{
+
 		}
 	}
 	else {
