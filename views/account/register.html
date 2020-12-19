@@ -10,12 +10,31 @@
                 <div class="p-4">
                     <div class="display-3 myBrand"><span>M.</span>fd</div>
                     
-                    <form method="POST">
+                    <form method="POST" name="F_register">
                         <div class="form-group">
-                            <input type="email" ng-model="regForm.email" class="form-control" name="email" id="email" placeholder="Email">
+                            <input type="email" ng-model="regForm.email" class="form-control" name="email" id="email" placeholder="Email" required>
+                            <p style="color: red;">
+                                <span ng-show="F_register.email.$touched && F_register.email.$invalid">Email chưa hợp lệ. </span>
+                                <span ng-show="F_register.email.$touched && F_register.email.$error.required">Thông tin này bắt buộc</span>
+                            </p>
                         </div>
                         <div class="form-group">
-                            <input type="text" ng-model="regForm.username" class="form-control" name="username" id="username" placeholder="Tên đại diện">
+                            <input type="text" ng-model="regForm.username" class="form-control" name="username" id="username" placeholder="Tên đại diện" required>
+                            <p style="color: red;">
+                                <span ng-show="F_register.username.$touched && F_register.username.$error.required">Thông tin này bắt buộc</span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" ng-model="regForm.password1" class="form-control" name="password1" id="password1" placeholder="Mật khẩu" required>
+                            <p style="color: red;">
+                                <span ng-show="F_register.password1.$touched && F_register.password1.$error.required">Thông tin này bắt buộc</span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" ng-model="regForm.password2" class="form-control" name="password2" id="password2" placeholder="Nhập lại mật khẩu" required>
+                            <p style="color: red;">
+                                <span ng-show="F_register.password2.$touched && F_register.password2.$error.required">Thông tin này bắt buộc</span>
+                            </p>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-block btn-success" ng-click="addUser()"  ng-disabled="!regForm.email">Đăng ký</button>

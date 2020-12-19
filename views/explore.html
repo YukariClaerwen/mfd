@@ -33,13 +33,13 @@
                         <span>Trà sữa</span>
                         <span>#tra_sua</span>
                     </a>
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Bánh tráng trộn</span>
-                        <span>#banh_trang_tron</span>
+                    <a ng-href="/post/hashtag/{{'com_tam'}}" class="swiper-slide flex-column">
+                        <span>Cơm tấm</span>
+                        <span>#com_tam</span>
                     </a>
-                    <a href="#" class="swiper-slide flex-column">
-                        <span>Bánh canh cua</span>
-                        <span>#banh_canh_cua</span>
+                    <a ng-href="/post/hashtag/{{'ca_phe'}}" class="swiper-slide flex-column">
+                        <span>Cà phê</span>
+                        <span>#ca_phe</span>
                     </a>
                     <a href="#" class="swiper-slide flex-column">
                         <span>Bánh tráng trộn</span>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <div class="block_meta mt-2 d-flex justify-content-between align-items-center">
-                        <div class="meta_user d-flex justify-content-start align-items-center" ng-repeat="user in users" ng-if="user.email == post.email">
+                        <div class="meta_user d-flex justify-content-start align-items-center" ng-repeat="user in users" ng-if="user.username == post.username">
                             <span class="meta_user_avar">
                                 <a href="/{{user.username}}">
                                     <img class="img-fluid" ng-src="../public/imgs/{{user.avatar}}" alt="">

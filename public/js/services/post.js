@@ -5,6 +5,9 @@ app.factory("PostServ", ["$http", function($http){
         },
         getpost: function(id){
             return $http.get("http://mfd.local/api/v1/post/"+id);
+        },
+        getpostbyHashtag: function(hashtag){
+            return $http.get("http://mfd.local/api/v1/post/"+hashtag);
         }
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);
