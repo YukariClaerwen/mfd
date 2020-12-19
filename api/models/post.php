@@ -4,8 +4,14 @@ if ($this->method == 'GET'){
 	$cn = new connection();
 	$getData = null;
 	if($this->params){
-		$id = $this->params[0];
-		$getData = "call SP_Timbaiviet('$id');";
+		if((int)$this->params[0]>0){
+			$id = $this->params[0];
+			$getData = "call SP_Timbaiviet('$id');";
+		}
+		else{
+			$hashtag= $this->params[0];
+			$getData= "call SP_TimbaivietTheoHashTag('$hashtag');";
+		}
 	}
 	else {
 		$getData = "call SP_Timbaiviet(-1);";
@@ -20,13 +26,14 @@ if ($this->method == 'GET'){
 			"restaurant" => $row['Tenquan'],
 			"point" => $row['Diemdanhgia'],
 			"address" => $row['Diachiquan'],
+			"location" => $row['Diadiem'],
 			"opentime" => $row['Thoigianmocua'],
 			"price" => $row['Giaban'],
 			"post_status" => $row['Trangthaibaiviet'],
 			"edited" => $row['Dachinhsua'],
 			"post_date" => $row['Ngaydangbaiviet'],
 			"title" => $row['Tieudebaiviet'],
-			"email" => $row['Email'],
+			"username" => $row['Tentaikhoan'],
 			"like_count" => $row['soluotthich'],
 			"featured_img" => $row['hinhmacdinh']
 		);
