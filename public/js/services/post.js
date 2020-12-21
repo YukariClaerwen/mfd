@@ -14,6 +14,17 @@ app.factory("PostServ", ["$http", function($http){
         },
         getpostbyLocation: function(location){
             return $http.get("http://mfd.local/api/v1/post/location/"+location);
+        },
+        getcmt: function(id){
+            return $http.get("http://mfd.local/api/v1/comment/"+id);
+        },
+        addcmt: function(cmt){
+            return $http({
+                method  : 'POST',
+                url     : 'http://mfd.local/api/v1/comment/',
+                data    : $.param(cmt),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
         }
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);

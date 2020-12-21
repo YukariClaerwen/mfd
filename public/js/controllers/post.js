@@ -15,13 +15,11 @@ app.controller(
             $scope.hashtag = $routeParams.hashtag;
             PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
                 $scope.posts= response.data;
-                console.log($scope.posts);
             })
         }
         else if($scope.path[2] == "location"){
             PostServ.getpostbyHashtag($routeParams.location).then(function(response){
                 $scope.posts= response.data;
-                console.log($scope.posts);
             })
         }
         // else if(Loa){
@@ -57,7 +55,6 @@ app.controller(
         $scope.hashtags = [];
         HashtagServ.gethashtag().then(function(response){
             $scope.hashtags= response.data;
-            console.log($scope.hashtags);
         })
         $scope.postbg = function(bg) {
             return bg;
@@ -70,10 +67,28 @@ app.controller(
         $scope.isActive = function(route) {
             return route === $location.path();
         }
+        $scope.cmtList = [];
+
+        // $scope.getcmtList;
+        PostServ.getcmt($routeParams.id).then(function(resposne){
+            $scope.cmtList = resposne.data;
+        })
         
-        /* Đưa từ khóa lên url */ 
+        $scope.submit_comment = function(){
+            var message = {
+                content : $scope.cmtForm.message,
+                post_id : $scope.post.ID,
+                username : $scope.logInUser.username
+            };
+            PostServ.addcmt(message).then(function(response){
+                $scope.cmtList = response.data;
+                $scope.cmtForm.message = "";
+            })
+        }
     }
 ])
+
+
 // nhớ hỏi
 app.controller(
     "UserCtrl", ["$scope", "UserServ", "$routeParams", "$location", "checkAuth",
@@ -92,11 +107,11 @@ app.controller(
         $scope.followers = [];
         UserServ.getfollowing($routeParams.user).then(function(response){
             $scope.following = response.data;
-            console.log($scope.following);
         })
         UserServ.getfollowers($routeParams.user).then(function(response){
             $scope.followers = response.data;
         });
+
         
         // $scope.check = checkAuth.getuserInfo();
 

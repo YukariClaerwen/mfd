@@ -66,7 +66,7 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
         return route === $location.path();
     }
 
-    
+    $scope.logInUser = {};
 
     $rootScope.isLoggedIn = false;
     if (localStorage.getItem("mfdssn") !== null) {
@@ -78,6 +78,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
         // $scope.check = checkAuth.getuserInfo();
         // console.log($rootScope.isLoggedIn);
         // console.log($scope.check);
+        UserServ.getuser($rootScope.userName).then(function(response){
+            $scope.logInUser = response.data[0];
+        })
         
     }
     // console.log($rootScope.isLoggedIn);

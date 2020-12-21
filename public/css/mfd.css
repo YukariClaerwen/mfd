@@ -277,8 +277,38 @@ a.swiper-slide:hover {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
 }
-.single_post a {
+.single_post a.tag {
     color: var(--primary-color);
+}
+ion-icon {
+    pointer-events: none;
+}
+
+.single_post .post_other_meta {
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.single-cmt {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+/* .single-cmt:first-child {
+    border: none;
+} */
+.cmt-img img {
+    width: 50px;
+    height: 50px;
+}
+.comment-inner .comment_name {
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.comment-date {
+    color: #a9a9a9;
+    font-size: 11px;
+}
+.comment-date::before {
+    content: '\2022';
+    margin: 0 4px 0 2px;
 }
 /* \blocks */
 

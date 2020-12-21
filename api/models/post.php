@@ -31,6 +31,14 @@ if ($this->method == 'GET'){
 	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
+		$getL = "call Sp_demluotthich('".$row['Id']."');";
+		if ($kq_L = $cn->connect()->query($getL)){
+			$like_count = $kq_L->fetch_object();
+		}
+		$getBL = "call Sp_demluotbinhluan('".$row['Id']."');";
+		if ($kq_BL = $cn->connect()->query($getBL)){
+			$comment_count = $kq_BL->fetch_object();
+		}
 		$getP = "call Sp_Laydiemdanhgia('".$row['place_id']."');";
 		if ($kq_P = $cn->connect()->query($getP)){
 			$point = $kq_P->fetch_object();
@@ -57,6 +65,24 @@ if ($this->method == 'GET'){
 				);
 			};
 		};
+		$getCmts = "call Sp_Laybinhluan('".$row['Id']."');";
+		$cmts = array();
+		if ($kq_C = $cn->connect()->query($getCmts)){
+			// echo $getTags;
+			while($r = $kq_C->fetch_assoc()){
+				$cmts += array(
+					$r['Idbinhluan']=>array(
+						"id" 		=> $r['Idbinhluan'], 
+						"content" 	=> $r['Noidung'],
+						"date"		=> (new DateTime($r['Ngaybinhluan']))->format('d-m-Y'),
+						"time"		=> (new DateTime($r['Ngaybinhluan']))->format('G:i'),
+						"username"	=> $r['Tentaikhoan'],
+						"name"	=> $r['viewname'],
+						"avatar"	=> (isset($r['avatar']) ? $r['avatar'] : $avardefault)
+					)
+				);
+			};
+		};
 		$data[] = array(
 			"ID" 			=> $row['Id'], 
 			"content" 		=> html_entity_decode($row['content']),
@@ -66,7 +92,8 @@ if ($this->method == 'GET'){
 			"post_date" 	=> (new DateTime($row['post_time']))->format('d-m-Y'),
 			"post_time" 	=> (new DateTime($row['post_time']))->format('G:i'),
 			"title" 		=> $row['title'],
-			"like_count" 	=> $row['like_count'],
+			"like_count" 	=> (isset($like_count->count) ? $like_count->count : 0),
+			"comment_count" => (isset($comment_count->count) ? $comment_count->count : 0),
 			"featured_img" 	=> $row['featured_img'],
 			"point" 		=> $row['review_point'],
 			"place"			=> array(
@@ -86,6 +113,7 @@ if ($this->method == 'GET'){
 				"following" 	=> $follow->following, 
 				"followers" 	=> $follow->followers
 			),
+			"comments"		=> $cmts,
 			"tags"			=> $tags
 		);
 	}
