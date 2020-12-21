@@ -65,6 +65,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
     $scope.isActive = function(route) {
         return route === $location.path();
     }
+
+    
+
     $rootScope.isLoggedIn = false;
     if (localStorage.getItem("mfdssn") !== null) {
         $scope.mfdSession = JSON.parse(window.localStorage.getItem("mfdssn"))[0];

@@ -1,3 +1,37 @@
-<section class="section" ng-style="topMargin">
-    <h2>{{post.title}}</h2>
+<style>
+    body {
+        background: rgba(0,0,0,0.03);
+    }
+</style>
+<section class="section" style="background: white;" ng-style="topMargin" ng-include="'views/includes/post/postTop.html'">
+    
+</section>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="block_type_2 single_post mb-5">
+                    <div class="post_inner">
+                        <div class="post_content">
+                            <h2>{{post.title}}</h2>
+                            <p>{{post.post_time}} ngày {{post.post_date}}</p>
+                            <p>{{post.content}}</p>
+                        </div>
+                        <div class="post_meta">
+                            <div class="post_hashtags">
+                                <a class="mr-3" href="/post/hashtag/{{tag.tag}}" ng-repeat="tag in post.tags">#{{tag.tag}}</a>
+                            </div>
+                        </div>
+                        <div class="post_place">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="block_type_2 mb-5">
+                    #comment
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </section>

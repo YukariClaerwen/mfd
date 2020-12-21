@@ -267,6 +267,19 @@ a.swiper-slide:hover {
 .block_meta .meta_user_name > a:hover {
     color: var(--light-content-color);
 }
+
+.block_type_2 {
+    background: var(--light-bg-color);
+    padding: 40px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.single_post a {
+    color: var(--primary-color);
+}
 /* \blocks */
 
 /* top section */
@@ -305,6 +318,9 @@ a.swiper-slide:hover {
 .top-section h1.display-4 {
     font-size: 2rem;
     text-shadow: 0 0 5px #000;
+}
+.section .title:first-letter {
+    text-transform: uppercase;
 }
 /* \top section */
 

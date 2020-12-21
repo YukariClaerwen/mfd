@@ -27,7 +27,7 @@
                 <div class="swiper-wrapper">
                     <a ng-href="/post/hashtag/{{hashtag.tag}}" class="swiper-slide flex-column" ng-repeat="hashtag in hashtags" >
                         <span>{{hashtag.tagname}}</span>
-                        <span>{{hashtag.tag}}</span>
+                        <span>#{{hashtag.tag}}</span>
                     </a>
                 </div>
                 <!-- Add Scrollbar -->
@@ -44,46 +44,8 @@
     <div class="container-fluid mb-5">
         <div class="row mb-3">
             <div class="col">
-                <h3 class="title">Bộ sưu tập</h3>
-                <p>{{session}}</p>
-            </div>
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
-            <div class="col mb-4">
-                <div class="block_type_1">
-                    <div class="block_inner d-flex">
-                        <div class="block_bg">
-                            <a class="block_link" href="#" tabindex="-1">					
-                                <div class="block_bg_img" style="background-image: url('../public/imgs/collection_1.jpg')"></div>                         
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h4 class="block_title">Các món cuốn</h4>
-                        </div>
-                    </div>
-                    <div class="block_meta mt-2">
-                        <div class="meta_user d-flex justify-content-start align-items-center">
-                            <span class="meta_user_avar">
-                                <a href="#">
-                                    <img class="img-fluid" src="../public/imgs/avarDefault.png" alt="">
-                                </a>
-                            </span>
-                            <span class="meta_user_name">
-                                <a href="/Meet.Foodie">Meet.Foodie</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section" id="collections">
-    <div class="container-fluid mb-5">
-        <div class="row mb-3">
-            <div class="col">
-                <h3 class="title">Tất cả bài viết</h3>
+                <h3 class="title" ng-if="!hashtag">Tất cả bài viết</h3>
+                <h3 class="title" ng-if="hashtag"><span ng-repeat="tag in hashtags" ng-if="tag.tag == hashtag">{{tag.tagname}}: Có {{tag.count}} bài viết</span></h3>
             </div>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
@@ -106,14 +68,14 @@
                         </div>
                     </div>
                     <div class="block_meta mt-2 d-flex justify-content-between align-items-center">
-                        <div class="meta_user d-flex justify-content-start align-items-center" ng-repeat="user in users" ng-if="user.username == post.username">
+                        <div class="meta_user d-flex justify-content-start align-items-center">
                             <span class="meta_user_avar">
-                                <a href="/{{user.username}}">
-                                    <img class="img-fluid" ng-src="../public/imgs/{{user.avatar}}" alt="">
+                                <a href="/{{post.user.username}}">
+                                    <img class="img-fluid" ng-src="../public/imgs/{{post.user.avatar}}" alt="">
                                 </a>
                             </span>
                             <span class="meta_user_name">
-                                <a ng-href="/{{user.username}}">{{user.name}}</a>
+                                <a ng-href="/{{post.user.username}}">{{post.user.name}}</a>
                             </span>
                         </div>
                         <div class="meta_like">

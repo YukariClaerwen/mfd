@@ -2,14 +2,15 @@
 
 if ($this->method == 'GET'){
 	$cn= new connection();
-	$getData = "select * from tbl_hashtag";
+	$getData = "call Sp_Layhashtag();";
 	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
 		$data[] = array(
-			"IDtag" => $row['Idtag'], 
-			"tag" => $row['Tentag'],
-			"tagname" => $row['tenhashtag']
+			"IDtag" => $row['IDtag'], 
+			"tag" => $row['tag'],
+			"tagname" => $row['tagname'],
+			"count" => $row['count']
 		);
 	}
 	$this->response(200, $data);

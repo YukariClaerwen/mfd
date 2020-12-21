@@ -1,0 +1,40 @@
+<style>
+    .head-profile-has-cover {
+        background-image:url(../public/imgs/{{post.featured_img}});
+    }
+</style>
+<div class="head-profile mb-5">
+    <div class="d-flex align-items-center" ng-class="post.featured_img ? 'head-profile-cover head-profile-has-cover' : 'head-profile-cover'">
+        <!-- <div class="container"><h2>{{post.title}}</h2></div> -->
+    </div>
+    <div class="container head-profile-inner d-flex flex-column position-relative pb-4">
+        <div class="head-profile-avar">
+            <div size="102" class="head-profile-avar-border d-flex justify-content-center align-items-center">
+                <a href="/{{post.user.username}}">
+                    <div size="96" title="{{post.user.name}}" role="img" class="head-profile-avar-img">
+                        <img src="../public/imgs/{{post.user.avatar}}" alt="{{post.user.name}}">
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="head-profile-title d-flex justify-content-between align-items-center">
+            <div class="head-profile-title-inner">
+                <a href="/{{post.user.username}}"><h4>{{post.user.name}}</h4></a>
+            </div>
+            <div class="head-profile-title-btn">
+                <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block">Theo dõi</button>
+            </div>
+        </div>
+        <div class="head-profile-meta d-flex align-items-center">
+            <a class="mr-4" ng-href="/{{post.user.username}}/followers">
+                <span class="number">{{post.user.followers}}</span>
+                <span>Người theo dõi</span>
+            </a>
+            <a  ng-href="/{{post.user.username}}/following">
+                <span class="number">{{post.user.following}}</span>
+                <span>Đang theo dõi</span>
+            </a>
+        </div>
+    </div>    
+</div>

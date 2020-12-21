@@ -3,6 +3,7 @@
 if ($this->method == 'GET'){
 	$cn = new connection();
 	$getData = null;
+	$avardefault = "avarDefault.png";
 	if($this->params){
 		if((int)$this->params[0]>0){
 			$id = $this->params[0];
@@ -30,23 +31,54 @@ if ($this->method == 'GET'){
 	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
+		$getFL = "call Sp_DemTheoDoi('".$row['Tentaikhoan']."');";
+		if ($kq_FL = $cn->connect()->query($getFL)){
+			$follow = $kq_FL->fetch_object();
+		}
+		$getUser = "call SP_Timtaikhoan('".$row['Tentaikhoan']."');";
+		if ($kq_U = $cn->connect()->query($getUser)){
+			$user = $kq_U->fetch_object();
+			$cn->close();
+		}
+		$getTags = "call Sp_Laytagsbaiviet('".$row['Idbaiviet']."');";
+		$tags = array();
+		if ($kq_T = $cn->connect()->query($getTags)){
+			// echo $getTags;
+			while($r = $kq_T->fetch_assoc()){
+				$tags += array(
+					$r['tag']=>array(
+						"IDtag" 	=> $r['IDtag'], 
+						"tag" 		=> $r['tag'],
+						"tagname"	=> $r['tagname']
+					)
+				);
+			};
+		};
 		$data[] = array(
-			"ID" => $row['Idbaiviet'], 
-			"content" => html_entity_decode($row['Noidung']),
-			"views" => $row['Soluotxem'],
-			"restaurant" => $row['Tenquan'],
-			"point" => $row['Diemdanhgia'],
-			"address" => $row['Diachiquan'],
-			"location" => $row['Diadiem'],
-			"opentime" => $row['Thoigianmocua'],
-			"price" => $row['Giaban'],
-			"post_status" => $row['Trangthaibaiviet'],
-			"edited" => $row['Dachinhsua'],
-			"post_date" => $row['Ngaydangbaiviet'],
-			"title" => $row['Tieudebaiviet'],
-			"username" => $row['Tentaikhoan'],
-			"like_count" => $row['soluotthich'],
-			"featured_img" => $row['hinhmacdinh']
+			"ID" 			=> $row['Idbaiviet'], 
+			"content" 		=> html_entity_decode($row['Noidung']),
+			"views" 		=> $row['Soluotxem'],
+			"restaurant" 	=> $row['Tenquan'],
+			"point" 		=> $row['Diemdanhgia'],
+			"address" 		=> $row['Diachiquan'],
+			"location" 		=> $row['Diadiem'],
+			"opentime" 		=> $row['Thoigianmocua'],
+			"price"		 	=> $row['Giaban'],
+			"post_status" 	=> $row['Trangthaibaiviet'],
+			"edited" 		=> $row['Dachinhsua'],
+			"post_date" 	=> (new DateTime($row['Ngaydangbaiviet']))->format('d-m-Y'),
+			"post_time" 	=> (new DateTime($row['Ngaydangbaiviet']))->format('G:i'),
+			"title" 		=> $row['Tieudebaiviet'],
+			"like_count" 	=> $row['soluotthich'],
+			"featured_img" 	=> $row['hinhmacdinh'],
+			"user" 			=> array(
+				"username" 		=> $row['Tentaikhoan'],
+				"name" 			=> $user->viewname,
+				"avatar" 		=> (isset($user->avatar) ? $user->avatar : $avardefault),
+				"following" 	=> $follow->following, 
+				"followers" 	=> $follow->followers
+			),
+			"tags"			=> $tags
 		);
 	}
 	$this->response(200, $data);
