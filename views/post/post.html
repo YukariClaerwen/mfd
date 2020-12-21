@@ -11,15 +11,43 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="block_type_2 single_post mb-5">
-                    <div class="post_inner">
+                    <div class="post_action d-flex justify-content-end mb-2">
+                        <a href="#" title="Sửa bài viết" class="ml-2">
+                            <ion-icon name="create-outline" size="large"></ion-icon>
+                        </a>
+                        <!-- <a href="#" title="Lưu bài viết" class="ml-2">
+                            <ion-icon name="bookmark-outline" size="large"></ion-icon>
+                            <ion-icon name="bookmark" size="large"></ion-icon>
+                        </a> -->
+                        <a href="#" title="Thích bài viết" class="ml-2">
+                            <ion-icon name="heart-outline" size="large"></ion-icon>
+                            <ion-icon name="heart" size="large"></ion-icon>
+                        </a>
+                    </div>
+                    <div class="post_inner px-5">
                         <div class="post_content">
                             <h2>{{post.title}}</h2>
                             <p>{{post.post_time}} ngày {{post.post_date}}</p>
                             <p>{{post.content}}</p>
                         </div>
                         <div class="post_meta">
-                            <div class="post_hashtags">
-                                <a class="mr-3" href="/post/hashtag/{{tag.tag}}" ng-repeat="tag in post.tags">#{{tag.tag}}</a>
+                            <div class="post_hashtags mb-3">
+                                <a class="mr-3 tag" href="/post/hashtag/{{tag.tag}}" ng-repeat="tag in post.tags">#{{tag.tag}}</a>
+                            </div>
+                            <div class="post_other_meta d-flex justify-content-between align-items-center pt-3">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="mr-4 d-flex justify-content-start align-items-center">
+                                        <ion-icon name="heart"></ion-icon>
+                                        <span class="ml-1">{{post.like_count}}</span>
+                                    </div>
+                                    <div class="mr-4 d-flex justify-content-start align-items-center">
+                                        <ion-icon name="eye"></ion-icon>
+                                        <span class="ml-1">{{post.views}}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#{{post.ID}}-comment">{{post.comment_count}} Bình luận</a>
+                                </div>
                             </div>
                         </div>
                         <div class="post_place">
@@ -27,8 +55,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="block_type_2 mb-5">
-                    #comment
+                <div id="{{post.ID}}-comment" class="block_type_2 mb-5">
+                    <div class="comment-inner px-5">
+                        <div class="d-flex justify-content-start single-cmt pt-3" ng-repeat="cmt in cmtList">
+                            <div class="cmt-img mr-4">
+                                <a href="/{{cmt.username}}" title="{{cmt.name}}">
+                                    <img src="../public/imgs/{{cmt.avatar}}" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <p class="m-0"><a class="comment_name" href="/{{cmt.username}}">{{cmt.name}}</a> <small class="comment-date">{{cmt.date}}</small></p>
+                                <p>{{cmt.content}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center form-comt mt-3">
+                            <div class="cmt-img mr-4">
+                                <a href="/{{logInUser.username}}" title="{{logInUser.name}}">
+                                    <img src="../public/imgs/{{logInUser.avatar}}" alt="">
+                                </a>
+                            </div>
+                            <div class="w-100">
+                                <form name="cmtForm" ng-submit="submit_comment()">
+                                    <input ng-model="cmtForm.message" class="form-control w-100" name="message_cmt" id="message_cmt" placeholder="Hãy viết bình luận của bạn...">
+                                    <input type="submit" 
+                                    style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+                                    tabindex="-1" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
