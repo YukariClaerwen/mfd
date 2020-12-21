@@ -90,6 +90,7 @@ app.controller(
         }
         $scope.following = [];
         $scope.followers = [];
+        $scope.result =[];
         UserServ.getfollowing($routeParams.user).then(function(response){
             $scope.following = response.data;
             console.log($scope.following);
@@ -97,7 +98,21 @@ app.controller(
         UserServ.getfollowers($routeParams.user).then(function(response){
             $scope.followers = response.data;
         });
-        
+        $scope.luuthongtin = function(){
+            console.log($location.path());
+            var infor ={
+                    email: $scope.email,
+                    gender: $scope.gender,
+                    job: $scope.job,
+                    birthday: $scope.birthday
+                }    
+            console.log(infor); 
+            UserServ.change($routeParams.user,infor).then(function(response){
+                
+                $scope.result = response.data;
+                console.log($scope.result);
+            });
+        }
         // $scope.check = checkAuth.getuserInfo();
 
         // console.log($routeParams);

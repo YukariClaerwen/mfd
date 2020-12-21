@@ -1,5 +1,5 @@
 // angular
-var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide"])
+var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide","ngSanitize"])
 
 // app route
 app.config(['$routeProvider','$locationProvider' , function($routeProvider, $locationProvider){

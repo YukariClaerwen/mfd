@@ -66,7 +66,6 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
         return route === $location.path();
     }
 
-    
 
     $rootScope.isLoggedIn = false;
     if (localStorage.getItem("mfdssn") !== null) {
@@ -157,6 +156,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
             $scope.regForm.password2 = "";        
             //console.log($scope.result[0].message);
             alert($scope.result[0].message);
+            if($scope.result[0].message == "Dang ky thanh cong"){
+                $location.path('/login');    
+            }
             // $scope.loading = false;
         })
     }

@@ -10,8 +10,95 @@
                 </div>
             </div>
             <div class="col-sm-9">
-                Setting
+                <div>
+                    <div id="inf_eamil" class="d-flex flex-grow justify-content-between">
+                        <h4><span>
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </span>{{user.email}}</h4>
+                    </div>
+                    <div class="d-flex flex-grow justify-content-between">
+                    <h4><span>
+                            <ion-icon name="transgender-outline"></ion-icon>
+                        </span> {{user.gender}} </h4>
+                    </div>
+                    <div class="d-flex flex-grow justify-content-between">
+                        <h4><span>
+                            <ion-icon name="medkit-outline"></ion-icon>
+                        </span>{{user.job}}</h4>                  
+                    </div>
+                    <div class="d-flex flex-grow justify-content-between">    
+                    <h4><span>
+                            <ion-icon name="calendar-outline"></ion-icon>
+                        </span> {{user.birthday}}</h4>
+                    </div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#SuathongtinModal">Sửa thông tin</button>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Đổi mật khẩu
+                    </button>
+                    <button class="btn btn-primary">Xóa tài khoản</button>
+            
+                    <div class="collapse mt-4" id="collapseExample">
+                        <form>
+                            <div class="form-group">
+                              <input type="password" class="form-control" id="exampleInputPassword" placeholder="Mật khẩu hiện tại">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu mới">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Nhập lại mật khẩu mới">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                          </form>
+                    </div>
+            
+                    <div class="modal fade" id="SuathongtinModal" tabindex="-1" aria-labelledby="SuathongtinModal" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" name="ChangeForm">
+                                    <div class="form-group">
+                                        <input type="email" ng-model="email"  class="form-control" name="email" id="email"
+                                            ng-value={{user.email}} required>
+                                        <p style="color: red;">
+                                            <span ng-show="ChangeForm.email.$touched && ChangeForm.email.$invalid">Email chưa hợp lệ. </span>
+                                            <span ng-show="ChangeForm.email.$touched && ChangeForm.email.$error.required">Thông tin này bắt
+                                                buộc</span>
+                                        </p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" ng-model="gender"  class="form-control" 
+                                            ng-value={{user.gender}} required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" ng-model="job"  class="form-control" name="ngheNghiep" id="ngheNghiep"
+                                            placeholder="Nghề nghiệp" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" ng-model="birthday"  class="form-control" name="ngaySinh" id="ngaySinh">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-block btn-success" ng-click="luuthongtin()">Lưu thông tin</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    $("#a").click(function () {
+        var email= "<form><div class='form-group'><input type='email' class='form-control' aria-describedby='emailHelp' value =user.email ></div></form>"
+    $("#inf_eamil").html(email);    
+    })
+</script>

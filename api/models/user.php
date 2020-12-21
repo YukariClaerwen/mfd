@@ -173,6 +173,39 @@ elseif ($this->method == 'POST'){
 elseif ($this->method == 'PUT'){
 	// Hãy viết code xử lý CẬP NHẬT dữ liệu ở đây
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
+	$cn = new connection();
+	parse_str($this->file, $_PUT);
+	var_dump($_PUT);
+	$data =array(
+		"user" => $this->params[0],
+		"email" => $_PUT["email"],
+		"gioitinh" => $_PUT["gt"],
+		"nghenghiep" => $_PUT["nn"],
+		"ngaysinh" => $_PUT["ns"]
+	);
+	$updateaData ="call Sp_Chinhsuathongtin('".$data["email"]."','".$data["user"]."','".$data["nghenghiep"]."','".$data["gioitinh"]."','".$data["ngaysinh"]."',@mess)";
+	$result= array();
+	echo $updateaData;
+	$query =$cn->connect()->query($updateaData);
+	while($row = mysqli_fetch_assoc($query)){
+		$mess= $row["mess"];
+	}
+	if($mess == 1){
+		$result[]= array(
+			"success" => 1,
+			"message" => "Email have already exist, please choose another"
+		);
+	}
+	else{
+		$result[]= array(
+			"success" => 2,
+			"message" => "Update successfully"
+		);
+	}
+	$this->response(200,$result);
+	$cn->close();
+		//echo $email;
+		//echo $data["user"];
 }
 elseif ($this->method == 'DELETE'){
 	// Hãy viết code xử lý XÓA dữ liệu ở đây

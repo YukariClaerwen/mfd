@@ -27,6 +27,14 @@ app.factory("UserServ", ["$http", function($http){
                 data    : $.param(data),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
+        },
+        change: function(id,user){
+            return $http({
+                method  : 'POST',
+                url     : 'http://mfd.local/api/v1/user/'+id,
+                data    : $.param(id,user),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
         }
         // delete: function(id){
         //     return $http.delete("http://171.244.37.97:9119/api/todo/" + id);
