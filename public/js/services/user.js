@@ -28,11 +28,12 @@ app.factory("UserServ", ["$http", function($http){
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
         },
-        change: function(id,user){
+        change: function(user){
+            // return $http.put('http://mfd.local/api/v1/user/'+id, user);
             return $http({
-                method  : 'POST',
-                url     : 'http://mfd.local/api/v1/user/'+id,
-                data    : $.param(id,user),
+                method  : 'PUT',
+                url     : 'http://mfd.local/api/v1/user/',
+                data    : user,
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
         }

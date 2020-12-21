@@ -68,10 +68,12 @@ app.controller(
             return route === $location.path();
         }
         $scope.cmtList = [];
+        $scope.countcmts = 0;
 
         // $scope.getcmtList;
         PostServ.getcmt($routeParams.id).then(function(resposne){
             $scope.cmtList = resposne.data;
+            $scope.countcmts = $scope.cmtList.length;
         })
         
         $scope.submit_comment = function(){
@@ -83,6 +85,7 @@ app.controller(
             PostServ.addcmt(message).then(function(response){
                 $scope.cmtList = response.data;
                 $scope.cmtForm.message = "";
+                $scope.countcmts = $scope.cmtList.length;
             })
         }
     }
@@ -114,17 +117,17 @@ app.controller(
         });
         $scope.luuthongtin = function(){
             console.log($location.path());
+            var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
             var infor ={
+                    user: $routeParams.user,
                     email: $scope.email,
                     gender: $scope.gender,
                     job: $scope.job,
-                    birthday: $scope.birthday
+                    birthday: timestamp_end
                 }    
             console.log(infor); 
-            UserServ.change($routeParams.user,infor).then(function(response){
-                
+            UserServ.change(infor).then(function(response){
                 $scope.result = response.data;
-                console.log($scope.result);
             });
         }
         // $scope.check = checkAuth.getuserInfo();

@@ -46,6 +46,7 @@ elseif ($this->method == 'POST'){
 		$createCmt = "call Sp_Thembinhluan('".$data['content']."','".$data['post_id']."','".$data['username']."');";
 		//echo $createUser;
 		$query = $cn->connect()->query($createCmt);
+		
 		$getCmts = "call SP_Laybinhluan('".$data['post_id']."');";
 		if ($kq = $cn->connect()->query($getCmts)){
 			// echo $getTags;

@@ -174,19 +174,11 @@ elseif ($this->method == 'PUT'){
 	// Hãy viết code xử lý CẬP NHẬT dữ liệu ở đây
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 	$cn = new connection();
-	parse_str($this->file, $_PUT);
-	var_dump($_PUT);
-	$data =array(
-		"user" => $this->params[0],
-		"email" => $_PUT["email"],
-		"gioitinh" => $_PUT["gt"],
-		"nghenghiep" => $_PUT["nn"],
-		"ngaysinh" => $_PUT["ns"]
-	);
-	$updateaData ="call Sp_Chinhsuathongtin('".$data["email"]."','".$data["user"]."','".$data["nghenghiep"]."','".$data["gioitinh"]."','".$data["ngaysinh"]."',@mess)";
+	$data = json_decode($this->file, true);
+	$updateaData ="call Sp_Chinhsuathongtin('".$data["email"]."','".$data["user"]."','".$data["job"]."','".$data["gender"]."','".$data["birthday"]."',@mess)";
 	$result= array();
-	echo $updateaData;
-	$query =$cn->connect()->query($updateaData);
+	$mess;
+	$query = $cn->connect()->query($updateaData);
 	while($row = mysqli_fetch_assoc($query)){
 		$mess= $row["mess"];
 	}
@@ -203,9 +195,6 @@ elseif ($this->method == 'PUT'){
 		);
 	}
 	$this->response(200,$result);
-	$cn->close();
-		//echo $email;
-		//echo $data["user"];
 }
 elseif ($this->method == 'DELETE'){
 	// Hãy viết code xử lý XÓA dữ liệu ở đây
