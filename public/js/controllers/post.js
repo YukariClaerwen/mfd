@@ -75,7 +75,6 @@ app.controller(
             $scope.cmtList = resposne.data;
             $scope.countcmts = $scope.cmtList.length;
         })
-        
         $scope.submit_comment = function(){
             var message = {
                 content : $scope.cmtForm.message,
