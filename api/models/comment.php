@@ -61,7 +61,7 @@ elseif ($this->method == 'POST'){
 					"avatar"	=> (isset($r['avatar']) ? $r['avatar'] : $avardefault)
 				);
 			};
-		};
+		}; 
 		$this->response(200, $result);
 	}
 	  
