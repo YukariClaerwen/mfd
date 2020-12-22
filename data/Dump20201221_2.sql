@@ -32,7 +32,7 @@ alter table tbl_baiviet drop column Thoigianmocua;
 alter table tbl_baiviet drop column Giaban;
 alter table tbl_baiviet add column IdDiadiem int;
 alter table tbl_baiviet add column Diemdanhgia int;
-alter table tbl_baiviet add foreign key (IdDiadiem) references tble_Diadiem(IdDiadiem);
+alter table tbl_baiviet add foreign key (IdDiadiem) references tbl_Diadiem(IdDiadiem);
 
 insert into tbl_diadiem (Tenquan,Diachiquan,IdTinhthanh,Thoigianmocua,Thoigiandongcua,Giaban) values
 ('Mapiness Coffee','345/3 Nguyễn Đình Chiểu, P. 5, Quận 3, TP. HCM',30,'8:30','22:00','30k đến 50k'),
@@ -50,7 +50,7 @@ insert into tbl_diadiem (Tenquan,Diachiquan,IdTinhthanh,Thoigianmocua,Thoigiando
 ('Aeon Mall Hà Đông','Khu dân cư Hoàng Văn Thụ, Quận Hà Đông',24,'','',''),
 ('ROSETTA KAFE & CHILL','158 Xuân Diệu, Phường Quảng An, Quận Hồ Tây',24,'','','38k - 80k');
 
-insert into tbl_baivietdiem (IdBaiviet,IdDiadiem,Diemdanhgia) values
+insert into tbl_baivietdiem (IdBaiviet,IdDiadiem) values
 (11,1),(12,2),(13,3),
 (14,4),(15,5),(16,6),
 (21,7),(22,8),(23,9),
