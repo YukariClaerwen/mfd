@@ -1,6 +1,6 @@
 app.controller(
-    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", 
-    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams){
+    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", 
+    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope){
         // console.log("path" + $location.path());
         // console.log("url" + $location.url());
         // console.log("search" + $location.search());   
@@ -80,7 +80,7 @@ app.controller(
             var message = {
                 content : $scope.cmtForm.message,
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.addcmt(message).then(function(response){
                 $scope.cmtList = response.data;
@@ -97,7 +97,7 @@ app.controller(
         $scope.postAddlike = function(){
             var data = {
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.addlike(data).then(function(response){
                 if(response.data.message == 1){
@@ -112,7 +112,7 @@ app.controller(
         $scope.postUnlike = function(){
             var data = {
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.unlike(data.post_id,data.username).then(function(response){
                 if(response.data.message == 1){
@@ -128,7 +128,7 @@ app.controller(
             $scope.postlike = res.data;
             $scope.count = 0;
             $scope.postlike.users.forEach(ele => {
-                if (ele === $scope.logInUser.username){
+                if (ele === $rootScope.userName){
                     $scope.count++;
                     // break;
                 }

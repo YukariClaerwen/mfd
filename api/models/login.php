@@ -7,6 +7,7 @@ if ($this->method == 'GET'){
 elseif ($this->method == 'POST'){
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 	$cn = new connection();
+	$avardefault = "avarDefault.png";
 	// get posted data
 	$data = array(
 		"email" 	=> $this->params['email'],
@@ -29,14 +30,16 @@ elseif ($this->method == 'POST'){
 			}
 			elseif($flag[0] == 2) {
 				// flag = 2 -> tai khoan con hieu luc
-				$sql2 = "select * from tbl_Taikhoan where Email = '".$data['email']."';";
+				$sql2 = "call Sp_Dangnhap('".$data['email']."');";
 				if($r = $cn->connect()->query($sql2)){
 					$user = $r->fetch_object();
 					$kq[] = array(
 						"success" 		=> $flag[0], 
 						"message" 		=> "Dang nhap thanh cong",
-						"username"		=> $user->Tentaikhoan,
-						"roll"			=> (($user->Idquyen == 0) ? "member" : "admin")
+						"username"		=> $user->username,
+						"name"			=> $user->name,
+						"avatar"		=> (isset($user->avatar) ? $user->avatar : $avardefault),
+						"role"			=> (($user->role == 0) ? "member" : "admin")
 					);
 					$this->response(200, $kq);
 				}
