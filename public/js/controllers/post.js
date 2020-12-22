@@ -151,12 +151,23 @@ app.controller(
 
 // nhớ hỏi
 app.controller(
-    "UserCtrl", ["$scope", "UserServ", "$routeParams", "$location", "$rootScope",
-    function($scope, UserServ, $routeParams, $location,$rootScope){
+    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope",
+    function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope){
         $scope.user = {};
         $scope.cover = null;
         getuser(UserServ,$routeParams.user,$scope)
-
+        
+        /* get plan*/
+        $scope.plans=[];
+        PlanServ.get($routeParams.user).then(function(response){
+            $scope.plans = response.data;
+            console.log($scope.plans[0])
+        })
+        // get City
+        $scope.cities=[];
+        PlanServ.getCity().then(function(response){
+            $scope.cities = response.data;
+        })
         $scope.isActive = function(route) {
             return route === $location.path();
         }
@@ -174,6 +185,23 @@ app.controller(
             console.log(infor); 
             UserServ.change(infor).then(function(response){
                 $scope.result = response.data;
+            });
+        }
+        // Create plan
+        $scope.re=[];
+        $scope.selected= true;
+        $scope.CreatePlan = function(){
+            //console.log($location.path());
+            //var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
+            var data ={
+                    user: $routeParams.user,
+                    namePlan: $scope.namePlan,
+                    city: $scope.City
+                }    
+            console.log(data); 
+            PlanServ.createplan(data).then(function(response){
+                $scope.result = response.data;
+                console.log($scope.result);
             });
         }
         // $scope.check = checkAuth.getuserInfo();
