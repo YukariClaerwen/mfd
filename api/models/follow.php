@@ -19,6 +19,39 @@ if ($this->method == 'GET'){
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây
+	$cn = new connection();
+	// get posted data
+	$data = array(
+		"username" 	=> $this->params['username'],
+		"follow"	=> $this->params['follow']
+	);
+	$result = array();
+    if($data['username'] !== "" && $data['follow'] !== "")
+    {
+        $addFollow = "call Sp_theodoi('".$data['username']."','".$data['follow']."');";
+        $link = $cn->connect();
+        if(mysqli_query($link, $addFollow)){
+            if (mysqli_affected_rows($link) > 0){
+                $result = array(
+                    "message" => 1
+                );
+            } else {
+                $result = array(
+                    "message" => 0
+                );
+            }
+        } else {
+			$result = array(
+				"message" => 0
+			);
+		}
+	}
+	else{
+        $result = array(
+            "message" => 0
+        );
+	}
+    $this->response(200, $result);
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 }
 elseif ($this->method == 'PUT'){
@@ -27,6 +60,27 @@ elseif ($this->method == 'PUT'){
 }
 elseif ($this->method == 'DELETE'){
 	// Hãy viết code xử lý XÓA dữ liệu ở đây
+	$cn = new connection();
+    $deletedata = "call Sp_botheodoi('".$_REQUEST['username']."','".$_REQUEST['unfollow']."');";
+    $result = array();
+    $link = $cn->connect();
+    if(mysqli_query($link,$deletedata)){
+        if (mysqli_affected_rows($link) > 0){
+            $result = array(
+                "message" => 1
+            );
+        } else {
+            $result = array(
+                "message" => 0
+            );
+        }
+    } else {
+		$result = array(
+			"message" => 0
+		);
+	}
+
+	$this->response(200, $result);
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 }
 
