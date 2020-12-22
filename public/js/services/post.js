@@ -25,6 +25,20 @@ app.factory("PostServ", ["$http", function($http){
                 data    : $.param(cmt),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
+        },
+        getlike: function(id){
+            return $http.get("http://mfd.local/api/v1/postlike/"+id);
+        },
+        addlike: function(data) {
+            return $http({
+                method  : 'POST',
+                url     : 'http://mfd.local/api/v1/postlike/',
+                data    : $.param(data),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+        },
+        unlike: function(postid, user){
+            return $http.delete("http://mfd.local/api/v1/postlike/?user=" + user + "&postid=" + postid);
         }
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);

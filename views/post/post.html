@@ -19,9 +19,11 @@
                             <ion-icon name="bookmark-outline" size="large"></ion-icon>
                             <ion-icon name="bookmark" size="large"></ion-icon>
                         </a> -->
-                        <a href="#" title="Thích bài viết" class="ml-2">
-                            <ion-icon name="heart-outline" size="large"></ion-icon>
+                        <a href="#" title="Bỏ thích bài viết" class="ml-2" ng-show="Userpostlike" ng-click="postUnlike()">
                             <ion-icon name="heart" size="large"></ion-icon>
+                        </a>
+                        <a href="#" title="Thích bài viết" class="ml-2" ng-show="!Userpostlike" ng-click="postAddlike()">
+                            <ion-icon name="heart-outline" size="large"></ion-icon>
                         </a>
                     </div>
                     <div class="post_inner px-5">
@@ -38,7 +40,7 @@
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="mr-4 d-flex justify-content-start align-items-center">
                                         <ion-icon name="heart"></ion-icon>
-                                        <span class="ml-1">{{post.like_count}}</span>
+                                        <span class="ml-1">{{postlike.like_count}}</span>
                                     </div>
                                     <div class="mr-4 d-flex justify-content-start align-items-center">
                                         <ion-icon name="eye"></ion-icon>

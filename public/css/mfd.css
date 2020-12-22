@@ -486,7 +486,11 @@ ion-icon {
     color: var(--light-text-color);
 }
 /* \user profile*/
+img.navAva {
+    width: 32px;
+    height: 32px;
 
+}
 
 @media (min-width: 576px) { 
     

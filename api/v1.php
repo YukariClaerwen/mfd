@@ -16,6 +16,7 @@ class api extends R_api{
     function likepost(){ include './models/likepost.php';}
     function hashtag(){ include './models/hashtag.php';}
     function login(){ include './models/login.php';}
+    function postlike(){ include './models/postlike.php';}
 
 }
     $api = new api();

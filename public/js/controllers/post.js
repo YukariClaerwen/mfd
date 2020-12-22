@@ -88,6 +88,58 @@ app.controller(
                 $scope.countcmts = $scope.cmtList.length;
             })
         }
+        $scope.postlike = [];
+        $scope.Userpostlike = false;
+        // like count
+        PostServ.getlike($routeParams.id).then(function(resposne){
+            $scope.getlike(resposne);
+        })
+        $scope.postAddlike = function(){
+            var data = {
+                post_id : $scope.post.ID,
+                username : $scope.logInUser.username
+            };
+            PostServ.addlike(data).then(function(response){
+                if(response.data.message == 1){
+                    PostServ.getlike(data.post_id).then(function(resposne){
+                        $scope.getlike(resposne);
+                    })
+                } else {
+                    console.log("error");
+                }
+            })
+        }
+        $scope.postUnlike = function(){
+            var data = {
+                post_id : $scope.post.ID,
+                username : $scope.logInUser.username
+            };
+            PostServ.unlike(data.post_id,data.username).then(function(response){
+                if(response.data.message == 1){
+                    PostServ.getlike(data.post_id).then(function(resposne){
+                        $scope.getlike(resposne);
+                    })
+                } else {
+                    console.log("error");
+                }
+            })
+        }
+        $scope.getlike = function(res){
+            $scope.postlike = res.data;
+            $scope.count = 0;
+            $scope.postlike.users.forEach(ele => {
+                if (ele === $scope.logInUser.username){
+                    $scope.count++;
+                    // break;
+                }
+            });
+            if ($scope.count === 1) {
+                $scope.Userpostlike = true;
+            } else {
+                $scope.Userpostlike = false;
+            }
+        }
+        
     }
 ])
 
