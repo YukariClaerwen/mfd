@@ -1,6 +1,6 @@
 app.controller(
-    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", 
-    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams){
+    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", 
+    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope){
         // console.log("path" + $location.path());
         // console.log("url" + $location.url());
         // console.log("search" + $location.search());   
@@ -75,12 +75,11 @@ app.controller(
             $scope.cmtList = resposne.data;
             $scope.countcmts = $scope.cmtList.length;
         })
-        
         $scope.submit_comment = function(){
             var message = {
                 content : $scope.cmtForm.message,
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.addcmt(message).then(function(response){
                 $scope.cmtList = response.data;
@@ -97,7 +96,7 @@ app.controller(
         $scope.postAddlike = function(){
             var data = {
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.addlike(data).then(function(response){
                 if(response.data.message == 1){
@@ -112,7 +111,7 @@ app.controller(
         $scope.postUnlike = function(){
             var data = {
                 post_id : $scope.post.ID,
-                username : $scope.logInUser.username
+                username : $rootScope.userName
             };
             PostServ.unlike(data.post_id,data.username).then(function(response){
                 if(response.data.message == 1){
@@ -128,9 +127,8 @@ app.controller(
             $scope.postlike = res.data;
             $scope.count = 0;
             $scope.postlike.users.forEach(ele => {
-                if (ele === $scope.logInUser.username){
+                if (ele === $rootScope.userName){
                     $scope.count++;
-                    // break;
                 }
             });
             if ($scope.count === 1) {
@@ -146,13 +144,12 @@ app.controller(
 
 // nhớ hỏi
 app.controller(
-    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location", "checkAuth",
-    function($scope, UserServ,PlanServ, $routeParams, $location,checkAuth){
+    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope"
+    function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope){
         $scope.user = {};
         $scope.cover = null;
         UserServ.getuser($routeParams.user).then(function(response){
             $scope.user = response.data[0];
-            $scope.cover = $scope.user.cover;
         })
         
         /* get plan*/
@@ -175,8 +172,9 @@ app.controller(
         UserServ.getfollowing($routeParams.user).then(function(response){
             $scope.following = response.data;
         })
+        $scope.Userfollowing = false;
         UserServ.getfollowers($routeParams.user).then(function(response){
-            $scope.followers = response.data;
+            $scope.getfollowers(response);
         });
         $scope.luuthongtin = function(){
             console.log($location.path());
@@ -214,6 +212,63 @@ app.controller(
 
         // console.log($routeParams);
 
-        
+
+        $scope.getfollowers = function(res){
+            $scope.followers = res.data;
+            $scope.count = 0;
+            $scope.followers.forEach(ele => {
+                if (ele.username === $rootScope.userName){
+                    $scope.count++;
+                }
+            });
+            if ($scope.count === 1) {
+                $scope.Userfollowing = true;
+            } else {
+                $scope.Userfollowing = false;
+            }
+        }
+        $scope.followUser = function(user){
+            var data = {
+                username : $rootScope.userName,
+                follow : user
+            };
+            UserServ.follow(data).then(function(response){
+                if(response.data.message == 1){
+                    UserServ.getfollowers(user).then(function(resposne){
+                        $scope.getfollowers(resposne);
+                    });
+                    UserServ.getfollowing(user).then(function(response){
+                        $scope.following = response.data;
+                    });
+                    UserServ.getuser(user).then(function(response){
+                        $scope.user = response.data[0];
+                    })
+                } else {
+                    console.log("error");
+                }
+            })
+        }
+        $scope.unfollowUser = function(user){
+            var data = {
+                username : $rootScope.userName,
+                unfollow : user
+            };
+            UserServ.unfollow(data.username,data.unfollow).then(function(response){
+                if(response.data.message == 1){
+                    UserServ.getfollowers(user).then(function(resposne){
+                        $scope.getfollowers(resposne);
+                    });
+                    UserServ.getfollowing(user).then(function(response){
+                        $scope.following = response.data;
+                    });
+                    UserServ.getuser(user).then(function(response){
+                        $scope.user = response.data[0];
+                    })
+                } else {
+                    console.log("error");
+                }
+            })
+        }
+
     }
 ])

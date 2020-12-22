@@ -50,6 +50,10 @@ elseif ($this->method == 'POST'){
                     "message" => 0
                 );
             }
+        } else {
+            $result = array(
+                "message" => 0
+            );
         }
 	}
 	else{
@@ -80,7 +84,11 @@ elseif ($this->method == 'DELETE'){
                 "message" => 0
             );
         }
-    }
+    } else {
+		$result = array(
+			"message" => 0
+		);
+	}
 
 	$this->response(200, $result);
 }

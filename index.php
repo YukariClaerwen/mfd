@@ -51,14 +51,14 @@
                     </div>
                 </div> -->
                 <div ng-show="isLoggedIn">
-                    <a href="/{{userName}}" title="{{logInUser.name}}">
-                        <img class="navAva" src="../public/imgs/{{logInUser.avatar}}" alt="">
-                        <span>{{logInUser.name}}</span>
+                    <a href="/{{userName}}" title="{{viewName}}">
+                        <img class="navAva" ng-src="../public/imgs/{{avatar}}" alt="">
+                        <span>{{viewName}}</span>
                     </a>
                     <a class="btn btn-success" href="#" ng-click="logout()">Đăng xuất</a>
                 </div>        
                 <div ng-hide="isActive('/login') || isActive('/register') || isLoggedIn">
-                    <a class="btn btn-success" href="/login">Đăng nhập</a>
+                    <a class="btn btn-success" href="/login" ng-click="getoldlink()">Đăng nhập</a>
                 </div>
             </div>
         </nav>

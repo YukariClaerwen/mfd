@@ -70,10 +70,13 @@
                                 <p>{{cmt.content}}</p>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-start align-items-center form-comt mt-3">
+                        <div class="text-center mt-3" ng-show="!isLoggedIn">
+                            <p>Hãy <a class="color" href="/login" title="Đăng nhập" ng-click="getoldlink()">Đăng nhập</a> để bình luận.</p>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center form-comt mt-3" ng-show="isLoggedIn">
                             <div class="cmt-img mr-4">
-                                <a href="/{{logInUser.username}}" title="{{logInUser.name}}">
-                                    <img src="../public/imgs/{{logInUser.avatar}}" alt="">
+                                <a href="/{{userName}}" title="{{viewName}}">
+                                    <img src="../public/imgs/{{avatar}}" alt="">
                                 </a>
                             </div>
                             <div class="w-100">

@@ -17,8 +17,11 @@
             <div class="head-profile-title-inner">
                 <h4>{{user.name}}</h4>
             </div>
-            <div class="head-profile-title-btn">
-                <button type="button" name="" id="" class="btn btn-success btn-lg btn-block">Theo dõi</button>
+            <div class="head-profile-title-btn" ng-if="Userfollowing">
+                <button type="button" class="btn btn-light btn-lg btn-block" ng-click="unfollowUser(user.username)">Đang theo dõi</button>
+            </div>
+            <div class="head-profile-title-btn" ng-if="!Userfollowing">
+                <button type="button" class="btn btn-success btn-lg btn-block"  ng-click="followUser(user.username)">Theo dõi</button>
             </div>
         </div>
         <div class="head-profile-meta d-flex align-items-center">

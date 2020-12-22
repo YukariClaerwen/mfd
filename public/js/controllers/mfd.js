@@ -11,7 +11,6 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             
             UserServ.login(user).then(function(response){
                 $scope.result = response.data[0];
-                console.log($scope.result);
                 if($scope.result.success == 2)
                 {
                     alert('login successful');
@@ -19,11 +18,14 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
                     const mfdSession = [{
                         email: user.email,
                         userid : $scope.result.username,
-                        roll : $scope.result.roll,
+                        viewname : $scope.result.name,
+                        avatar : $scope. result.avatar,
+                        role : $scope.result.role,
                         isLoggedIn : $scope.isLoggedIn
                     }] ;
                     const setjson = JSON.stringify(mfdSession);
                     window.localStorage.setItem("mfdssn", setjson);
+                    console.log(mfdSession);
                     // console.log(window.localStorage.getItem("mfdssn"));
                     // $scope.UserId = user.email;
                     // $scope.session = $scope.result.username;
@@ -34,9 +36,11 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
                     
                     //userDetails.SessionId = $scope.session;
                     
-                    $location.path('/');
+                    $location.path($rootScope.oldlink);
                     $rootScope.session = user.email;
                     $rootScope.userName = $scope.result.username;
+                    $rootScope.viewName = $scope.result.name;
+                    $rootScope.avatar = $scope.result.avatar;
                     $rootScope.isLoggedIn = $scope.isLoggedIn;
                 }
                 else{
@@ -65,22 +69,15 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
     $scope.isActive = function(route) {
         return route === $location.path();
     }
-
-    $scope.logInUser = {};
-
     $rootScope.isLoggedIn = false;
     if (localStorage.getItem("mfdssn") !== null) {
         $scope.mfdSession = JSON.parse(window.localStorage.getItem("mfdssn"))[0];
     
         $rootScope.session = $scope.mfdSession.email;
         $rootScope.userName = $scope.mfdSession.userid;
+        $rootScope.viewName = $scope.mfdSession.viewname;
+        $rootScope.avatar = $scope.mfdSession.avatar;
         $rootScope.isLoggedIn = $scope.mfdSession.isLoggedIn;
-        // $scope.check = checkAuth.getuserInfo();
-        // console.log($rootScope.isLoggedIn);
-        // console.log($scope.check);
-        UserServ.getuser($rootScope.userName).then(function(response){
-            $scope.logInUser = response.data[0];
-        })
         
     }
     // console.log($rootScope.isLoggedIn);
@@ -92,6 +89,8 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
         $rootScope.isLoggedIn = false;
         $rootScope.session = null;
         $rootScope.userName = null;
+        $rootScope.viewName = null;
+        $rootScope.avatar = null;
         $location.path("/");
     };
 
@@ -165,5 +164,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
             }
             // $scope.loading = false;
         })
+    }
+    $rootScope.oldlink = "/";
+    $scope.getoldlink = function(){
+        $rootScope.oldlink = $location.path();
     }
 }])

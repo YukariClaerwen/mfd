@@ -46,6 +46,10 @@ body, input, select, textarea, blockquote cite, a {
 a{
     color: var(--light-text-color);
 }
+a.color {
+    color: var(--primary-color);
+    font-weight: bold;
+}
 a:hover, a:active, a:focus {
     color: var(--primary-color);
 }
