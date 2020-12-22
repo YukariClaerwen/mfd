@@ -51,6 +51,7 @@ app.controller(
         }*/
         PostServ.getpost($routeParams.id).then(function(response){
             $scope.post = response.data[0];
+            followFn($scope,UserServ,$scope.post.user.username,$rootScope);
         })
         $scope.hashtags = [];
         HashtagServ.gethashtag().then(function(response){
@@ -137,6 +138,12 @@ app.controller(
                 $scope.Userpostlike = false;
             }
         }
+        $scope.followUser = function(user) {
+            followUser($rootScope,user,UserServ,$scope);
+        }
+        $scope.unfollowUser = function(user){
+            unfollowUser($rootScope,user,UserServ,$scope);
+        }
         
     }
 ])
@@ -148,23 +155,12 @@ app.controller(
     function($scope, UserServ, $routeParams, $location,$rootScope){
         $scope.user = {};
         $scope.cover = null;
-        UserServ.getuser($routeParams.user).then(function(response){
-            $scope.user = response.data[0];
-        })
+        getuser(UserServ,$routeParams.user,$scope)
 
         $scope.isActive = function(route) {
             return route === $location.path();
         }
-        $scope.following = [];
-        $scope.followers = [];
         $scope.result =[];
-        UserServ.getfollowing($routeParams.user).then(function(response){
-            $scope.following = response.data;
-        })
-        $scope.Userfollowing = false;
-        UserServ.getfollowers($routeParams.user).then(function(response){
-            $scope.getfollowers(response);
-        });
         $scope.luuthongtin = function(){
             console.log($location.path());
             var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
@@ -184,63 +180,83 @@ app.controller(
 
         // console.log($routeParams);
 
-        
-        $scope.getfollowers = function(res){
-            $scope.followers = res.data;
-            $scope.count = 0;
-            $scope.followers.forEach(ele => {
-                if (ele.username === $rootScope.userName){
-                    $scope.count++;
-                }
-            });
-            if ($scope.count === 1) {
-                $scope.Userfollowing = true;
-            } else {
-                $scope.Userfollowing = false;
-            }
-        }
-        $scope.followUser = function(user){
-            var data = {
-                username : $rootScope.userName,
-                follow : user
-            };
-            UserServ.follow(data).then(function(response){
-                if(response.data.message == 1){
-                    UserServ.getfollowers(user).then(function(resposne){
-                        $scope.getfollowers(resposne);
-                    });
-                    UserServ.getfollowing(user).then(function(response){
-                        $scope.following = response.data;
-                    });
-                    UserServ.getuser(user).then(function(response){
-                        $scope.user = response.data[0];
-                    })
-                } else {
-                    console.log("error");
-                }
-            })
+        followFn($scope,UserServ,$routeParams.user,$rootScope);
+        $scope.followUser = function(user) {
+            followUser($rootScope,user,UserServ,$scope);
         }
         $scope.unfollowUser = function(user){
-            var data = {
-                username : $rootScope.userName,
-                unfollow : user
-            };
-            UserServ.unfollow(data.username,data.unfollow).then(function(response){
-                if(response.data.message == 1){
-                    UserServ.getfollowers(user).then(function(resposne){
-                        $scope.getfollowers(resposne);
-                    });
-                    UserServ.getfollowing(user).then(function(response){
-                        $scope.following = response.data;
-                    });
-                    UserServ.getuser(user).then(function(response){
-                        $scope.user = response.data[0];
-                    })
-                } else {
-                    console.log("error");
-                }
-            })
+            unfollowUser($rootScope,user,UserServ,$scope);
         }
-        
     }
 ])
+
+var getfollowing = function(service, user, scope) {
+    service.getfollowing(user).then(function(response){
+        scope.following = response.data;
+        console.log(scope.following);
+    })
+}
+
+var getfollowers = function(service, user, scope, rootScope) {
+    service.getfollowers(user).then(function(res){
+        scope.followers = res.data;
+        scope.count = 0;
+        scope.followers.forEach(ele => {
+            if (ele.username === rootScope.userName){
+                scope.count++;
+            }
+        });
+        if (scope.count === 1) {
+            scope.Userfollowing = true;
+        } else {
+            scope.Userfollowing = false;
+        }
+        console.log(scope.followers);
+    })
+}
+
+var getuser = function(service, user, scope) {
+    service.getuser(user).then(function(response){
+        scope.user = response.data[0];
+    })
+}
+
+var followUser = function(rootScope, user, service, scope){
+    var data = {
+        username : rootScope.userName,
+        follow : user
+    };
+    service.follow(data).then(function(response){
+        if(response.data.message == 1){
+            getfollowers(service,user,scope,rootScope);
+            getfollowing(service,user,scope);
+            getuser(service,user,scope);
+        } else {
+            console.log("error");
+        }
+    })
+}
+
+var unfollowUser = function(rootScope, user, service, scope){
+    var data = {
+        username : rootScope.userName,
+        unfollow : user
+    };
+    service.unfollow(data.username,data.unfollow).then(function(response){
+        if(response.data.message == 1){
+            getfollowers(service,user,scope,rootScope);
+            getfollowing(service,user,scope);
+            getuser(service,user,scope);
+        } else {
+            console.log("error");
+        }
+    })
+}
+
+var followFn = function(scope,service,user,rootScope){
+    scope.following = [];
+    scope.followers = [];
+    scope.Userfollowing = false;
+    getfollowing(service,user,scope);
+    getfollowers(service,user,scope,rootScope);
+}
