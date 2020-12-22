@@ -144,7 +144,7 @@ app.controller(
 
 // nhớ hỏi
 app.controller(
-    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope"
+    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope",
     function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope){
         $scope.user = {};
         $scope.cover = null;
