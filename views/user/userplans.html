@@ -14,23 +14,26 @@
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" title="Thêm kế hoạch">
         <ion-icon name="add-circle-outline" size="large">
     </button>
-    <div ng-repeat ="plan in plans">
+    <div ng-repeat ="plan in plans track by $index">
         <div class="d-flex flex-row mt-3">
             <h4>{{plan.Name}}</h4>
-            <h4>{{plan.Location}}</h4>
+            <h4>{{plan.Location}}, {{user.username}}</h4>
             <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#plan{{plan.Idplan}}"
                 aria-expanded="false" aria-controls="{{plan.Idplan}}">
                 <ion-icon name="chevron-down-outline" title="Chi tiết"></ion-icon>
             </button>
             <!-- Button trigger modal thêm kế hoạch -->
+            <a ng-href="/{{user.username}}/plans/{{plan.Idplan}}">
             <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1"
                 title="Thêm hoạt động">
+              
                 <ion-icon name="add-outline"></ion-icon>
-            </button>
+              
+            </button></a>
         </div>
         <table class="table collapse" id="plan{{plan.Idplan}}">
             <tbody>
-                <tr ng-repeat= "detail in plan.Detail">
+                <tr ng-repeat= "detail in plan.Detail track by $index">
                     <td><input type="checkbox" name="" id=""></td>
                     <td>{{detail.Activity}}</td>
                     <td>{{detail.Address}}</td>
@@ -100,7 +103,7 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="F_createAct.$invalid">Thêm</button>
+              <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-click="Createdetail()" ng-disabled="F_createAct.$invalid">Thêm</button>
             </div>
           </div>
         </div>

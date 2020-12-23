@@ -22,12 +22,14 @@ if ($this->method == 'GET'){
 		// 	$getData= "call Sp_TimbaivietTheoTuKhoa('$location');";
 		// }
 		else{
-
+			$user = $this->params[0];
+			$getData= "call Sp_Laybaivietdang('$user');";			
 		}
 	}
 	else {
 		$getData = "call SP_Timbaiviet('','');";
 	}
+
 	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){

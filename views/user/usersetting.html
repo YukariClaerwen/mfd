@@ -31,24 +31,24 @@
                             <ion-icon name="calendar-outline"></ion-icon>
                         </span> {{user.birthday}}</h4>
                     </div>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#SuathongtinModal">Sửa thông tin</button>
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button  class="btn btn-success btn-simple btn-round btn-block" data-toggle="modal" data-target="#SuathongtinModal">Sửa thông tin</button>
+                    <button  class="btn btn-success btn-simple btn-round btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Đổi mật khẩu
                     </button>
-                    <button class="btn btn-primary">Xóa tài khoản</button>
+                    <button  class="btn btn-success btn-simple btn-round btn-block" >Xóa tài khoản</button>
             
                     <div class="collapse mt-4" id="collapseExample">
-                        <form>
+                        <form name="F_ChangePassword">
                             <div class="form-group">
-                              <input type="password" class="form-control" id="exampleInputPassword" placeholder="Mật khẩu hiện tại">
+                              <input type="password" class="form-control" id="exampleInputPassword" ng-model="pswdcurrent" placeholder="Mật khẩu hiện tại"required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu mới">
+                                <input type="password" class="form-control" id="exampleInputPassword1" ng-model="pswd1" placeholder="Mật khẩu mới"required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Nhập lại mật khẩu mới">
+                                <input type="password" class="form-control" id="exampleInputPassword2" ng-model="pswd2" placeholder="Nhập lại mật khẩu mới" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                            <button type="submit"  class="btn btn-success btn-simple btn-round btn-block" ng-click="ChangePassword()" ng-disabled="F_ChangePassword.$invalid">Đổi mật khẩu</button>
                           </form>
                     </div>
             
@@ -65,7 +65,7 @@
                                 <form method="POST" name="ChangeForm">
                                     <div class="form-group">
                                         <input type="email" ng-model="email"  class="form-control" name="email" id="email"
-                                            ng-value={{user.email}} required>
+                                            ng-value={{user.email}} placeholder="Email" required>
                                         <p style="color: red;">
                                             <span ng-show="ChangeForm.email.$touched && ChangeForm.email.$invalid">Email chưa hợp lệ. </span>
                                             <span ng-show="ChangeForm.email.$touched && ChangeForm.email.$error.required">Thông tin này bắt
@@ -74,11 +74,11 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="text" ng-model="gender"  class="form-control" 
-                                            ng-value={{user.gender}} required>
+                                            ng-value={{user.gender}} placeholder="Giới tính" >
                                     </div>
                                     <div class="form-group">
                                         <input type="text" ng-model="job"  class="form-control" name="ngheNghiep" id="ngheNghiep"
-                                            placeholder="Nghề nghiệp" required>
+                                            placeholder="Nghề nghiệp">
                                     </div>
                                     <div class="form-group">
                                         <input type="date" ng-model="birthday"  class="form-control" name="ngaySinh" id="ngaySinh"  data-date-format="DD MMMM YYYY">
@@ -86,7 +86,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-block btn-success" ng-click="luuthongtin()">Lưu thông tin</button>
+                              <button type="button"  class="btn btn-success btn-simple btn-round btn-block" ng-disabled="ChangeForm.$invalid" ng-click="luuthongtin()">Lưu thông tin</button>
                             </div>
                           </div>
                         </div>
