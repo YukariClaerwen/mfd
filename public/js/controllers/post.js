@@ -168,7 +168,6 @@ app.controller(
         }
         $scope.following = [];
         $scope.followers = [];
-        $scope.result =[];
         UserServ.getfollowing($routeParams.user).then(function(response){
             $scope.following = response.data;
         })
@@ -204,7 +203,7 @@ app.controller(
                 }    
             console.log(data); 
             PlanServ.createplan(data).then(function(response){
-                $scope.result = response.data;
+                $scope.plans = response.data;
                 console.log($scope.result);
             });
         }
