@@ -66,6 +66,11 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             controller: 'UserCtrl',
             activetab: 'user'
         })
+        .when("/:user/plans/:idplan",{
+            templateUrl: "views/user/userplans.html",
+            controller: 'UserCtrl',
+            activetab: 'user'
+        })
         .when("/:user/gallery",{
             templateUrl: "views/user/usergallery.html",
             controller: 'UserCtrl',

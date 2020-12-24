@@ -14,23 +14,26 @@
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" title="Thêm kế hoạch">
         <ion-icon name="add-circle-outline" size="large">
     </button>
-    <div ng-repeat ="plan in plans">
+    <div ng-repeat ="plan in plans track by $index">
         <div class="d-flex flex-row mt-3">
-            <h4>{{plan.Idplan}}</h4>
             <h4>{{plan.Name}}</h4>
+            <h4>{{plan.Location}}, {{user.username}}</h4>
             <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#plan{{plan.Idplan}}"
                 aria-expanded="false" aria-controls="{{plan.Idplan}}">
                 <ion-icon name="chevron-down-outline" title="Chi tiết"></ion-icon>
             </button>
             <!-- Button trigger modal thêm kế hoạch -->
+            <a ng-href="/{{user.username}}/plans/{{plan.Idplan}}">
             <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1"
                 title="Thêm hoạt động">
+              
                 <ion-icon name="add-outline"></ion-icon>
-            </button>
+              
+            </button></a>
         </div>
         <table class="table collapse" id="plan{{plan.Idplan}}">
             <tbody>
-                <tr ng-repeat= "detail in plan.Detail">
+                <tr ng-repeat= "detail in plan.Detail track by $index">
                     <td><input type="checkbox" name="" id=""></td>
                     <td>{{detail.Activity}}</td>
                     <td>{{detail.Address}}</td>
@@ -56,18 +59,21 @@
           </button>
         </div>
         <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" ng-model="namePlan" id="exampleFormControlInput1" placeholder="Tên kế hoạch">
-                    <select class="custom-select" id="inputGroupSelect02" ng-model="City">
-                        <option ng-selected="selected" value="Chọn...">Chọn...</option>
-                        <option ng-repeat="city in cities" value="{{city.Name}}">{{city.Name}}</option>
-                    </select>
-                </div>
-            </form>          
+          <form name="F_createPlan">
+            <div class="form-group">
+              <input type="text" class="form-control" ng-model="namePlan" id="exampleFormControlInput1"
+                placeholder="Tên kế hoạch" required>
+            </div>
+            <div class="form-group">
+              <select class="custom-select" id="inputGroupSelect02" ng-model="City" required>
+                <option ng-selected="selected" value="Chọn...">Chọn...</option>
+                <option ng-selected="!selected" ng-repeat="city in cities" value="{{city.Name}}">{{city.Name}}</option>
+              </select>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" ng-click="CreatePlan()">Tạo</button>
+          <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="F_createPlan.$invalid" ng-click="CreatePlan()">Tạo</button>
         </div>
       </div>
     </div>
@@ -84,16 +90,20 @@
               </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Tên hoạt động">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Địa chỉ quán ăn">
-                        <input type="date" class="form-control" id="exampleFormControlInput1">
-                    </div>
-                </form>
+              <form name="F_createAct">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="Activity" id="exampleFormControlInput1" placeholder="Tên hoạt động" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="Address" id="exampleFormControlInput1" placeholder="Địa chỉ quán ăn" required>
+                </div>
+                <div class="form-group">
+                  <input type="date" class="form-control" ng-model="Date" id="exampleFormControlInput1" required>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary">Thêm</button>
+              <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-click="Createdetail()" ng-disabled="F_createAct.$invalid">Thêm</button>
             </div>
           </div>
         </div>

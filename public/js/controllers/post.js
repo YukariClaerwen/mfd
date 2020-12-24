@@ -173,8 +173,8 @@ app.controller(
 
 // nhớ hỏi
 app.controller(
-    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope",
-    function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope){
+    "UserCtrl", ["$scope", "UserServ","PlanServ", "$routeParams", "$location","$rootScope","PostServ",
+    function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope,PostServ){
         $scope.user = {};
         $scope.cover = null;
         getuser(UserServ,$routeParams.user,$scope)
@@ -183,7 +183,14 @@ app.controller(
         $scope.plans=[];
         PlanServ.get($routeParams.user).then(function(response){
             $scope.plans = response.data;
-            console.log($scope.plans[0])
+            //console.log($scope.plans[0])
+        })
+        $scope.posts=[];
+        $scope.nopost= true;
+        PostServ.getpostbyuser($routeParams.user).then(function(response){
+            $scope.posts= response.data;
+            console.log($scope.posts[0].comments);
+            if($scope.posts.length > 0){$scope.nopost =false;}
         })
         // get City
         $scope.cities=[];
@@ -193,7 +200,15 @@ app.controller(
         $scope.isActive = function(route) {
             return route === $location.path();
         }
-        $scope.result =[];
+        $scope.following = [];
+        $scope.followers = [];
+        UserServ.getfollowing($routeParams.user).then(function(response){
+            $scope.following = response.data;
+        })
+        $scope.Userfollowing = false;
+        UserServ.getfollowers($routeParams.user).then(function(response){
+            $scope.getfollowers(response);
+        });
         $scope.luuthongtin = function(){
             console.log($location.path());
             var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
@@ -207,6 +222,27 @@ app.controller(
             console.log(infor); 
             UserServ.change(infor).then(function(response){
                 $scope.result = response.data;
+                console.log($scope.result)
+                alert($scope.result[0].message);
+            });
+        }
+        $scope.ChangePassword = function(){
+            //console.log($location.path());
+            //var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
+            var password ={
+                    user: $routeParams.user,
+                    pswdcurrent: $scope.pswdcurrent,
+                    pswd1: $scope.pswd1,
+                    pswd2: $scope.pswd2
+                }    
+            console.log(password); 
+            UserServ.changePassword(password).then(function(response){
+                $scope.result = response.data;
+                console.log($scope.result)
+                alert($scope.result[0].message);
+                $scope.pswdcurrent="";
+                $scope.pswd1="";
+                $scope.pswd2=""
             });
         }
         // Create plan
@@ -222,9 +258,31 @@ app.controller(
                 }    
             console.log(data); 
             PlanServ.createplan(data).then(function(response){
-                $scope.result = response.data;
-                console.log($scope.result);
+                $scope.plans = response.data;
+                //console.log($scope.result);
             });
+        }
+
+        $scope.Createdetail = function(){
+            var d = new Date( $scope.Date).toISOString().slice(0, 10);
+            var data ={
+                id: $routeParams.idplan,
+                Activity: $scope.Activity,
+                Address: $scope.Address,
+                Date:  d
+            }
+            //console.log($location.search());
+            console.log(data);
+            PlanServ.createplan(data).then(function(response){
+                PlanServ.get($routeParams.user).then(function(response){
+                    $scope.plans = response.data;
+                    //console.log($scope.plans[0])
+                })
+                //console.log($scope.plans);
+                //$('#exampleModal1').modal('hide');
+                alert("Successful");
+            })
+
         }
         // $scope.check = checkAuth.getuserInfo();
 
@@ -237,7 +295,7 @@ app.controller(
         $scope.unfollowUser = function(user){
             unfollowUser($rootScope,user,UserServ,$scope);
         }
-    }
+    }   
 ])
 
 var getfollowing = function(service, user, scope) {

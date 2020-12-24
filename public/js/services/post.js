@@ -15,6 +15,9 @@ app.factory("PostServ", ["$http", function($http){
         getpostbyLocation: function(location){
             return $http.get("http://mfd.local/api/v1/post/location/"+location);
         },
+        getpostbyuser: function(user){
+            return $http.get("http://mfd.local/api/v1/post/"+user);
+        },
         getcmt: function(id){
             return $http.get("http://mfd.local/api/v1/comment/"+id);
         },

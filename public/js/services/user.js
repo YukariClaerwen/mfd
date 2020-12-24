@@ -37,6 +37,15 @@ app.factory("UserServ", ["$http", function($http){
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
         },
+        changePassword: function(pswd){
+            // return $http.put('http://mfd.local/api/v1/user/'+id, user);
+            return $http({
+                method  : 'PUT',
+                url     : 'http://mfd.local/api/v1/user/password',
+                data    : pswd,
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+        },
         follow: function(data) {
             return $http({
                 method  : 'POST',

@@ -175,26 +175,57 @@ elseif ($this->method == 'PUT'){
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 	$cn = new connection();
 	$data = json_decode($this->file, true);
-	$updateaData ="call Sp_Chinhsuathongtin('".$data["email"]."','".$data["user"]."','".$data["job"]."','".$data["gender"]."','".$data["birthday"]."',@mess)";
-	$result= array();
-	$mess;
-	$query = $cn->connect()->query($updateaData);
-	while($row = mysqli_fetch_assoc($query)){
-		$mess= $row["mess"];
-	}
-	if($mess == 1){
-		$result[]= array(
-			"success" => 1,
-			"message" => "Email have already exist, please choose another"
-		);
+	if(isset($this->params[0]) && $this->params[0] == "password" ){
+		$changePassword ="call Sp_doimatkhau('".$data["user"]."',".$data["pswdcurrent"].",".$data["pswd1"].",".$data["pswd2"].",@mess);";
+		$result= array();
+		$mess;
+		$query = $cn->connect()->query($changePassword);
+		while($row = mysqli_fetch_assoc($query)){
+			$mess= $row["mess"];
+		}
+		if($mess == 1){
+			$result[]= array(
+				"success" => 1,
+				"message" => "Password current is wrong"
+			);
+		}
+		else if($mess == 2){
+			$result[]= array(
+				"success" => 2,
+				"message" => "Entered the wrong second password"
+			);
+		}
+		else{
+			$result[]= array(
+				"success" => 2,
+				"message" => "Change password successfully"
+			);
+		}
+		$this->response(200,$result);
+		//var_dump($data);
 	}
 	else{
-		$result[]= array(
-			"success" => 2,
-			"message" => "Update successfully"
-		);
-	}
-	$this->response(200,$result);
+		$updateaData ="call Sp_Chinhsuathongtin('".$data["email"]."','".$data["user"]."','".$data["job"]."','".$data["gender"]."','".$data["birthday"]."',@mess)";
+		$result= array();
+		$mess;
+		$query = $cn->connect()->query($updateaData);
+		while($row = mysqli_fetch_assoc($query)){
+			$mess= $row["mess"];
+		}
+		if($mess == 1){
+			$result[]= array(
+				"success" => 1,
+				"message" => "Email have already exist, please choose another"
+			);
+		}
+		else{
+			$result[]= array(
+				"success" => 2,
+				"message" => "Update successfully"
+			);
+		}
+		$this->response(200,$result);
+	}	
 }
 elseif ($this->method == 'DELETE'){
 	// Hãy viết code xử lý XÓA dữ liệu ở đây
