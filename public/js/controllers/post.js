@@ -1,6 +1,6 @@
 app.controller(
-    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", 
-    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope){
+    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", "$anchorScroll", 
+    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope, $anchorScroll){
         // console.log("path" + $location.path());
         // console.log("url" + $location.url());
         // console.log("search" + $location.search());   
@@ -10,6 +10,8 @@ app.controller(
         $scope.post = {};
         $scope.key= "";
         $scope.hashtag = "";
+
+        
         
         if($scope.path[2] == "hashtag"){
             $scope.hashtag = $routeParams.hashtag;
@@ -32,9 +34,11 @@ app.controller(
         //     }
         // }
         else{
+            $rootScope.loading = true;
             PostServ.get().then(function(response){
                 $scope.posts = response.data;
-                // console.log($scope.posts);
+                console.log($scope.posts);
+                $rootScope.loading = false;
             })
         }
         
@@ -52,6 +56,8 @@ app.controller(
         PostServ.getpost($routeParams.id).then(function(response){
             $scope.post = response.data[0];
             followFn($scope,UserServ,$scope.post.user.username,$rootScope);
+            $scope.points = $scope.getNumber($scope.post.point);
+            // $scope.placepoint = parseFloat($scope.post.place.point).toFixed(1);
         })
         $scope.hashtags = [];
         HashtagServ.gethashtag().then(function(response){
@@ -142,7 +148,23 @@ app.controller(
             followUser($rootScope,user,UserServ,$scope);
         }
         $scope.unfollowUser = function(user){
-            unfollowUser($rootScope,user,UserServ,$scope);
+            var alert = confirm("Bạn có chắc chắn muốn xóa hay không?");
+            if(alert){
+                unfollowUser($rootScope,user,UserServ,$scope);
+            }
+        }
+        $scope.getNumber = function(num) {
+            return new Array(parseInt(num));   
+        }
+        $scope.fixPoint = function financial(x) {
+            return Number.parseFloat(x).toFixed(1);
+        }
+        $scope.scroll = function () {
+            $anchorScroll();
+        };
+        $scope.gotoCmt = function() {
+            $location.hash('comment_list');
+            $anchorScroll();
         }
         
     }
@@ -221,7 +243,7 @@ app.controller(
 var getfollowing = function(service, user, scope) {
     service.getfollowing(user).then(function(response){
         scope.following = response.data;
-        console.log(scope.following);
+        // console.log(scope.following);
     })
 }
 
@@ -239,7 +261,7 @@ var getfollowers = function(service, user, scope, rootScope) {
         } else {
             scope.Userfollowing = false;
         }
-        console.log(scope.followers);
+        // console.log(scope.followers);
     })
 }
 
@@ -288,3 +310,8 @@ var followFn = function(scope,service,user,rootScope){
     getfollowing(service,user,scope);
     getfollowers(service,user,scope,rootScope);
 }
+
+
+// app.run(function ($rootScope) {
+    
+//   });

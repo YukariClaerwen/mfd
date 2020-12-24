@@ -65,7 +65,8 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             
     } 
 }]);
-app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", function($scope, $location, $rootScope, UserServ){
+app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "PostServ", 
+    function($scope, $location, $rootScope, UserServ, PostServ){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
@@ -80,6 +81,9 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
         $rootScope.isLoggedIn = $scope.mfdSession.isLoggedIn;
         
     }
+    $rootScope.postloading = false;
+    $rootScope.loading = false;
+    $rootScope.editor_block = false;
     // console.log($rootScope.isLoggedIn);
     // console.log($scope.mfdSession);
     // Call checkAuth factory for cheking login details
@@ -169,4 +173,85 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", fun
     $scope.getoldlink = function(){
         $rootScope.oldlink = $location.path();
     }
+    $scope.addPost = function(){
+        $rootScope.editor_block = true;
+    }
+    $scope.close_block_add = function(){
+        $rootScope.editor_block = false;
+    }
+
+      
+    // $scope.loadTags = function(query) {
+    //     // return $http.get('tags.json');
+    // };
+      
+      
+    $scope.tags = [];
+    $scope.onTagAdded = function($tag) {
+    var currentId = 0;
+    if ($scope.tags.length > 1) {
+                var previousTagIdx = $scope.tags.indexOf($tag) - 1;
+                var previousTag  = $scope.tags[previousTagIdx];
+                currentId = previousTag.id + 1;
+        }
+        $tag.id = currentId;
+        console.log($tag.id, $tag.text)
+    }
+    $scope.postForm = {};
+
+    $scope.createPost = function(){
+        var inputhashtags = [];
+        var inputhashtag = {};
+        $scope.tags.forEach(element => {
+            inputhashtag = {
+                id : element.id,
+                hashtag : element.text.toLowerCase(),
+                tag : xoa_dau(element.text.toLowerCase())
+            }
+            inputhashtags.push(inputhashtag);
+        });
+        var data = {
+            post : {
+                title: $scope.postForm.title,
+                content: $scope.postForm.content,
+                username : $rootScope.userName
+            },
+            tags : inputhashtags
+        }
+        // console.log(data);
+        PostServ.createPost(data).then(function(response){
+            $scope.result = response.data;
+            if($scope.result.message = 0) {
+                alert("Đăng bài thất bại, vui lòng thao tác lại");
+            }
+            else {
+                $scope.postForm.title = "";
+                $scope.postForm.content = "";
+                $scope.tags = [];
+                $scope.close_block_add();
+                alert("Đăng bài viết thành công");
+                $location.path("/post/"+$scope.result.idbv);
+            }
+            // console.log($scope.message);
+        })
+    }
 }])
+
+var xoa_dau = function(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    str = str.replace(/\s/g, '_');
+    return str;
+}

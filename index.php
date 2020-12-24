@@ -10,12 +10,13 @@
 
     <link rel="stylesheet" href="public/css/libs/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/css/xeditable.min.css"/>
+    <link rel="stylesheet" href="public/css/libs/ng-tags-input.min.css" />
     <link rel="stylesheet" href="public/css/libs/swiper-bundle.min.css">
     
     <link rel="stylesheet" href="public/css/customBT.css">
     <link rel="stylesheet" href="public/css/mfd.css">
 </head>
-<body>
+<body ng-class=" (loading || editor_block) ? 'overflow-hidden' : ''">
     <header>
         <div id="sideMenu" class="sidemenu">
             <ul ng-include="'views/includes/mainMenu.html'" ng-hide="isActive('/login') || isActive('/register')"></ul>
@@ -50,26 +51,40 @@
                         <a class="dropdown-item {{theme.txt}} {{theme.bg}}" href="" ng-click="switch('light')" theme="light">Switch light theme</a> 
                     </div>
                 </div> -->
-                <div ng-show="isLoggedIn">
-                    <a href="/{{userName}}" title="{{viewName}}">
-                        <img class="navAva" ng-src="../public/imgs/{{avatar}}" alt="">
-                        <span>{{viewName}}</span>
+                <div ng-show="isLoggedIn" class="d-flex justify-content-end align-items-center">
+                    <a href="/{{userName}}" title="{{viewName}}" class="mr-3 d-flex justify-content-end align-items-center">
+                        <img class="navAva mr-1" ng-src="../public/imgs/{{avatar}}" alt="">
+                        <b>{{viewName}}</b>
                     </a>
-                    <a class="btn btn-success" href="#" ng-click="logout()">Đăng xuất</a>
-                </div>        
+                    <a class="mr-3 icon-btn btn btn-light" href="" ng-click="addPost()">
+                        <ion-icon name="add"></ion-icon>
+                    </a>
+                    <a class=" icon-btn btn btn-light" href="#" ng-click="logout()">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </a>
+                </div>         
                 <div ng-hide="isActive('/login') || isActive('/register') || isLoggedIn">
-                    <a class="btn btn-success" href="/login" ng-click="getoldlink()">Đăng nhập</a>
+                    <a class="btn btn-success icon-btn" href="/login" ng-click="getoldlink()">
+                        <ion-icon name="log-in-outline"></ion-icon>
+                    </a>
                 </div>
             </div>
         </nav>
     </header>
     
 
-    
 	<div ng-view></div>
-
+    <div class="spinner-loading d-flex justify-content-center align-items-center" ng-show="loading">
+        <div class="spinner-grow text-success" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="editor_block_modal" ng-include="'views/includes/post/posteditor.html'" ng-if="editor_block"></div>
+    
     <footer>
-
+        <div class="text-center py-3">
+            &copy; <?php echo date("Y"); ?>  <a href="/" title="Meet.Foodie"><b>M.fd</b></a>
+        </div>
     </footer>
 
     
@@ -81,7 +96,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/js/xeditable.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-sanitize.js"></script>
+    
 
+    <script src="public/js/libs/ng-tags-input.min.js"></script>
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 

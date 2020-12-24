@@ -1,5 +1,5 @@
 // angular
-var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide","ngSanitize"])
+var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide","ngSanitize", 'ngTagsInput'])
 
 // app route
 app.config(['$routeProvider','$locationProvider' , function($routeProvider, $locationProvider){
@@ -92,7 +92,7 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
         .when("/post/:id",{
             templateUrl: "views/post/post.html",
             controller: 'PostCtrl',
-            activetab: 'post'
+            type: 'singlepost'
         })
         .when("/post/hashtag/:hashtag",{
             templateUrl: "/views/explore.html",
@@ -118,22 +118,24 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
 
 // end app route
 
-/* Create factory to Disable Browser Back Button only after Logout */
-app.factory("checkAuth", function($location,$rootScope,$routeParams){
-    return {
-        getuserInfo : function(){
-			if($rootScope.isLoggedIn === undefined || $rootScope.isLoggedIn === null || $rootScope.isLoggedIn === false){
-                // console.log($rootScope.isLoggedIn)
-				// $location.path('/login');
+app.run(function($rootScope, PostServ) {
+    $rootScope.$on('$routeChangeSuccess', function(event, next, current){
+        var views = 0;
+        var message = "";
+        if(next.type == "singlepost"){
+            var data = {
+                post_id : next.params.id
             }
-            else {
-                console.log($location.path())
-                console.log($routeParams.id)
-                // $location.path('/');
-            }
-        },
-    };
-});
+            PostServ.updateviews(data).then(function(response){
+                message = response.data.message;
+                PostServ.getpost(next.params.id).then(function(response){
+                    views = response.data[0].views;
+                })
+                
+            })
+        }
+    });
+})
 
 var checklogin = function($q, $location,$rootScope,$route){
     var deferred = $q.defer();

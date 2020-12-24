@@ -4,6 +4,7 @@ if ($this->method == 'GET'){
 	$cn = new connection();
 	$getData = null;
 	$avardefault = "avarDefault.png";
+	$imgdefault = "postDefault.png";
 	if($this->params){
 		if((int)$this->params[0]>0){
 			$id = $this->params[0];
@@ -86,25 +87,26 @@ if ($this->method == 'GET'){
 		$data[] = array(
 			"ID" 			=> $row['Id'], 
 			"content" 		=> html_entity_decode($row['content']),
-			"views" 		=> $row['views'],
-			"post_status" 	=> $row['post_status'],
+			"views" 		=> intval($row['views']),
+			"post_status" 	=> (isset($row['post_status']) ? $row['post_status'] : ""),
 			"edited" 		=> $row['edited'],
 			"post_date" 	=> (new DateTime($row['post_time']))->format('d-m-Y'),
 			"post_time" 	=> (new DateTime($row['post_time']))->format('G:i'),
 			"title" 		=> $row['title'],
 			"like_count" 	=> (isset($like_count->count) ? $like_count->count : 0),
 			"comment_count" => (isset($comment_count->count) ? $comment_count->count : 0),
-			"featured_img" 	=> $row['featured_img'],
-			"point" 		=> $row['review_point'],
+			"featured_img" 	=> (isset($row['featured_img']) ? $row['featured_img'] : $imgdefault),
+			"point" 		=> (isset($row['review_point']) ? $row['review_point'] : 0),
 			"place"			=> array(
 				"id"			=> $row['place_id'],
 				"name" 			=> $row['place_name'],
 				"address" 		=> $row['place_address'],
 				"location" 		=> $row['place_city'],
-				"opentime" 		=> $row['place_open_time'],
-				"closetime" 	=> $row['place_close_time'],
+				"opentime" 		=> (new DateTime($row['place_open_time']))->format('G:i'),
+				"closetime" 	=> (new DateTime($row['place_close_time']))->format('G:i'),
 				"price"		 	=> $row['place_price'],
-				"point"			=> $point->review_sum / $point->review_count
+				"review_count"	=> (isset($point->review_count) ? $point->review_count : 0),
+				"point"			=> (isset($point->review_sum) ? ($point->review_sum * 2) / $point->review_count : 0)
 			),
 			"user" 			=> array(
 				"username" 		=> $row['username'],
@@ -122,6 +124,71 @@ if ($this->method == 'GET'){
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây
+	$cn = new connection();
+	// get posted data
+	$postdata = array(
+		"title" 	=> $this->params['post']['title'],
+		"content"	=> $this->params['post']['content'],
+		"username"	=> $this->params['post']['username']
+	);
+	$hashtags = $this->params['tags'];
+	// $hashtags = $this->params['tags'];
+	// echo $data['title'];
+		// $hashtags = array(
+		// 	0 => array(
+		// 		"id" 		=> 0,
+		// 		"hashtag" 	=> "cà phê",
+		// 		"tag" 		=> "ca phe"
+		// 	),
+		// 	1 => array(
+		// 		"id" 		=> 1,
+		// 		"hashtag" 	=> "bánh kem",
+		// 		"tag" 		=> "banh kem"
+		// 	)
+		// );
+		
+	
+	// call Sp_Themhashtag(12, "cà phê", "ca_phe");
+	
+	$result = array();
+    if($postdata['title'] !== "" && $postdata['content'] !== "" && $postdata['username'] !== "")
+    {
+		$addPost = "insert into tbl_baiviet (Noidung, Tieudebaiviet, Tentaikhoan) values ('".$postdata['content']."', '".$postdata['title']."', '".$postdata['username']."');";
+		$addTags = "";
+        $link = $cn->connect();
+        if(mysqli_query($link, $addPost)){
+            if (mysqli_affected_rows($link) > 0){
+				if(isset($hashtags)){
+					for($i = 0; $i < sizeof($hashtags); $i++) {
+						$addTags = "call Sp_Themhashtag(0,'".$hashtags[$i]['hashtag']."','".$hashtags[$i]['tag']."');";
+						$query = $cn->connect()->query($addTags); 
+					};
+				};
+				$getNewId = "select max(Idbaiviet) as id from tbl_baiviet;";
+				if ($kq = $cn->connect()->query($getNewId)){
+					$idbv = $kq->fetch_object();
+				}
+
+				$result = array(
+					"message" => 1,
+					"idbv" => $idbv->id
+				);
+            } else {
+                $result = array(
+                    "message" => 0
+                );
+            };
+        } else {
+			$result = array(
+				"message" => 0
+			);
+		};
+	} else {
+        $result = array(
+            "message" => 0
+        );
+	};
+    $this->response(200, $result);
 	// trả về dữ liệu bằng cách gọi: $this->response(200, $data)
 }
 elseif ($this->method == 'PUT'){

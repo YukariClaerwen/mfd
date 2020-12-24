@@ -39,7 +39,19 @@ app.factory("PostServ", ["$http", function($http){
         },
         unlike: function(postid, user){
             return $http.delete("http://mfd.local/api/v1/postlike/?user=" + user + "&postid=" + postid);
+        },
+        updateviews: function(data){
+            return $http.put("http://mfd.local/api/v1/postview/", data);
+        },
+        createPost: function(data) {
+            return $http({
+                method  : 'POST',
+                url     : 'http://mfd.local/api/v1/post/',
+                data    : $.param(data),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
         }
+
         // add: function(data){
         //     return $http.post("http://171.244.37.97:9119/api/todo", data);
         // },

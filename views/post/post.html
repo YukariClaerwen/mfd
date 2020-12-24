@@ -7,34 +7,67 @@
     
 </section>
 <section class="section">
-    <div class="container">
+    <div class="container pb-5">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="block_type_2 single_post mb-5">
-                    <div class="post_action d-flex justify-content-end mb-2">
-                        <a href="#" title="Sửa bài viết" class="ml-2">
-                            <ion-icon name="create-outline" size="large"></ion-icon>
-                        </a>
-                        <!-- <a href="#" title="Lưu bài viết" class="ml-2">
-                            <ion-icon name="bookmark-outline" size="large"></ion-icon>
-                            <ion-icon name="bookmark" size="large"></ion-icon>
-                        </a> -->
-                        <a href="#" title="Bỏ thích bài viết" class="ml-2" ng-show="Userpostlike" ng-click="postUnlike()">
-                            <ion-icon name="heart" size="large"></ion-icon>
-                        </a>
-                        <a href="#" title="Thích bài viết" class="ml-2" ng-show="!Userpostlike" ng-click="postAddlike()">
-                            <ion-icon name="heart-outline" size="large"></ion-icon>
-                        </a>
-                    </div>
                     <div class="post_inner px-5">
+                        <div class="post_action d-flex justify-content-end">
+                            <a href="#" title="Sửa bài viết" class="ml-2" ng-show="post.user.username === userName">
+                                <ion-icon name="create-outline" size="large"></ion-icon>
+                            </a>
+                            <!-- <a href="#" title="Lưu bài viết" class="ml-2">
+                                <ion-icon name="bookmark-outline" size="large"></ion-icon>
+                                <ion-icon name="bookmark" size="large"></ion-icon>
+                            </a> -->
+                            <a href="#" title="Bỏ thích bài viết" class="ml-2 text-danger" ng-show="Userpostlike" ng-click="postUnlike()">
+                                <ion-icon name="heart" size="large"></ion-icon>
+                            </a>
+                            <a href="#" title="Thích bài viết" class="ml-2" ng-show="!Userpostlike" ng-click="postAddlike()">
+                                <ion-icon name="heart-outline" size="large"></ion-icon>
+                            </a>
+                        </div>
                         <div class="post_content">
+                            <span class="post-stars">
+                                <ion-icon name="star" ng-repeat="i in points track by $index"></ion-icon>
+                            </span>
                             <h2>{{post.title}}</h2>
-                            <p>{{post.post_time}} ngày {{post.post_date}}</p>
+                            <p class="meta">{{post.post_time}} ngày {{post.post_date}}</p>
                             <p>{{post.content}}</p>
                         </div>
                         <div class="post_meta">
                             <div class="post_hashtags mb-3">
                                 <a class="mr-3 tag" href="/post/hashtag/{{tag.tag}}" ng-repeat="tag in post.tags">#{{tag.tag}}</a>
+                            </div>
+                            
+                            <div class="post_place py-3 d-flex justify-content-between" ng-if="post.place.id !== null">
+                                <div class="d-flex justify-content-start">
+                                    <div class="post_place_img mr-3">
+                                        <img ng-src="../public/imgs/{{post.featured_img}}" alt="{{post.place.name}}">
+                                    </div>
+                                    <div class="post_place_des">
+                                        <h5>{{post.place.name}}</h5>
+                                        <p class="m-0">
+                                            <ion-icon name="navigate-outline" class="mr-1"></ion-icon>
+                                            <span class="mt-2">{{post.place.address}}</span>
+                                        </p>
+                                        <p class="m-0">
+                                            <ion-icon name="time-outline" class="mr-1"></ion-icon>
+                                            <span class="mr-3">{{post.place.opentime}} - {{post.place.closetime}}</span>
+                                        </p>
+                                        <p class="m-0">
+                                            <ion-icon name="pricetag-outline" class="mr-1" ng-if="post.place.price"></ion-icon>
+                                            <span>{{post.place.price}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="post_place_review text-center d-flex flex-column justify-content-center align-items-stretch">
+                                    <div class="review_points">{{fixPoint(post.place.point)}}</div>
+                                    <p class="meta mb-2">({{post.place.review_count}} đánh giá)</p>
+                                    <div>
+                                        <a href="" class="btn btn-outline-success btn-sm" ng-click="addPost()"><b>Viết review</b></a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="post_other_meta d-flex justify-content-between align-items-center pt-3">
                                 <div class="d-flex justify-content-start align-items-center">
@@ -48,16 +81,13 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#{{post.ID}}-comment">{{countcmts}} Bình luận</a>
+                                    <a href="" ng-click="gotoCmt()">{{countcmts}} Bình luận</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="post_place">
-                            
-                        </div>
                     </div>
                 </div>
-                <div id="{{post.ID}}-comment" class="block_type_2 mb-5">
+                <div class="block_type_2 mb-5" id="comment_list">
                     <div class="comment-inner px-5">
                         <div class="d-flex justify-content-start single-cmt pt-3" ng-repeat="cmt in cmtList">
                             <div class="cmt-img mr-4">
@@ -66,7 +96,14 @@
                                 </a>
                             </div>
                             <div>
-                                <p class="m-0"><a class="comment_name" href="/{{cmt.username}}">{{cmt.name}}</a> <small class="comment-date">{{cmt.date}}</small></p>
+                                <p class="m-0">
+                                    <a class="comment_name" href="/{{cmt.username}}">{{cmt.name}}</a> 
+                                    <small class="comment-date">
+                                        <span>{{cmt.date}}</span>
+                                        <span>lúc</span>
+                                        <span>{{cmt.time}}</span>
+                                    </small>
+                                </p>
                                 <p>{{cmt.content}}</p>
                             </div>
                         </div>
@@ -93,5 +130,8 @@
             </div>
         </div>
         
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5" ng-include="'views/includes/post/listpost.html'">
+            
+        </div>
     </div>
 </section>
