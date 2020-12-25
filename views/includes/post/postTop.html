@@ -30,11 +30,11 @@
             </div>
         </div>
         <div class="head-profile-meta d-flex align-items-center">
-            <a class="mr-4" ng-href="/{{post.user.username}}/followers">
+            <a class="mr-4" ng-href="/{{post.user.username}}/followers" ng-click="scroll()">
                 <span class="number">{{followers.length}}</span>
                 <span>Người theo dõi</span>
             </a>
-            <a  ng-href="/{{post.user.username}}/following">
+            <a  ng-href="/{{post.user.username}}/following" ng-click="scroll()">
                 <span class="number">{{following.length}}</span>
                 <span>Đang theo dõi</span>
             </a>

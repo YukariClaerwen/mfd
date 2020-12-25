@@ -66,8 +66,8 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             
     } 
 }]);
-app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "PostServ", "$routeParams", "PlaceServ", "$timeout",
-    function($scope, $location, $rootScope, UserServ, PostServ,$routeParams,PlaceServ, $timeout){
+app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "PostServ", "$routeParams", "PlaceServ", "$timeout", "$anchorScroll",
+    function($scope, $location, $rootScope, UserServ, PostServ,$routeParams,PlaceServ, $timeout, $anchorScroll){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
@@ -347,40 +347,10 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "Po
             })
         }
     }
-    // $scope.uploadFiles = function (files) {
-    //     $scope.files = files;
-    //     if (files && files.length) {
-    //         // var names = [];
-    //         // for (var i = files.length - 1; i >= 0; i--) 
-    //         // names.push(i + "_" + files[i].name);
-    //         Upload.upload({
-    //             url: '/api/models/uploadFile.php', 
-    //             method: 'POST',
-    //             file: files,
-    //             data: {
-    //                 'awesomeThings': $scope.awesomeThings,
-    //                 'targetPath' : '/public/imgs/'
-    //             },
-    //             fileFormDataName: names,
-    //             headers: {
-    //                 'Content-Type': undefined
-    //             }
-    //         }).then(function (response) {
-    //             $timeout(function () {
-    //                 $scope.result = response.data;
-    //                 console.log( $scope.result);
-    //             });
-    //         }, function (response) {
-    //             if (response.status > 0) {
-    //                 $scope.errorMsg = response.status + ': ' + response.data;
-    //             }
-    //         }, function (evt) {
-    //             $scope.progress = 
-    //                 Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-    //         });
-    //         console.log(files);
-    //     }
-    // };
+    
+    $scope.scroll = function () {
+        $anchorScroll();
+    };
 }])
 
 var xoa_dau = function(str) {

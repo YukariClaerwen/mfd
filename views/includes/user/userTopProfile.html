@@ -3,9 +3,9 @@
         background-image:url(../public/imgs/{{cover}});
     }
 </style>
-<div class="head-profile mb-5">
+<div class="head-profile mb-5 bg-white">
     <div ng-class="cover ? 'head-profile-cover head-profile-has-cover' : 'head-profile-cover'"></div>
-    <div class="container head-profile-inner d-flex flex-column position-relative">
+    <div class="container head-profile-inner d-flex flex-column position-relative pb-4">
         <div class="head-profile-avar">
             <div size="102" class="head-profile-avar-border d-flex justify-content-center align-items-center">
                 <div size="96" title="{{user.name}}" role="img" class="head-profile-avar-img">
@@ -25,11 +25,11 @@
             </div>
         </div>
         <div class="head-profile-meta d-flex align-items-center">
-            <a class="mr-4" ng-href="/{{user.username}}/followers">
+            <a class="mr-4" ng-href="/{{user.username}}/followers" ng-click="scroll()">
                 <span class="number">{{user.followers}}</span>
                 <span>Người theo dõi</span>
             </a>
-            <a  ng-href="/{{user.username}}/following">
+            <a  ng-href="/{{user.username}}/following" ng-click="scroll()">
                 <span class="number">{{user.following}}</span>
                 <span>Đang theo dõi</span>
             </a>

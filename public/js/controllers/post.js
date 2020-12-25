@@ -11,6 +11,7 @@ app.controller(
         $scope.key= "";
         $scope.hashtag = "";
         $scope.imgs = {};
+        $rootScope.Posts = [];
 
         
         
@@ -38,6 +39,7 @@ app.controller(
             $rootScope.loading = true;
             PostServ.get().then(function(response){
                 $scope.posts = response.data;
+                $rootScope.Posts = response.data;
                 console.log($scope.posts);
                 const Postsjson = JSON.stringify(response.data);
                 $rootScope.loading = false;
@@ -54,8 +56,6 @@ app.controller(
                     }
                 });
                 window.localStorage.setItem("mfdPosts", Postsjson);
-                // console.log(localStorage.getItem("mfdPosts"));
-                // console.log($scope.posts);
             })
         }
         
@@ -210,7 +210,7 @@ app.controller(
         $scope.user = {};
         $scope.cover = null;
         getuser(UserServ,$routeParams.user,$scope)
-        
+        $scope.limitcmt = 1;
         /* get plan*/
         $scope.plans=[];
         PlanServ.get($routeParams.user).then(function(response){
@@ -219,11 +219,21 @@ app.controller(
         })
         $scope.posts=[];
         $scope.nopost= true;
-        PostServ.getpostbyuser($routeParams.user).then(function(response){
-            $scope.posts= response.data;
-            console.log($scope.posts[0].comments);
-            if($scope.posts.length > 0){$scope.nopost =false;}
-        })
+        // window.localStorage.removeItem("mfdplaceList");
+        $rootScope.localPosts = JSON.parse(window.localStorage.getItem("mfdPosts"));
+
+        angular.forEach($rootScope.localPosts, function(value, key) {
+            if(value.user.username == $routeParams.user){
+                value.message = null;
+                this.push(value)
+            }
+        }, $scope.posts);
+        if($scope.posts.length > 0){$scope.nopost =false;}
+        // PostServ.getpostbyuser($routeParams.user).then(function(response){
+        //     $scope.posts= response.data;
+        //     console.log($scope.posts[0].comments);
+        //     if($scope.posts.length > 0){$scope.nopost =false;}
+        // })
         // get City
         $scope.cities=[];
         PlanServ.getCity().then(function(response){
@@ -238,9 +248,10 @@ app.controller(
             $scope.following = response.data;
         })
         $scope.Userfollowing = false;
-        UserServ.getfollowers($routeParams.user).then(function(response){
-            $scope.getfollowers(response);
-        });
+        getfollowers(UserServ,$routeParams.user,$scope,$rootScope)
+        // UserServ.getfollowers($routeParams.user).then(function(response){
+        //     $scope.getfollowers(response);
+        // });
         $scope.luuthongtin = function(){
             console.log($location.path());
             var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
@@ -327,6 +338,86 @@ app.controller(
         $scope.unfollowUser = function(user){
             unfollowUser($rootScope,user,UserServ,$scope);
         }
+
+        
+        $scope.submit_comment = function(index){
+            var message = {
+                content : $scope.posts[index].message,
+                post_id : $scope.posts[index].ID,
+                username : $rootScope.userName
+            };
+            PostServ.addcmt(message).then(function(response){
+                $scope.posts[index].comments = response.data;
+                $scope.posts[index].message = "";
+                PostServ.get().then(function(response){
+                    $rootScope.Posts = response.data;
+                    window.localStorage.removeItem("mfdPosts");
+                    const Postsjson = JSON.stringify(response.data);
+                    window.localStorage.setItem("mfdPosts", Postsjson);
+                })
+            })
+        }
+
+        $scope.imgsuser = [];
+        UserServ.getimgs($routeParams.user).then(function(res){
+            $scope.imgsuser =res.data;
+            // console.log($scope.imgsuser);
+        })
+
+        
+        // $scope.postAddlike = function(id){
+        //     if($rootScope.isLoggedIn){
+        //         var data = {
+        //             post_id : id,
+        //             username : $rootScope.userName
+        //         };
+        //         PostServ.addlike(data).then(function(response){
+        //             if(response.data.message == 1){
+        //                 PostServ.getlike(data.post_id).then(function(resposne){
+        //                     $scope.getlike(resposne);
+        //                 })sss
+        //             } else {
+        //                 console.log("error");
+        //             }
+        //         })
+        //     } else {
+        //         var alert = confirm("Hãy đăng nhập để có thể thích bài viết!")
+        //         if(alert){
+        //             $location.path("/login");
+        //         }
+        //     }
+        // }
+        // $scope.postUnlike = function(id){
+        //     var data = {
+        //         post_id : id,
+        //         username : $rootScope.userName
+        //     };
+        //     PostServ.unlike(data.post_id,data.username).then(function(response){
+        //         if(response.data.message == 1){
+        //             PostServ.getlike(data.post_id).then(function(resposne){
+        //                 $scope.getlike(resposne);
+        //             })
+        //         } else {
+        //             console.log("error");
+        //         }
+        //     })
+        // }
+
+        
+        // $scope.getlike = function(res){
+        //     $scope.postlike = res.data;
+        //     $scope.count = 0;
+        //     $scope.postlike.users.forEach(ele => {
+        //         if (ele === $rootScope.userName){
+        //             $scope.count++;
+        //         }
+        //     });
+        //     if ($scope.count === 1) {
+        //         $scope.Userpostlike = true;
+        //     } else {
+        //         $scope.Userpostlike = false;
+        //     }
+        // }
     }   
 ])
 

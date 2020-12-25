@@ -56,6 +56,9 @@ app.factory("UserServ", ["$http", function($http){
         },
         unfollow: function(user, unfollowuser) {
             return $http.delete("http://mfd.local/api/v1/follow/?username=" + user + "&unfollow=" + unfollowuser);
+        },
+        getimgs: function(user){
+            return $http.get("http://mfd.local/api/v1/imagebyuser/"+user);
         }
         // delete: function(id){
         //     return $http.delete("http://171.244.37.97:9119/api/todo/" + id);

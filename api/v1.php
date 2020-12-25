@@ -20,6 +20,7 @@ class api extends R_api{
     function city(){ include './models/city.php';}
     function postview(){ include './models/postview.php';}
     function place(){ include './models/place.php';}
+    function imagebyuser(){ include './models/imagebyuser.php';}
 }
     $api = new api();
 ?>

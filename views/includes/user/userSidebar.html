@@ -1,21 +1,28 @@
-
-<a href="/{{user.username}}" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username)}">Hồ sơ</a>
-<a href="/{{user.username}}/posts" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username+'/posts')}" >Danh sách bài viết</a>
-<a href="/{{user.username}}/likes" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username+'/likes')}">Danh sách yêu thích</a>
-<a href="/{{user.username}}/plans" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username+'/plans')}">Kế hoạch khám phá ẩm thực</a>
-<a href="/{{user.username}}/gallery" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username+'/gallery')}">Hình ảnh & Video</a>
-<a href="/{{user.username}}/settings" 
-    class="list-group-item list-group-item-action" 
-    ng-class="{active : isActive('/'+user.username+'/settings')}"
-    ng-if="user.username === userName">Settings</a>
-
+<div class="sticky-top">
+    <div class="list-group">
+        <!-- <a href="/{{user.username}}" 
+            class="list-group-item list-group-item-action" 
+            ng-class="{active : isActive('/'+user.username)}">Hồ sơ</a> -->
+        <a href="/{{user.username}}/posts" 
+        class="list-group-item list-group-item-action" 
+        ng-class="{active : (isActive('/'+user.username) || isActive('/'+user.username+'/posts'))}" 
+        ng-click="scroll()">Danh sách bài viết</a>
+        <!-- <a href="/{{user.username}}/likes" 
+        class="list-group-item list-group-item-action" 
+        ng-class="{active : isActive('/'+user.username+'/likes')}"
+        ng-click="scroll()">Danh sách yêu thích</a> -->
+        <a href="/{{user.username}}/plans" 
+        class="list-group-item list-group-item-action" 
+        ng-class="{active : isActive('/'+user.username+'/plans')}"
+        ng-click="scroll()">Kế hoạch khám phá ẩm thực</a>
+        <a href="/{{user.username}}/gallery" 
+        class="list-group-item list-group-item-action" 
+        ng-class="{active : isActive('/'+user.username+'/gallery')}"
+        ng-click="scroll()">Hình ảnh</a>
+        <a href="/{{user.username}}/settings" 
+        class="list-group-item list-group-item-action" 
+        ng-class="{active : isActive('/'+user.username+'/settings')}"
+        ng-if="user.username === userName"
+        ng-click="scroll()">Hồ sơ</a>
+    </div>
+</div>

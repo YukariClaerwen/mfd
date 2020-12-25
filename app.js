@@ -47,7 +47,7 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
             activetab: 'explore'
         })
         .when("/:user",{
-            templateUrl: "/views/user/user.html",
+            templateUrl: "/views/user/userposts.html",
             controller: 'UserCtrl',
             activetab: 'user'
         })
