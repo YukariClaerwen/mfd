@@ -16,6 +16,10 @@ app.controller(
             $scope.cities= response.data;
             //console.log($scope.cities[0].Name);
         })
+        $scope.imgs = {};
+
+        
+        
         if($scope.path[2] == "hashtag"){
             $scope.hashtag = $routeParams.hashtag;
             PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
@@ -37,7 +41,23 @@ app.controller(
             PostServ.get().then(function(response){
                 $scope.posts = response.data;
                 console.log($scope.posts);
+                const Postsjson = JSON.stringify(response.data);
                 $rootScope.loading = false;
+                var keepgoing = true;
+                $scope.posts.forEach(element => {
+                    if(keepgoing){
+                        if(element.ID === $routeParams.id){
+                            $scope.post = element;
+                            followFn($scope,UserServ,$scope.post.user.username,$rootScope);
+                            $scope.points = $scope.getNumber($scope.post.point);
+                            getimgs(PostServ,$scope.post.ID,$scope);
+                            keepgoing = false;
+                        }
+                    }
+                });
+                window.localStorage.setItem("mfdPosts", Postsjson);
+                // console.log(localStorage.getItem("mfdPosts"));
+                // console.log($scope.posts);
             })
         }      
         $scope.SearchLocation = function(){
@@ -67,12 +87,13 @@ app.controller(
                 console.log($scope.posts);
             })
         }*/
-        PostServ.getpost($routeParams.id).then(function(response){
-            $scope.post = response.data[0];
-            followFn($scope,UserServ,$scope.post.user.username,$rootScope);
-            $scope.points = $scope.getNumber($scope.post.point);
-            // $scope.placepoint = parseFloat($scope.post.place.point).toFixed(1);
-        })
+        
+        // PostServ.getpost($routeParams.id).then(function(response){
+        //     $scope.post = response.data[0];
+        //     followFn($scope,UserServ,$scope.post.user.username,$rootScope);
+        //     $scope.points = $scope.getNumber($scope.post.point);
+        //     // $scope.placepoint = parseFloat($scope.post.place.point).toFixed(1);
+        // })
         $scope.hashtags = [];
         HashtagServ.gethashtag().then(function(response){
             $scope.hashtags= response.data;
@@ -115,19 +136,26 @@ app.controller(
             $scope.getlike(resposne);
         })
         $scope.postAddlike = function(){
-            var data = {
-                post_id : $scope.post.ID,
-                username : $rootScope.userName
-            };
-            PostServ.addlike(data).then(function(response){
-                if(response.data.message == 1){
-                    PostServ.getlike(data.post_id).then(function(resposne){
-                        $scope.getlike(resposne);
-                    })
-                } else {
-                    console.log("error");
+            if($rootScope.isLoggedIn){
+                var data = {
+                    post_id : $scope.post.ID,
+                    username : $rootScope.userName
+                };
+                PostServ.addlike(data).then(function(response){
+                    if(response.data.message == 1){
+                        PostServ.getlike(data.post_id).then(function(resposne){
+                            $scope.getlike(resposne);
+                        })
+                    } else {
+                        console.log("error");
+                    }
+                })
+            } else {
+                var alert = confirm("Hãy đăng nhập để có thể thích bài viết!")
+                if(alert){
+                    $location.path("/login");
                 }
-            })
+            }
         }
         $scope.postUnlike = function(){
             var data = {
@@ -159,10 +187,17 @@ app.controller(
             }
         }
         $scope.followUser = function(user) {
-            followUser($rootScope,user,UserServ,$scope);
+            if($rootScope.isLoggedIn){
+                followUser($rootScope,user,UserServ,$scope);
+            } else {
+                var alert = confirm("Hãy đăng nhập để theo dõi tài khoản này");
+                if(alert){
+                    $location.path("/login");
+                }
+            }
         }
         $scope.unfollowUser = function(user){
-            var alert = confirm("Bạn có chắc chắn muốn xóa hay không?");
+            var alert = confirm("Bạn có chắc chắn muốn xóa theo dõi hay không?");
             if(alert){
                 unfollowUser($rootScope,user,UserServ,$scope);
             }
@@ -288,7 +323,7 @@ app.controller(
                 Date:  d
             }
             //console.log($location.search());
-            console.log(data);
+            // console.log(data);
             PlanServ.createplan(data).then(function(response){
                 PlanServ.get($routeParams.user).then(function(response){
                     $scope.plans = response.data;
@@ -342,6 +377,13 @@ var getfollowers = function(service, user, scope, rootScope) {
 var getuser = function(service, user, scope) {
     service.getuser(user).then(function(response){
         scope.user = response.data[0];
+    })
+}
+
+var getimgs = function(service,postid,scope) {
+    service.getImgs(postid).then(function(response){
+        console.log(response.data)
+        scope.imgs =  response.data;
     })
 }
 

@@ -79,9 +79,9 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="editor_block_modal" ng-include="'views/includes/post/posteditor.html'" ng-if="editor_block"></div>
+    <div class="editor_block_modal" ng-include="'views/includes/post/posteditorNew.html'" ng-if="editor_block"></div>
     
-    <footer>
+    <footer ng-hide="isActive('/login') || isActive('/register')">
         <div class="text-center py-3">
             &copy; <?php echo date("Y"); ?>  <a href="/" title="Meet.Foodie"><b>M.fd</b></a>
         </div>
@@ -98,6 +98,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-sanitize.js"></script>
     
 
+    <script src="public/js/libs/ng-file-upload.min.js"></script>
     <script src="public/js/libs/ng-tags-input.min.js"></script>
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -110,6 +111,7 @@
     <script src="public/js/services/post.js"></script>
     <script src="public/js/services/user.js"></script>
     <script src="public/js/services/plan.js"></script>
+    <script src="public/js/services/place.js"></script>
     <script src="public/js/services/hashtag.js"></script>
     <script src="public/js/controllers/mfd.js"></script>
     <script src="public/js/controllers/post.js"></script>

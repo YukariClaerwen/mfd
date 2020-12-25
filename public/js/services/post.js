@@ -1,4 +1,4 @@
-app.factory("PostServ", ["$http", function($http){
+app.factory("PostServ", ["$http","Upload", function($http,Upload){
     return {
         get: function(){
             return $http.get("http://mfd.local/api/v1/post");
@@ -53,6 +53,22 @@ app.factory("PostServ", ["$http", function($http){
                 data    : $.param(data),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
+        },
+        uploadImgs: function(files) {
+            return Upload.upload({
+                url: 'http://mfd.local/api/models/uploadFile.php', 
+                method: 'POST',
+                file: files,
+                data: {
+                    'targetPath' : '/public/imgs/'
+                },
+                headers: {
+                    'Content-Type': undefined
+                }
+            })
+        },
+        getImgs: function(id) {
+            return $http.get("http://mfd.local/api/v1/image/"+id);
         }
 
         // add: function(data){

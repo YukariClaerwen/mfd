@@ -19,6 +19,7 @@ class api extends R_api{
     function postlike(){ include './models/postlike.php';}
     function city(){ include './models/city.php';}
     function postview(){ include './models/postview.php';}
+    function place(){ include './models/place.php';}
 }
     $api = new api();
 ?>

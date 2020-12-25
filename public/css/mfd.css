@@ -340,6 +340,32 @@ ion-icon {
     font-weight: bold;
     color: var(--primary-color);
 }
+.modal-body .post_place {
+    border-top: 1px solid #eee;
+}
+.modal-body .post_place:first-child{
+    border-top: none;
+}
+.modal-body .post_place_img {
+    width: 80px;
+    max-height: 80px;
+}
+.post_content_inner {
+    white-space: pre-line;
+}
+.post-stars a {
+    color: silver;
+}
+.post-stars a.stars {
+    color: #ffc107;
+} 
+.post-stars a:hover {
+    text-decoration: none;
+    color: #ffc107;
+}
+.progress {
+    height: 1.3rem;
+} 
 /* .single-cmt:first-child {
     border: none;
 } */

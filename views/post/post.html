@@ -33,7 +33,7 @@
                             </span>
                             <h2>{{post.title}}</h2>
                             <p class="meta">{{post.post_time}} ngày {{post.post_date}}</p>
-                            <p>{{post.content}}</p>
+                            <p class="post_content_inner">{{post.content}}</p>
                         </div>
                         <div class="post_meta">
                             <div class="post_hashtags mb-3">
@@ -43,7 +43,7 @@
                             <div class="post_place py-3 d-flex justify-content-between" ng-if="post.place.id !== null">
                                 <div class="d-flex justify-content-start">
                                     <div class="post_place_img mr-3">
-                                        <img ng-src="../public/imgs/{{post.featured_img}}" alt="{{post.place.name}}">
+                                        <img ng-src="../public/imgs/{{post.place.img}}" alt="{{post.place.name}}">
                                     </div>
                                     <div class="post_place_des">
                                         <h5>{{post.place.name}}</h5>
@@ -51,7 +51,7 @@
                                             <ion-icon name="navigate-outline" class="mr-1"></ion-icon>
                                             <span class="mt-2">{{post.place.address}}</span>
                                         </p>
-                                        <p class="m-0">
+                                        <p class="m-0" ng-show="post.place.opentime != '' || post.place.closetime != ''">
                                             <ion-icon name="time-outline" class="mr-1"></ion-icon>
                                             <span class="mr-3">{{post.place.opentime}} - {{post.place.closetime}}</span>
                                         </p>
@@ -126,6 +126,14 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="w-100 mb-3" ng-repeat="item in imgs | limitTo: 3" >
+                    <img 
+                    ng-src="../public/imgs/{{item.src}}" 
+                    alt="{{item.src}}" title="{{item.src}}"
+                    class="img-thumbnail img-fluid">
                 </div>
             </div>
         </div>

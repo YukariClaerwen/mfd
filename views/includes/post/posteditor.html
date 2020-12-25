@@ -16,9 +16,7 @@
                                     <div class="form-group">
                                         <input type="text" ng-model="postForm.title" class="form-control" placeholder="Tiêu đề bài viết">
                                     </div>
-                                    <textarea name="editor1" id="editor1" rows="10" class="form-control" ng-model="postForm.content">
-                                        Nội dung bài viết
-                                    </textarea>
+                                    <textarea name="content" id="content" class="form-control" rows="3" placeholder="Nội dung bài viết" ng-model="postForm.content"></textarea>
                                     <tags-input ng-model="tags" add-on-enter="true"
                                                 min-length="0"
                                                 display-property="text"
@@ -27,6 +25,8 @@
                                                 placeholder="Thêm tag">
                                         <auto-complete source="loadTags($query)"></auto-complete>
                                     </tags-input>
+                                    <a href="" ng-click="selectPlace" class="btn btn-success-outline btn-block">Chọn địa điểm</a>
+                                    <input type="hidden" ng-model="postForm.place">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" ng-click="close_block_add()">Close</button>
@@ -39,9 +39,4 @@
             </div>
         </div>
     </div>
-    <!-- <script>
-        // Replace the <textarea id="editor1"> with a CKEditor 4
-        // instance, using default configuration.
-        CKEDITOR.replace( 'editor1' );
-    </script> -->
 </div>

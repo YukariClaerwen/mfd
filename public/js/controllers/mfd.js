@@ -14,7 +14,7 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
                 console.log($scope.result);
                 if($scope.result.success == 2)
                 {
-                    alert('login successful');
+                    alert('Đăng nhập thành công');
                     $rootScope.isLoggedIn = true;
                     const mfdSession = [{
                         email: user.email,
@@ -66,8 +66,8 @@ app.controller('loginCtrl',["$scope","$location","$rootScope","$sce","UserServ",
             
     } 
 }]);
-app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "PostServ", 
-    function($scope, $location, $rootScope, UserServ, PostServ){
+app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "PostServ", "$routeParams", "PlaceServ", "$timeout",
+    function($scope, $location, $rootScope, UserServ, PostServ,$routeParams,PlaceServ, $timeout){
     $scope.isActive = function(route) {
         return route === $location.path();
     }
@@ -85,11 +85,14 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "Po
     $rootScope.postloading = false;
     $rootScope.loading = false;
     $rootScope.editor_block = false;
+    $rootScope.writepost_block = true;
+    $rootScope.select_place = false;
     // console.log($rootScope.isLoggedIn);
     // console.log($scope.mfdSession);
     // Call checkAuth factory for cheking login details
 
     $scope.logout = function () {
+        confirm("Bạn có muốn đăng xuất?")
         window.localStorage.removeItem("mfdssn");
         $rootScope.isLoggedIn = false;
         $rootScope.session = null;
@@ -174,11 +177,87 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "Po
     $scope.getoldlink = function(){
         $rootScope.oldlink = $location.path();
     }
+    // console.log($routeParams);
+    $rootScope.placeList = [];
+    $scope.getPlace = {};
     $scope.addPost = function(){
-        $rootScope.editor_block = true;
+        if($rootScope.isLoggedIn)
+        {
+            $scope.postplace = false;
+            $rootScope.editor_block = true;
+            if($routeParams.id){
+                PostServ.getpost($routeParams.id).then(function(response){
+                    $scope.getPlace = response.data[0].place;
+                    if($scope.getPlace.id == null){
+                        $scope.postplace = false;
+                    } else {
+                        $scope.postplace = true;
+                    }
+                })
+            } else {
+                $scope.postplace = false;
+            }
+        } else {
+            var alert = confirm("Hãy đăng nhập để viết bài");
+            if(alert){
+                $location.path('/login');
+            }
+        }
+    }
+    $scope.close_select_place = function(){
+        $rootScope.writepost_block = true;
+        $rootScope.select_place = false;
     }
     $scope.close_block_add = function(){
+        $scope.close_select_place();
         $rootScope.editor_block = false;
+        $scope.postplace = false;
+        $scope.imgsplace = false;
+        $scope.files = [];
+        // $scope.getPlace.id = null;
+    }
+    // window.localStorage.removeItem("mfdplaceList");
+    if(localStorage.getItem("mfdplaceList")) {
+        $rootScope.placeList = JSON.parse(window.localStorage.getItem("mfdplaceList"));
+    }
+    else {
+        PlaceServ.get().then(function(response){
+            const placeListjson = JSON.stringify(response.data);
+            window.localStorage.setItem("mfdplaceList", placeListjson);
+            $rootScope.placeList = JSON.parse(window.localStorage.getItem("mfdplaceList"));
+        })
+    }
+    $scope.placePoint = 0;
+    $scope.addPoint = function(p) {
+        $scope.placePoint = $scope.placePoint + p + 1;
+    }
+    $scope.removePoint = function(p){
+        $scope.placePoint = p + 1;
+    }
+    $scope.removePlace = function(){
+        $scope.postplace = false;
+        $scope.placePoint = 0;
+        // $scope.getPlace.id = null;
+    }
+    $scope.selectPlace = function(){
+        $rootScope.writepost_block = false;
+        $rootScope.select_place = true;
+    }
+    $scope.pickPlace = function(id){
+        var keepgoing = true;
+        if(keepgoing){
+            $rootScope.placeList.forEach(element => {
+                if(element.id === id){
+                    $scope.getPlace = element;
+                    keepgoing = false;
+                    $scope.close_select_place();
+                    $scope.postplace = true;
+                }
+            });
+        }
+    }
+    $scope.getNumber = function(num) {
+        return new Array(parseInt(num));   
     }
 
       
@@ -196,46 +275,112 @@ app.controller("mainCtrl", ["$scope", "$location", "$rootScope", "UserServ", "Po
                 currentId = previousTag.id + 1;
         }
         $tag.id = currentId;
-        console.log($tag.id, $tag.text)
+        // console.log($tag.id, $tag.text)
     }
-    $scope.postForm = {};
-
-    $scope.createPost = function(){
-        var inputhashtags = [];
-        var inputhashtag = {};
-        $scope.tags.forEach(element => {
-            inputhashtag = {
-                id : element.id,
-                hashtag : element.text.toLowerCase(),
-                tag : xoa_dau(element.text.toLowerCase())
-            }
-            inputhashtags.push(inputhashtag);
-        });
-        var data = {
-            post : {
-                title: $scope.postForm.title,
-                content: $scope.postForm.content,
-                username : $rootScope.userName
-            },
-            tags : inputhashtags
+    
+    $scope.imgsplace = false;
+    $scope.addImgs = function(){
+        $scope.imgsplace = true;
+    }
+    $scope.files = [];
+    $scope.uploadFiles = function(files) {
+        if(files && files.length){
+            PostServ.uploadImgs(files).then(function(response){
+                $timeout(function () {
+                    $scope.results = response.data;
+                        $scope.results.forEach(element => {
+                            $scope.files.push(element);   
+                        });
+                });
+            })
         }
-        // console.log(data);
-        PostServ.createPost(data).then(function(response){
-            $scope.result = response.data;
-            if($scope.result.message = 0) {
-                alert("Đăng bài thất bại, vui lòng thao tác lại");
-            }
-            else {
-                $scope.postForm.title = "";
-                $scope.postForm.content = "";
-                $scope.tags = [];
-                $scope.close_block_add();
-                alert("Đăng bài viết thành công");
-                $location.path("/post/"+$scope.result.idbv);
-            }
-            // console.log($scope.message);
-        })
     }
+    $scope.removethisfile = function(f){
+        var index = $scope.files.indexOf(f);
+        $scope.files.splice(index, 1)
+        console.log($scope.files)
+    }
+
+    $scope.postForm = {};
+    $scope.createPost = function(){
+        console.log($scope.postplace);
+        if($scope.postplace && $scope.placePoint == 0) {
+            alert("Hãy đánh giá địa điểm bạn chọn");
+        } else {
+            var inputhashtags = [];
+            var inputhashtag = {};
+            $scope.tags.forEach(element => {
+                inputhashtag = {
+                    id : element.id,
+                    hashtag : element.text.toLowerCase(),
+                    tag : xoa_dau(element.text.toLowerCase())
+                }
+                inputhashtags.push(inputhashtag);
+            });
+            var data = {
+                post : {
+                    title: $scope.postForm.title,
+                    content: $scope.postForm.content,
+                    username : $rootScope.userName,
+                    placeid: $scope.getPlace.id,
+                    points: $scope.placePoint
+                },
+                tags : inputhashtags,
+                imgs : $scope.files
+            }
+            console.log(data);
+            PostServ.createPost(data).then(function(response){
+                $scope.result = response.data;
+                console.log($scope.result);
+                if($scope.result.message == 0) {
+                    alert("Đăng bài viết thất bại, vui lòng thao tác lại!");
+                }
+                else {
+                    $scope.postForm.title = "";
+                    $scope.postForm.content = "";
+                    $scope.tags = [];
+                    $scope.close_block_add();
+                    alert("Đăng bài viết thành công");
+                    $location.path("/post/"+$scope.result.idbv);
+                }
+                // console.log($scope.message);
+            })
+        }
+    }
+    // $scope.uploadFiles = function (files) {
+    //     $scope.files = files;
+    //     if (files && files.length) {
+    //         // var names = [];
+    //         // for (var i = files.length - 1; i >= 0; i--) 
+    //         // names.push(i + "_" + files[i].name);
+    //         Upload.upload({
+    //             url: '/api/models/uploadFile.php', 
+    //             method: 'POST',
+    //             file: files,
+    //             data: {
+    //                 'awesomeThings': $scope.awesomeThings,
+    //                 'targetPath' : '/public/imgs/'
+    //             },
+    //             fileFormDataName: names,
+    //             headers: {
+    //                 'Content-Type': undefined
+    //             }
+    //         }).then(function (response) {
+    //             $timeout(function () {
+    //                 $scope.result = response.data;
+    //                 console.log( $scope.result);
+    //             });
+    //         }, function (response) {
+    //             if (response.status > 0) {
+    //                 $scope.errorMsg = response.status + ': ' + response.data;
+    //             }
+    //         }, function (evt) {
+    //             $scope.progress = 
+    //                 Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+    //         });
+    //         console.log(files);
+    //     }
+    // };
 }])
 
 var xoa_dau = function(str) {

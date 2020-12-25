@@ -1,0 +1,205 @@
+<div class="block_add_post d-flex justify-content-center align-items-center" ng-click="close_block_add()">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-8" ng-click="$event.stopPropagation()">
+                <div ng-if="writepost_block" class="" tabindex="-1">
+                    <div class=" modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Viết review</h5>
+                                <button type="button" class="close" ng-click="close_block_add()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="postForm.title" class="form-control" placeholder="Tiêu đề bài viết">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="content" id="content" class="form-control" rows="3" placeholder="Nội dung bài viết" ng-model="postForm.content"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <tags-input ng-model="tags" add-on-enter="true"
+                                                min-length="0"
+                                                display-property="text"
+                                                key-property="id"
+                                                on-tag-added="onTagAdded($tag)"
+                                                placeholder="Thêm tag"
+                                                ng-class="form-control">
+                                        <auto-complete source="loadTags($query)"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                    <div class="form-group form-row">
+                                        <div class="col">
+                                            <a href="" ng-click="selectPlace()" class="btn btn-outline-success btn-block">Chọn địa điểm</a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="" ng-click="addImgs()" class="btn btn-outline-success btn-block" ngf-select="uploadFiles($files)" multiple 
+                                            accept="image/*">Thêm hình ảnh</a>
+                                        </div>
+                                    </div>
+                                    <div class="post_imgs py-3 text-left" ng-if="imgsplace">
+                                        <!-- <button ngf-select="uploadFiles($files)" multiple 
+                                                accept="image/*">Select Files</button> -->
+                                        <div class="row text-center">
+                                            <div ng-repeat="f in files" class="col-2 mb-2 img_upload positionr-relative">
+                                                <img ng-src="../public/imgs/{{f.name}}" class="img-thumbnail">
+                                                <a href="" class="icon-btn" ng-click="removethisfile(f)"><ion-icon name="close"></ion-icon></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="post_place py-3 text-left " ng-if="postplace">
+                                        <div class="row justify-content-between align-items-start">
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <div class="post_place_img mr-3">
+                                                            <img ng-src="../public/imgs/{{getPlace.img}}" alt="{{getPlace.name}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <div class="post_place_des">
+                                                            <h5>{{getPlace.name}}</h5>
+                                                            <p class="m-0">
+                                                                <ion-icon name="navigate-outline" class="mr-1"></ion-icon>
+                                                                <span class="mt-2">{{getPlace.address}}</span>
+                                                            </p>
+                                                            <p class="m-0" ng-show="getPlace.opentime != '' || getPlace.closetime != ''">
+                                                                <ion-icon name="time-outline" class="mr-1"></ion-icon>
+                                                                <span class="mr-3">{{getPlace.opentime}} - {{getPlace.closetime}}</span>
+                                                            </p>
+                                                            <p class="m-0">
+                                                                <ion-icon name="pricetag-outline" class="mr-1" ng-if="getPlace.price"></ion-icon>
+                                                                <span>{{getPlace.price}}</span>
+                                                            </p>
+                                                            <div class="w-100 mt-3 pt-3" style="border-top: 1px solid #eee;">
+                                                                <span class="mr-3">Đánh giá: </span>
+                                                                <span class="post-stars" style="vertical-align: middle;">
+                                                                    <a class="stars" href="" ng-repeat="i in getNumber(placePoint) track by -$index" ng-click="removePoint($index)">
+                                                                        <ion-icon name="star"></ion-icon>
+                                                                    </a>
+                                                                    <a href="" ng-repeat="i in getNumber(5-placePoint) track by $index" ng-click="addPoint($index)">
+                                                                        <ion-icon name="star-outline"></ion-icon>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 text-right">
+                                                <a href="" class="btn btn-outline-success" ng-click="removePlace()">Xóa</a>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" ng-model="getPlace.id" ng-value="getPlace.id" ng-if="getPlace.id !== undefined">
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="close_block_add()">Đóng</button>
+                                    <button type="button" type="submit" class="btn btn-success" ng-click="createPost()" ng-disabled="!postForm.title || !postForm.content">Lưu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="select_place" class="" tabindex="-1">
+                    <div class=" modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chọn địa điểm</h5>
+                                <button type="button" class="close" ng-click="close_select_place()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-grouop">
+                                            <input type="text" ng-model="SearchPlace" class="form-control" id="" placeholder="Tìm địa điểm">
+                                        </div>
+                                    </form>
+                                    <div class="mt-4">
+                                        <div class="post_place py-3 d-flex justify-content-between text-left align-items-start" ng-repeat="p in placeList | filter : SearchPlace">
+                                            <div class="d-flex justify-content-start">
+                                                <div class="post_place_img mr-3">
+                                                    <img ng-src="../public/imgs/{{p.img}}" alt="{{p.name}}">
+                                                </div>
+                                                <div class="post_place_des">
+                                                    <h5>{{p.name}}</h5>
+                                                    <p class="m-0">
+                                                        <ion-icon name="navigate-outline" class="mr-1"></ion-icon>
+                                                        <span class="mt-2">{{p.address}}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <a href="" class="btn btn-outline-success" ng-click="pickPlace(p.id)">Chọn</a>
+                                        </div>
+                                        <!-- <ul class="list-group">
+                                            <li ng-repeat="item in placeList | filter : SearchPlace" class="list-group-item d-flex justify-content-between align-items-center">
+                                                {{item.id}} | {{item.name}} | {{item.address}}
+                                            </li>
+                                        </ul> -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" ng-click="close_select_place()">Close</button>
+                                    <button type="button" type="submit" class="btn btn-success" ng-click="createPost()" ng-disabled="!postForm.title">Save changes</button> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+form .progress {
+    line-height: 15px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+.img_upload a.icon-btn {
+    padding: 0;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    color:white;
+    right: 15px;
+    top: 5px;
+
+    width: 15px;
+    height: 15px;
+}
+.img_upload a.icon-btn ion-icon {
+    padding: 0;
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 1.5px;
+    top: 1.5px;
+
+}
+.img_upload a.icon-btn:hover {
+    background: rgba(79,214,117,0.9);
+}
+</style>
