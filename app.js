@@ -1,5 +1,5 @@
 // angular
-var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide","ngSanitize", 'ngTagsInput'])
+var app = angular.module("MfdApp",["ngRoute","app.swiper","app.bgSlide","ngSanitize", 'ngTagsInput', 'ngFileUpload'])
 
 // app route
 app.config(['$routeProvider','$locationProvider' , function($routeProvider, $locationProvider){
@@ -141,6 +141,18 @@ app.run(function($rootScope, PostServ) {
         }
     });
 })
+app.directive('ngFiles', ['$parse', function ($parse) {
+        function fn_link(scope, element, attrs) {
+            var onChange = $parse(attrs.ngFiles);
+            element.on('change', function (event) {
+                onChange(scope, { $files: event.target.files });
+            });
+        };
+        return {
+            link: fn_link
+        }
+    } 
+])
 
 var checklogin = function($q, $location,$rootScope,$route){
     var deferred = $q.defer();

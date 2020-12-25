@@ -7,7 +7,7 @@ angular.module('app.swiper', []).directive('swiper', function() {
             var swiper = new Swiper('.swiper-container', {
                 slidesPerView: 'auto',
                 spaceBetween: 5,
-                centeredSlides: false,
+                // centeredSlides: false,
                 observer: true,
                 pagination: {
                   el: '.swiper-pagination',
@@ -26,7 +26,7 @@ angular.module('app.swiper', []).directive('swiper', function() {
                   640: {
                     slidesPerView: 'auto',
                     spaceBetween: 20,
-                    centeredSlides: true,
+                    // centeredSlides: true,
                   }
                 }
               });

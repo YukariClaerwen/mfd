@@ -1,7 +1,8 @@
 <?php
 
 if ($this->method == 'GET'){
-	include './database/conn.php';
+	// include './database/conn.php';
+	$cn = new connection();
 	$getData = null;
 	if($this->params){
 		$idpost = $this->params[0];
@@ -10,7 +11,7 @@ if ($this->method == 'GET'){
 	else {
 		$getData = "call SP_Layhinhanh('');";
 	}
-	$query = $connect->query($getData);   
+	$query = $cn->connect()->query($getData);   
 	$data = array();
 	while($row = mysqli_fetch_assoc($query)){
 		$data[] = array(
@@ -20,7 +21,7 @@ if ($this->method == 'GET'){
 		);
 	}
 	$this->response(200, $data);
-	mysqli_close($connect);
+	// mysqli_close($connect);
 }
 elseif ($this->method == 'POST'){
 	// Hãy viết code xử lý THÊM dữ liệu ở đây

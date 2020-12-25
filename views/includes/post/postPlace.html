@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-start text-left">
+    <div class="post_place_img mr-3">
+        <img ng-src="../public/imgs/{{post.featured_img}}" alt="{{post.place.name}}">
+    </div>
+    <div class="post_place_des">
+        <h5>{{post.place.name}}</h5>
+        <p class="m-0">
+            <ion-icon name="navigate-outline" class="mr-1"></ion-icon>
+            <span class="mt-2">{{post.place.address}}</span>
+        </p>
+        <p class="m-0">
+            <ion-icon name="time-outline" class="mr-1"></ion-icon>
+            <span class="mr-3">{{post.place.opentime}} - {{post.place.closetime}}</span>
+        </p>
+        <p class="m-0">
+            <ion-icon name="pricetag-outline" class="mr-1" ng-if="post.place.price"></ion-icon>
+            <span>{{post.place.price}}</span>
+        </p>
+    </div>
+</div>
+<a href="" class="btn btn-outline-success" ng-click="removePlace()">Xóa</a>
+<!-- <div class="post_place_review text-center d-flex flex-column justify-content-center align-items-stretch">
+    <div class="review_points">{{fixPoint(post.place.point)}}</div>
+    <p class="meta mb-2">({{post.place.review_count}} đánh giá)</p>
+    <div>
+        <a href="" class="btn btn-outline-success btn-sm" ng-click="addPost()"><b>Viết review</b></a>
+    </div>
+</div> -->

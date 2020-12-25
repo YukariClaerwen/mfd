@@ -3,11 +3,18 @@
         <div class="block_inner d-flex">
             <div class="block_bg">
                 <a class="block_link" href="/post/{{post.ID}}" tabindex="-1"  ng-click="scroll()">					
-                    <div class="block_bg_img" ng-style="post.featured_img != null ? 
+                    <div ng-if="!post.place.id" class="block_bg_img" ng-style="post.featured_img != null ? 
                         {
                           'background-image':'url(../public/imgs/{{post.featured_img}})'
                         } : {
                           'background-image':'url(../public/imgs/postDefault.png)'
+                        }">
+                    </div>                         
+                    <div ng-if="post.place.id" class="block_bg_img" ng-style="post.featured_img != null ? 
+                        {
+                          'background-image':'url(../public/imgs/{{post.featured_img}})'
+                        } : {
+                          'background-image':'url(../public/imgs/{{post.place.img}})'
                         }">
                     </div>                         
                 </a>

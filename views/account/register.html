@@ -9,7 +9,7 @@
             <div class="col-md-4" style="background: rgba(255,255,255,0.9); border-radius: 4px;">
                 <div class="p-4">
                     <div class="display-3 myBrand"><span>M.</span>fd</div>
-                    
+                    <h4 class="my-2 pb-2">Đăng ký tài khoản</h4>
                     <form method="POST" name="F_register">
                         <div class="form-group">
                             <input type="email" ng-model="regForm.email" class="form-control" name="email" id="email" placeholder="Email" required>
@@ -39,6 +39,11 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-block btn-success" ng-click="addUser()"  ng-disabled="!regForm.email">Đăng ký</button>
                         </div>    
+                        <div class="col-xs-12 mt-3">
+                            <h6 class="text-center">
+                                <a href="/login" class="link">Đã có tài khoản? Hãy đăng nhập.</a>
+                            </h6>
+                        </div>
                     </form>
                 </div>
             </div>
