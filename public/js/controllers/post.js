@@ -1,6 +1,6 @@
 app.controller(
-    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", "$anchorScroll", 
-    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope, $anchorScroll){
+    "PostCtrl", ["$scope", "PostServ", "UserServ", "HashtagServ", "$location", "$routeParams", "$rootScope", "$anchorScroll","PlanServ",
+    function($scope, PostServ, UserServ,HashtagServ, $location, $routeParams, $rootScope, $anchorScroll,PlanServ){
         // console.log("path" + $location.path());
         // console.log("url" + $location.url());
         // console.log("search" + $location.search());   
@@ -10,9 +10,12 @@ app.controller(
         $scope.post = {};
         $scope.key= "";
         $scope.hashtag = "";
-
-        
-        
+        $scope.cities=[];
+        //console.log($location.search().search);
+        PlanServ.getCity().then(function(response){
+            $scope.cities= response.data;
+            //console.log($scope.cities[0].Name);
+        })
         if($scope.path[2] == "hashtag"){
             $scope.hashtag = $routeParams.hashtag;
             PostServ.getpostbyHashtag($routeParams.hashtag).then(function(response){
@@ -20,19 +23,15 @@ app.controller(
             })
         }
         else if($scope.path[2] == "location"){
-            PostServ.getpostbyHashtag($routeParams.location).then(function(response){
+            PostServ.getpostbyLocation($routeParams.location).then(function(response){
                 $scope.posts= response.data;
             })
         }
-        // else if(Loa){
-        //     $scope.searchKey = function(){
-        //     console.log($scope.key);
-        //     /*PostServ.getpostbyKey($scope.key).then(function(response){
-        //         $scope.posts = response.data;
-        //     })*/
-        //     alert($scope.key);
-        //     }
-        // }
+        else if($scope.path[2] == "key"){
+            PostServ.getpostbyKey($routeParams.key).then(function(response){
+                $scope.posts = response.data;
+            })
+        }
         else{
             $rootScope.loading = true;
             PostServ.get().then(function(response){
@@ -40,8 +39,23 @@ app.controller(
                 console.log($scope.posts);
                 $rootScope.loading = false;
             })
-        }
-        
+        }      
+        $scope.SearchLocation = function(){
+            $location.path("/post/location/"+$scope.location );
+            //console.log($location.path("/post/location/"+$scope.location ));
+            //$scope.location=$routeParams.location;
+            //console.log($routeParams.location);
+        } 
+        $scope.SearchKey = function(){
+            $location.path("/post/key/"+$scope.key);
+            //$scope.key= $routeParams.key;
+            //console.log($routeParams.key);    
+            } 
+        /*$scope.searchKey = function(){
+            console.log($scope.key);
+            PostServ.getpostbyKey($scope.key).then(function(response){
+                $scope.posts = response.data;
+            })}*/
         /*if($routeParams.hashtag === undefined || $routeParams.hashtag === null) {
             PostServ.get().then(function(response){
                 $scope.posts = response.data;
@@ -177,8 +191,8 @@ app.controller(
     function($scope, UserServ,PlanServ, $routeParams, $location, $rootScope,PostServ){
         $scope.user = {};
         $scope.cover = null;
-        getuser(UserServ,$routeParams.user,$scope)
-        
+        getuser(UserServ,$routeParams.user,$scope);
+        console.log($scope.user);
         /* get plan*/
         $scope.plans=[];
         PlanServ.get($routeParams.user).then(function(response){
@@ -209,12 +223,14 @@ app.controller(
         UserServ.getfollowers($routeParams.user).then(function(response){
             $scope.getfollowers(response);
         });
+        //$scope.email="hello";
+        //console.log($scope.email);
         $scope.luuthongtin = function(){
             console.log($location.path());
             var timestamp_end = new Date($scope.birthday).toISOString().slice(0, 19).replace('T', ' ');
             var infor ={
                     user: $routeParams.user,
-                    email: $scope.email,
+                    email: $scope.Email,
                     gender: $scope.gender,
                     job: $scope.job,
                     birthday: timestamp_end

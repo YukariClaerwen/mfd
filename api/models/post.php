@@ -14,14 +14,14 @@ if ($this->method == 'GET'){
 			$hashtag= $this->params[1];
 			$getData= "call SP_Timbaiviet('','$hashtag');";
 		}
-		// elseif($this->params[0] =='key'){
-		// 	$key= $this->params[1];
-		// 	$getData= "call Sp_TimbaivietTheoTuKhoa('$key');";
-		// }
-		// elseif($this->params[0] =='location'){
-		// 	$location= $this->params[1];
-		// 	$getData= "call Sp_TimbaivietTheoTuKhoa('$location');";
-		// }
+		elseif($this->params[0] =='key'){
+		 	$key= $this->params[1];
+		 	$getData= "call Sp_TimbaivietTheoTuKhoa('$key');";
+		}
+		 elseif($this->params[0] =='location'){
+			$location= $this->params[1];
+		 	$getData= "call Sp_TimbaivietTheoDiaDiem('$location');";
+		}
 		else{
 			$user = $this->params[0];
 			$getData= "call Sp_Laybaivietdang('$user');";			

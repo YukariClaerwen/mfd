@@ -11,12 +11,19 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-9 col-lg-7">
                     <form action="">
-                        <div class="search_bar d-flex justify-content-between">
-                            <input class="form-control" ng-model="key" id="search" name="search" placeholder="Tìm kiếm" required="required" type="text" value="">
-                            <button type="button" ng-click="searchKey()" id="search-action" title="Search">
+                        <div class="search_bar d-flex justify-content-between">      
+                            <input class="form-control"  id="search" ng-model="key" name="search" placeholder="Tìm kiếm" required="required" type="text" value="">
+                            
+                            <button type="button"  id="search-action" title="Search" ng-click="SearchKey()">
                                 <ion-icon size="large" name="search-outline"></ion-icon>
                             </button>
+                            
                         </div>
+                        <select class="custom-select" ng-model="location" ng-change="SearchLocation()">
+                            <option ng-repeat="city in cities"  ng-value="city.Name" >
+                                {{city.Name}}
+                            </option>
+                      </select>
                     </form>
                 </div>
             </div>
@@ -53,7 +60,6 @@
         </div>
     </div>
 </section>
-
 <section class="section">
     <div class="d-flex justify-content-center align-items-center pb-5"ng-show="postloading">
         <div class="spinner-grow text-success" role="status">
