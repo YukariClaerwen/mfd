@@ -8,7 +8,7 @@
             <div class="col-sm-3" ng-include="'views/includes/user/userSidebar.html'">
             </div>
             <div class="col-sm-9">
-                <div ng-repeat="post in posts track by -$index"  ng-init="orderFilterLimit = 1">
+                <div ng-repeat="post in posts | orderBy: ['-post_date','-post_time']"  ng-init="orderFilterLimit = 1">
                     <div class="block_type_2 single_post">
                         <div class="post_inner px-5">
                             <div class="post_action d-flex justify-content-end">

@@ -90,18 +90,18 @@
     
     <script src="public/js/libs/jquery-3.5.1.min.js"></script>
     <script src="public/js/libs/popper.min.js"></script>
-    <script src="public//js/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="public/js/libs/bootstrap/bootstrap.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.2/js/xeditable.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-sanitize.js"></script>
+    <script src="public/js/libs/angular.min.js"></script>
+    <script src="public/js/libs/xeditable.min.js"></script>
+    <script src="public/js/libs/angular-route.js"></script>
+    <script src="public/js/libs/angular-sanitize.js"></script>
     
 
     <script src="public/js/libs/ng-file-upload.min.js"></script>
     <script src="public/js/libs/ng-tags-input.min.js"></script>
     <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="public/js/libs/swiper-bundle.min.js"></script>
 
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 
