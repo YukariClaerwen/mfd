@@ -89,10 +89,10 @@ app.config(['$routeProvider','$locationProvider' , function($routeProvider, $loc
         .when("/:user/settings",{
             templateUrl: "views/user/usersetting.html",
             controller: 'UserCtrl',
-            activetab: 'user',
-            resolve: {
-                loggedin: checklogin
-            }
+            activetab: 'user'
+            // resolve: {
+            //     loggedin: checklogin
+            // }
         })
         .when("/post/:id",{
             templateUrl: "views/post/post.html",

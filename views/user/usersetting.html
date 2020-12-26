@@ -8,47 +8,52 @@
             <div class="col-sm-3" ng-include="'views/includes/user/userSidebar.html'">
             </div>
             <div class="col-sm-9">
-                <div>
-                    <div id="inf_eamil" class="d-flex flex-grow justify-content-between">
-                        <h4><span>
-                            <ion-icon name="mail-outline"></ion-icon>
-                        </span>{{user.email}}</h4>
-                    </div>
-                    <div class="d-flex flex-grow justify-content-between">
-                    <h4><span>
-                            <ion-icon name="transgender-outline"></ion-icon>
-                        </span> {{user.gender}} </h4>
-                    </div>
-                    <div class="d-flex flex-grow justify-content-between">
-                        <h4><span>
-                            <ion-icon name="medkit-outline"></ion-icon>
-                        </span>{{user.job}}</h4>                  
-                    </div>
-                    <div class="d-flex flex-grow justify-content-between">    
-                    <h4><span>
-                            <ion-icon name="calendar-outline"></ion-icon>
-                        </span> {{user.birthday}}</h4>
-                    </div>
-                    <button  class="btn btn-success btn-simple btn-round btn-block" data-toggle="modal" data-target="#SuathongtinModal">Sửa thông tin</button>
-                    <button  class="btn btn-success btn-simple btn-round btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Đổi mật khẩu
-                    </button>
-                    <button  class="btn btn-success btn-simple btn-round btn-block" >Xóa tài khoản</button>
-            
-                    <div class="collapse mt-4" id="collapseExample">
-                        <form name="F_ChangePassword">
-                            <div class="form-group">
-                              <input type="password" class="form-control" id="exampleInputPassword" ng-model="pswdcurrent" placeholder="Mật khẩu hiện tại"required>
+                <div class="block_type_2 px-4">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div id="inf_eamil" class="d-flex flex-grow justify-content-start align-items-center">
+                                <h4 class="mr-3"><ion-icon name="mail-outline"></ion-icon></h4>
+                                <p>{{user.email}}</p>
                             </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" ng-model="pswd1" placeholder="Mật khẩu mới"required>
+                            <div class="d-flex flex-grow justify-content-start align-items-center">
+                                <h4 class="mr-3"><ion-icon name="transgender-outline"></ion-icon></h4>
+                                <p>{{user.gender}}</p>
                             </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword2" ng-model="pswd2" placeholder="Nhập lại mật khẩu mới" required>
+                            <div class="d-flex flex-grow justify-content-start align-items-center">
+                                <h4 class="mr-3"><ion-icon name="medkit-outline"></ion-icon></h4>               
+                                <p>{{user.job}}</p>   
                             </div>
-                            <button type="submit"  class="btn btn-success btn-simple btn-round btn-block" ng-click="ChangePassword()" ng-disabled="F_ChangePassword.$invalid">Đổi mật khẩu</button>
-                          </form>
+                            <div class="d-flex flex-grow justify-content-start align-items-center">    
+                                <h4 class="mr-3"><ion-icon name="calendar-outline"></ion-icon></h4>
+                                <p>{{user.birthday}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div ng-if="user.username === userName">
+                                <button  class="btn btn-outline-success btn-simple btn-round btn-block" data-toggle="modal" data-target="#SuathongtinModal">Sửa thông tin</button>
+                                <button  class="btn btn-outline-success btn-simple btn-round btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    Đổi mật khẩu
+                                </button>
+                                <!-- <button  class="btn btn-outline-success btn-simple btn-round btn-block" >Xóa tài khoản</button> -->
+                        
+                                <div class="collapse mt-4" id="collapseExample">
+                                    <form name="F_ChangePassword">
+                                        <div class="form-group">
+                                        <input type="password" class="form-control" id="exampleInputPassword" ng-model="pswdcurrent" placeholder="Mật khẩu hiện tại"required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" id="exampleInputPassword1" ng-model="pswd1" placeholder="Mật khẩu mới"required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" id="exampleInputPassword2" ng-model="pswd2" placeholder="Nhập lại mật khẩu mới" required>
+                                        </div>
+                                        <button type="submit"  class="btn btn-success btn-simple btn-round btn-block" ng-click="ChangePassword()" ng-disabled="F_ChangePassword.$invalid">Đổi mật khẩu</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
             
                     <div class="modal fade" id="SuathongtinModal" tabindex="-1" aria-labelledby="SuathongtinModal" aria-hidden="true">
                         <div class="modal-dialog">

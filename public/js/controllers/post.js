@@ -449,6 +449,8 @@ var getfollowers = function(service, user, scope, rootScope) {
 var getuser = function(service, user, scope) {
     service.getuser(user).then(function(response){
         scope.user = response.data[0];
+        scope.cover = scope.user.cover;
+        console.log(scope.user);
     })
 }
 

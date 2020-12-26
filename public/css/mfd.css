@@ -661,3 +661,12 @@ section.section.section-user{
 .sticky-top {
     top: 100px;
 }
+
+.card-img, .card-img-bottom {
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+.card-img, .card-img-top {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}

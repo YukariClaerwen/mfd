@@ -5,108 +5,127 @@
 <section class="section section-user">
     <div class="container">
         <div class="row">
-          <div class="col-sm-3" ng-include="'views/includes/user/userSidebar.html'">
-          </div>
+            <div class="col-sm-3" ng-include="'views/includes/user/userSidebar.html'">
+            </div>
             <div class="col-sm-9">
+              <div class="block_type_2 px-4">
                 <!-- Button trigger modal thêm kế hoạch -->
-    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" title="Thêm kế hoạch">
-        <ion-icon name="add-circle-outline" size="large">
-    </button>
-    <div ng-repeat ="plan in plans track by $index">
-        <div class="d-flex flex-row mt-3">
-            <h4>{{plan.Name}}</h4>
-            <h4>{{plan.Location}}, {{user.username}}</h4>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#plan{{plan.Idplan}}"
-                aria-expanded="false" aria-controls="{{plan.Idplan}}">
-                <ion-icon name="chevron-down-outline" title="Chi tiết"></ion-icon>
-            </button>
-            <!-- Button trigger modal thêm kế hoạch -->
-            <a ng-href="/{{user.username}}/plans/{{plan.Idplan}}">
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1"
-                title="Thêm hoạt động">
-              
-                <ion-icon name="add-outline"></ion-icon>
-              
-            </button></a>
+                <a ng-if="user.username === userName" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal" title="Thêm kế hoạch">
+                  <div class="d-flex justify-content-start align-items-center">
+                    <ion-icon name="add-circle-outline" size="large"> </ion-icon> 
+                    <span class="ml-3">Tạo kế hoạch </span> 
+                  </div>
+                </a>
+                <div class="mt-3">
+                  <div ng-repeat ="plan in plans track by $index" class="pb-3" style="border-top: 1px solid rgba(0,0,0,0.1)">
+                    <div class="d-flex flex-row justify-content-between align-items-center mt-3">
+                        <div class="d-flex justify-content-start align-items-center">
+                          <h4 class="mr-3 my-0 p-0">{{plan.Name}}</h4>
+                          <p class="m-0 p-0">{{plan.Location}} | {{user.username}}</p>
+                        </div>
+                        <div>
+                          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#plan{{plan.Idplan}}"
+                            aria-expanded="false" aria-controls="{{plan.Idplan}}">
+                            <ion-icon name="chevron-down-outline" title="Chi tiết"></ion-icon>
+                          </button>
+                          <!-- Button trigger modal thêm kế hoạch -->
+                          <a ng-href="/{{user.username}}/plans/{{plan.Idplan}}">
+                          <button ng-if="user.username === userName" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal1"
+                              title="Thêm hoạt động">
+                            
+                              <ion-icon name="add-outline"></ion-icon>
+                            
+                          </button></a>
+                        </div>
+                      </div>
+                      <table class="table collapse mt-3" id="plan{{plan.Idplan}}">
+                          <thead>
+                            <tr>
+                              <th ng-if="user.username === userName"></th>
+                              <th>Địa điểm</th>
+                              <th>Địa chỉ</th>
+                              <th>Ngày</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr ng-repeat= "detail in plan.Detail track by $index">
+                                  <td ng-if="user.username === userName"><input type="checkbox" name="" id=""></td>
+                                  <td>{{detail.Activity}}</td>
+                                  <td>{{detail.Address}}</td>
+                                  <td>{{detail.Date}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-        <table class="table collapse" id="plan{{plan.Idplan}}">
-            <tbody>
-                <tr ng-repeat= "detail in plan.Detail track by $index">
-                    <td><input type="checkbox" name="" id=""></td>
-                    <td>{{detail.Activity}}</td>
-                    <td>{{detail.Address}}</td>
-                    <td>{{detail.Date}}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
+</section>
 
     
     
-    <!-- Button trigger modal -->
+<!-- Button trigger modal -->
 
-  
-  <!-- Modal tạo kế hoạch -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- Modal tạo kế hoạch -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Thêm kế hoạch khám phá</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form name="F_createPlan">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="namePlan" id="exampleFormControlInput1"
+            placeholder="Tên kế hoạch" required>
+        </div>
+        <div class="form-group">
+          <select class="custom-select" id="inputGroupSelect02" ng-model="City" required>
+            <option ng-selected="selected" value="Chọn...">Chọn...</option>
+            <option ng-selected="!selected" ng-repeat="city in cities" value="{{city.Name}}">{{city.Name}}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="F_createPlan.$invalid" ng-click="CreatePlan()">Tạo</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal thêm hoạt động -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Thêm kế hoạch khám phá</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Thêm hoạt động</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form name="F_createPlan">
+          <form name="F_createAct">
             <div class="form-group">
-              <input type="text" class="form-control" ng-model="namePlan" id="exampleFormControlInput1"
-                placeholder="Tên kế hoạch" required>
+              <input type="text" class="form-control" ng-model="Activity" id="exampleFormControlInput1" placeholder="Tên hoạt động" required>
             </div>
             <div class="form-group">
-              <select class="custom-select" id="inputGroupSelect02" ng-model="City" required>
-                <option ng-selected="selected" value="Chọn...">Chọn...</option>
-                <option ng-selected="!selected" ng-repeat="city in cities" value="{{city.Name}}">{{city.Name}}</option>
-              </select>
+              <input type="text" class="form-control" ng-model="Address" id="exampleFormControlInput1" placeholder="Địa chỉ quán ăn" required>
+            </div>
+            <div class="form-group">
+              <input type="date" class="form-control" ng-model="Date" id="exampleFormControlInput1" required>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="F_createPlan.$invalid" ng-click="CreatePlan()">Tạo</button>
+          <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-click="Createdetail()" ng-disabled="F_createAct.$invalid">Thêm</button>
         </div>
       </div>
     </div>
   </div>
-
-    <!-- Modal thêm hoạt động -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Thêm hoạt động</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form name="F_createAct">
-                <div class="form-group">
-                  <input type="text" class="form-control" ng-model="Activity" id="exampleFormControlInput1" placeholder="Tên hoạt động" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" ng-model="Address" id="exampleFormControlInput1" placeholder="Địa chỉ quán ăn" required>
-                </div>
-                <div class="form-group">
-                  <input type="date" class="form-control" ng-model="Date" id="exampleFormControlInput1" required>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success btn-simple btn-round btn-block" ng-click="Createdetail()" ng-disabled="F_createAct.$invalid">Thêm</button>
-            </div>
-          </div>
-        </div>
-      </div>
-            </div>
-        </div>
-    </div>
-</section>

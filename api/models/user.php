@@ -64,6 +64,7 @@ if ($this->method == 'GET'){
 					"createdate" 	=> $row['createdate'],
 					"avatar" 		=> (isset($row['avatar']) ? $row['avatar'] : $avardefault),
 					"status" 		=> $row['userstatus'],
+					"cover"			=> $row['cover'],
 					"following" 	=> $follow->following, 
 					"followers" 	=> $follow->followers
 				);
